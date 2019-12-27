@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport"
+			content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no">
+		<title>RSA</title>
+		
+		<!--Import Google Icon Font-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection">
+		<link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" />
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	
+	<body id="page-top">
+		<!-- Page Wrapper -->
+		<div id="wrapper">
+			<!-- Content Wrapper -->
+			<div id="content-wrapper" class="d-flex flex-column">
+				<!-- Main Content -->
+				<div id="content">
+					<div th:replace="fragments/header :: cabecalho">
+						<div>navbar</div>
+					</div>
+					<!-- Begin Page Content -->
+					<section layout:fragment="conteudo">
+						<div class="container-fluid">conteudo principal das páginas</div>
+					</section>
+				</div>
+				<footer th:replace="fragments/footer :: rodape">
+					<div>footer</div>
+				</footer>
+			</div>
+		</div>
+	
+		<!-- Modal Logoff -->
+        <form action="/escola/sair" method="POST">
+	        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+	            <div class="modal-dialog" role="document">
+	                <div class="modal-content">
+	                    <div class="modal-header">
+	                        <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
+	                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                            <span aria-hidden="true">&times;</span>
+	                        </button>
+	                    </div>
+	                    <div class="modal-body">
+	                        Selecione <span id="confirm-label" class="badge badge-danger">Sair</span> caso queira realmente desconectar sua sessão atual.
+	                    </div>
+	                    <div class="modal-footer">
+	                        <button class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+	                        <button type="submit" id="btn-confirm" class="btn btn-danger">Sair</button>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+        </form>
+        <!-- Modal Logoff -->
+        	
+		<!--JavaScript at end of body for optimized loading-->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script>
+			var url = '';
+			
+			$('button[id*="btn_"]').click(function() {
+				url = "http://localhost:8080/" + $(this).attr('id').split("_")[1];
+			});
+			
+			$('#ok_confirm').click(function() {
+				document.location.href = url;
+			});
+			
+            $(document).ready(function () {
+                $('.cpf').mask('000.000.000-00');
+                $('.telefone').mask('(00) #0000-0000');
+                $('.cep').mask('00.000-000');
+                $('.ano').mask('0000');
+                $('.carga').mask('##0hrs');
+            });
+            
+        </script>
+	</body>
+</html>

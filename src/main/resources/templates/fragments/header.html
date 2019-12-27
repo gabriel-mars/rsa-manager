@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<div th:fragment="cabecalho">
+			<ul id="dropdownColaboradores" class="dropdown-content">
+				<li><a th:href="@{/colaborador/cadastro}">Novo colaborador</a></li>
+			  	<li class="divider"></li>
+			  	<li><a href="#!">Ver colaboradores</a></li>
+			</ul>
+			
+			<ul id="dropdownAtividades" class="dropdown-content">
+				<li><a href="#!">Cadastrar atividades</a></li>
+			  	<li class="divider"></li>
+			  	<li><a href="#!">-</a></li>
+			</ul>
+			
+			<nav id="nav" class="navbar-fixed">
+				<div class="nav-wrapper">
+			    	<a href="#" class="brand-logo">
+			    		<img alt="Logo" th:src="@{/img/rsa.jpeg}" width="65" height="65">
+			    	</a>
+			      	<ul id="nav-mobile" class="right hide-on-med-and-down">
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownColaboradores">Colaboradores<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownAtividades">Atividades<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a href="#!">Relatórios</a></li>
+			      	</ul>
+			    </div>
+			</nav>
+        	
+        	<script>
+        		$(document).ready(function(){
+        		    $('.sidenav').sidenav();
+        		    $('.dropdown-trigger').dropdown();
+        		});
+        	</script>
+        	<!-- End of Topbar -->
+		</div>
+	</body>
+</html>

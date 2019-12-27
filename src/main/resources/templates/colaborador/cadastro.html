@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	        <div class=" container row">
+			    <form class="col s12">
+			    	<div class="row">
+			        	<div class="input-field col s6">
+			          		<input id="first_name" type="text" class="validate">
+			          		<label for="first_name">Nome</label>
+			        	</div>
+			        	<div class="input-field col s6">
+			          		<input id="email" type="email" class="validate">
+			          		<label for="email">E-mail</label>
+			          		<span class="helper-text" data-error="Incorreto!" data-success="Ok!"></span>
+			        	</div>
+			      	</div>
+			      	<div class="row">
+			        	<div class="input-field col s4">
+			          		<input id="cpf" type="text" class="validate">
+			          		<label for="cpf">CPF</label>
+			        	</div>
+			        	<div class="input-field col s4">
+			          		<input id="phone" type="text" class="validate">
+			          		<label for="phone">Telefone</label>
+			        	</div>
+			        	<div class="input-field col s4">
+			          		<input id="id_ericsson" type="text" class="validate">
+			          		<label for="id_ericsson">ID Ericsson</label>
+			        	</div>
+			      	</div>
+			      	<div class="row">
+			        	<div class="input-field col s6">
+			          		<input id="data_inicio" type="text" class="datepicker">
+			          		<label for="data_inicio">Início no RSA</label>
+			        	</div>
+			      	    <div class="input-field col s6">
+			          		<select>
+						    	<option value="" disabled selected>Organização</option>
+						      	<option value="Ericsson">Ericsson</option>
+						      	<option value="Fitec">Fitec</option>
+						      	<option value="Inatel">Inatel</option>
+						    </select>
+			        	</div>
+			      	</div>
+			      	<div class="row">
+			      		<div class="col s12">
+			          		
+			        	</div>
+			    	</div>
+				</form>
+			</div>
+			<script>
+				$(document).ready(function(){
+			    	$('select').formSelect();			    	
+			    	$('.datepicker').datepicker({
+			    		format: 'dd-mm-yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>		
