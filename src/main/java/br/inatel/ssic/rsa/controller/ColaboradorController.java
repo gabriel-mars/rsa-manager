@@ -44,6 +44,14 @@ public class ColaboradorController {
 		}
 	}
 	
+	@PostMapping("/colaborador/sair")
+	public String logoutColaborador(HttpSession session, RedirectAttributes attr) {
+		session.invalidate();
+        
+        attr.addFlashAttribute("success", "Até logo!");
+		return "redirect:/";
+	}
+	
 	@PostMapping("/colaborador/salvar")
 	public String salvarColaborador(Colaborador colaborador, RedirectAttributes attr) {
 		service.save(colaborador);

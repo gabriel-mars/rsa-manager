@@ -45,26 +45,16 @@
 		</div>
 	
 		<!-- Modal Logoff -->
-        <form action="/escola/sair" method="POST">
-	        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
-	            <div class="modal-dialog" role="document">
-	                <div class="modal-content">
-	                    <div class="modal-header">
-	                        <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
-	                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                            <span aria-hidden="true">&times;</span>
-	                        </button>
-	                    </div>
-	                    <div class="modal-body">
-	                        Selecione <span id="confirm-label" class="badge badge-danger">Sair</span> caso queira realmente desconectar sua sessão atual.
-	                    </div>
-	                    <div class="modal-footer">
-	                        <button class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-	                        <button type="submit" id="btn-confirm" class="btn btn-danger">Sair</button>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
+        <form action="/colaborador/sair" method="POST">
+			<div id="modal1" class="modal">
+			    <div class="modal-content">
+			    	<h4>Sair?</h4>
+			      	<p>Caso queira realmente sair, clique em 'Sair' logo abaixo.</p>
+			    </div>
+			    <div class="modal-footer">
+			      	<button type="submit" id="btn-confirm" class="btn waves-effect waves-light red">Sair</button>
+			    </div>
+			</div>
         </form>
         <!-- Modal Logoff -->
         	
@@ -84,6 +74,7 @@
             $(document).ready(function () {
                 $('.cpf').mask('000.000.000-00');
                 $('.telefone').mask('(00) #0000-0000');
+                $('#modal1').modal();
             });
             
         </script>
