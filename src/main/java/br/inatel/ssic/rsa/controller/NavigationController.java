@@ -19,11 +19,6 @@ public class NavigationController {
 		return "index";
 	}
 	
-	@PostMapping("/entrar")
-	public String getDashboard(Pessoa pessoa) {
-		return "dashboard";
-	}
-	
 	@GetMapping("/colaborador/cadastro")
 	public String getCadastroColaborador(ModelMap model) {
 		Colaborador colaborador = new Colaborador();

@@ -15,8 +15,9 @@
 	<body>
 		<div class="container loginForm z-depth-1 card-panel">
 			<div class="row m-b-none">
+				<div th:replace="fragments/alert"></div>
 				<h2 class="center-align grey-text darken-1">RSA</h2>
-				<form th:action="@{/entrar}" th:object="${pessoa}" method="POST">
+				<form th:action="@{/colaborador/entrar}" th:object="${pessoa}" method="POST">
 					<div class="row">
 						<div class="input-field">
 							<input id="email" type="email" class="validate" th:field="*{email}" required>

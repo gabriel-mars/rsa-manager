@@ -46,3 +46,37 @@
   max-height: 30%;
   overflow: auto;
 }
+
+.popup2 {
+  margin: 70px auto;
+  padding: 20px;
+  background: #d70c06;
+  border-radius: 5px;
+  width: 40%;
+  position: relative;
+  transition: all 5s ease-in-out;
+  color: #fff;
+}
+
+.popup2 h2 {
+  margin-top: 0;
+  color: #fff;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup2 .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+}
+.popup2 .close:hover {
+  color: #fff;
+}
+.popup2 .content {
+  max-height: 30%;
+  overflow: auto;
+}
