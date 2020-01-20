@@ -20,7 +20,7 @@ public class Colaborador extends Pessoa{
 	@Column(name = "data_inicio", nullable = false, length = 10)
 	private String dataInicioRSA;
 	
-	@Column(name = "data_fim", nullable = false, length = 10)
+	@Column(name = "data_fim", length = 10)
 	private String dataFimRSA;
 	
 	@Column(name = "organizacao", nullable = false, length = 50)
@@ -29,4 +29,35 @@ public class Colaborador extends Pessoa{
 	@Transient
 	private Pessoa pessoa;
 
+	public String getIdEricsson() {
+		return idEricsson;
+	}
+
+	public void setIdEricsson(String idEricsson) {
+		this.idEricsson = idEricsson;
+	}
+
+	public String getDataInicioRSA() {
+		return dataInicioRSA;
+	}
+
+	public void setDataInicioRSA(String dataInicioRSA) {
+		this.dataInicioRSA = dataInicioRSA;
+	}
+
+	public String getDataFimRSA() {
+		return dataFimRSA;
+	}
+
+	public void setDataFimRSA(String dataFimRSA) {
+		this.dataFimRSA = dataFimRSA;
+	}
+
+	public String getOrganizacao() {
+		return organizacao;
+	}
+
+	public void setOrganizacao(String organizacao) {
+		this.organizacao = organizacao;
+	}
 }
