@@ -60,17 +60,17 @@ public class ColaboradorController {
 		return "redirect:/colaborador/cadastro";
 	}
 	
-//	@RequestMapping(value = "/colaborador/listar", method = RequestMethod.GET)
-//	public String listarColaboradores(ModelMap model, HttpSession session) {
-//		List<Pessoa> professores = new ArrayList<Pessoa>(); 
-//		Escola escolaSessaoAtual = new Escola();
-//		
-//		escolaSessaoAtual = (Escola) session.getAttribute("escolaLogada");
-//		
-//		professores = service.buscarProfessorPorEscola(escolaSessaoAtual.getId());
-//		
-//		model.addAttribute("professores", professores);
-//		
-//		return "professor/listaProfessores";
-//	}
+	@RequestMapping(value = "/colaborador/listar", method = RequestMethod.GET)
+	public String listarColaboradores(ModelMap model, HttpSession session) {
+		List<Pessoa> colaboradores = new ArrayList<Pessoa>(); 
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		colaboradores = service.findByOrganizacao(sessaoAtual.getOrganizacao());
+		
+		model.addAttribute("colaboradores", colaboradores);
+		
+		return "colaborador/lista";
+	}
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	        <div class=" container row">
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			            	<th>#</th>
+			              	<th>Nome</th>
+			              	<th>E-mail</th>
+			          	</tr>
+	        		</thead>
+	
+	        		<tbody>
+		          		<tr th:each="c : ${colaboradores}">
+		              		<td th:text="${c[0]}">1</td>
+		              		<td th:text="${c[1]}">Colaborador</td>
+		              		<td th:text="${c[2]}">Email</td>
+		        		</tr>
+	        		</tbody>
+	      		</table>
+	        </div>
+	    </section>
+	</body>
+</html>
