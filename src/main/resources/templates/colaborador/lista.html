@@ -4,6 +4,7 @@
 	<body>
 	    <section class="layout-content" layout:fragment="conteudo">
 	        <div class="container row">
+	        	<h3 class="white-black">Colaboradores</h3>
 		        <table class="highlight">
 	        		<thead>
 			          	<tr>
@@ -20,7 +21,7 @@
 		              		<td th:text="${c[1]}">Colaborador</td>
 		              		<td th:text="${c[2]}">Email</td>
 		              		<td colspan="2">
-	                            <a class="waves-effect waves-light btn-small tooltipped" th:href="@{/colaborador/editar/{id} (id=${c[0]})}" data-position="right" data-tooltip="Editar">
+	                            <a class="waves-effect waves-light btn-small blue tooltipped" th:href="@{/colaborador/editar/{id} (id=${c[0]})}" data-position="right" data-tooltip="Editar">
                                 	<i class="material-icons">edit</i>
                             	</a>
 	                        </td>
