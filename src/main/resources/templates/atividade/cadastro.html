@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	        <div class="container row">
+		        <div th:replace="fragments/alert"></div>
+	        	<h3 class="white-black">Cadastrar atividades</h3>
+	        	<form action="#">
+	        		<div class="row">
+	        			<div class="input-field col s6">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true">
+			          		<label for="data_inicio">Data das atividades</label>
+			        	</div>
+	        			<div class="file-field input-field col s6">
+				      		<div class="btn blue">
+					        	<span>Arquivo</span>
+					        	<input type="file" required="true">
+					      	</div>
+					      	<div class="file-path-wrapper">
+					        	<input class="file-path validate" type="text" placeholder="Selecione o arquivo com as atividades">
+					      	</div>
+					    </div>
+	        		</div>
+	        		<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+			  	</form>
+	        </div>
+	        
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<blockquote>
+			    	O arquivo escolhido deve ser baixado diretamente do NRO Tracker, correspondendo somente ao dia informado informado.
+			    </blockquote>
+	        </div>
+	        <script>
+				$(document).ready(function(){		    	
+			    	$('.datepicker').datepicker({
+			    		format: 'dd-mm-yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>

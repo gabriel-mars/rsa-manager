@@ -33,11 +33,16 @@ public class NavigationController {
 	}
 	
 	@GetMapping("/colaborador/editar/{id}")
-	public String editarColaborador(@PathVariable("id") Long id, ModelMap model) {
+	public String getEditarColaborador(@PathVariable("id") Long id, ModelMap model) {
 		Colaborador colaborador = service.findById(id);
 		
 		model.addAttribute("colaborador", colaborador);
 		
 		return "colaborador/cadastro";
+	}
+	
+	@GetMapping("/atividade/cadastro")
+	public String getCadastroAtividade() {
+		return "atividade/cadastro";
 	}
 }
