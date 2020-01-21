@@ -6,9 +6,10 @@
 	        <div class=" container row">
 	        	<div th:replace="fragments/alert"></div>
 	        	<h3 class="white-black">Novo Colaborador</3>
-			    <form class="col s12" th:action="@{/colaborador/salvar}" th:object="${colaborador}" method="POST">
+			    <form class="col s12" th:action="@{${colaborador.id == null} ? @{/colaborador/salvar} : @{/colaborador/update}}" th:object="${colaborador}" method="POST">
 			    	<div class="row">
 			        	<div class="input-field col s6">
+			        		<input id="id-pessoa" type="hidden" th:field="*{id}" />
 			          		<input id="first_name" type="text" class="validate" required="true" th:field="*{nome}">
 			          		<label for="first_name">Nome</label>
 			        	</div>

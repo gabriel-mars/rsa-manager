@@ -25,7 +25,6 @@ public class ColaboradorController {
 	@PostMapping("/colaborador/entrar")
 	public String verificarLogin(Pessoa pessoa, HttpSession session, RedirectAttributes attr) {
 		Colaborador sessaoAtual = new Colaborador();
-		Pessoa aux = new Pessoa();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
 		
@@ -72,5 +71,13 @@ public class ColaboradorController {
 		model.addAttribute("colaboradores", colaboradores);
 		
 		return "colaborador/lista";
+	}
+	
+	@PostMapping("/colaborador/update")
+	public String editarColaborador(Colaborador colaborador, RedirectAttributes attr) {
+		service.update(colaborador);
+		
+		attr.addFlashAttribute("success", "Colaborador atualizado.");
+		return "redirect:/colaborador/cadastro";
 	}
 }

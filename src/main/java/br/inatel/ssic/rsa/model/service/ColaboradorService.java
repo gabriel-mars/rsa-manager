@@ -26,7 +26,7 @@ public class ColaboradorService implements ColaboradorInterface{
 
 	@Override
 	public void update(Colaborador colaborador) {
-		dao.update(colaborador);
+		dao.updateColaborador(colaborador);
 	}
 
 	@Override
@@ -37,7 +37,22 @@ public class ColaboradorService implements ColaboradorInterface{
 	@Transactional(readOnly = true)
 	@Override
 	public Colaborador findById(Long id) {
-		return dao.findById(id);
+		Colaborador colaborador = new Colaborador();
+		Object[] aux = null;
+		List<Object[]> pessoa = dao.findByUpdate(id);
+		
+		aux = pessoa.get(0);
+		
+		colaborador.setId(Long.parseLong(aux[0].toString()));
+		colaborador.setNome(aux[1].toString());
+		colaborador.setEmail(aux[2].toString());
+		colaborador.setCpf(aux[3].toString());
+		colaborador.setTelefone(aux[4].toString());
+		colaborador.setIdEricsson(aux[5].toString());
+		colaborador.setDataInicioRSA(aux[6].toString());
+		colaborador.setOrganizacao(aux[7].toString());
+		
+		return colaborador;
 	}
 
 	@Transactional(readOnly = true)

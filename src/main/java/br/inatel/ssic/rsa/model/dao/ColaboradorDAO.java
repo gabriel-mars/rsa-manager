@@ -46,4 +46,32 @@ public class ColaboradorDAO extends BaseDAO<Colaborador, Long> implements Colabo
 				.setParameter(1, id);
 		return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> findByUpdate(Long id) {
+		Query query = manager.createNativeQuery("SELECT P.id as pessoa_id, P.nome, P.email, P.cpf, P.telefone, C.id_ericsson, C.data_inicio, C.organizacao "
+				+ "FROM pessoa P "
+				+ "INNER JOIN colaborador C On C.pessoa_id = P.id "
+				+ "WHERE P.id = ?")
+				.setParameter(1, id);
+		return query.getResultList();
+	}
+	
+	public void updateColaborador(Colaborador colaborador) {
+		Query queryPessoa = manager.createNativeQuery("UPDATE pessoa SET nome = ?, email = ?, cpf = ?, telefone = ? WHERE id = ?")
+				.setParameter(1, colaborador.getNome())
+				.setParameter(2, colaborador.getEmail())
+				.setParameter(3, colaborador.getCpf())
+				.setParameter(4, colaborador.getTelefone())
+				.setParameter(5, colaborador.getId());
+		
+		Query queryColab = manager.createNativeQuery("UPDATE colaborador SET id_ericsson = ?, data_inicio = ?, organizacao = ? WHERE pessoa_id = ?")
+				.setParameter(1, colaborador.getIdEricsson())
+				.setParameter(2, colaborador.getDataInicioRSA())
+				.setParameter(3, colaborador.getOrganizacao())
+				.setParameter(4, colaborador.getId());
+		
+		queryPessoa.executeUpdate();
+		queryColab.executeUpdate();
+	}
 }
