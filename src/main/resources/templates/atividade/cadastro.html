@@ -6,7 +6,7 @@
 	        <div class="container row">
 		        <div th:replace="fragments/alert"></div>
 	        	<h3 class="white-black">Cadastrar atividades</h3>
-	        	<form action="#">
+	        	<form  th:action="@{/atividade/upload}" method="POST" enctype="multipart/form-data">
 	        		<div class="row">
 	        			<div class="input-field col s6">
 			          		<input id="data_inicio" type="text" class="datepicker" required="true">
@@ -15,7 +15,7 @@
 	        			<div class="file-field input-field col s6">
 				      		<div class="btn blue">
 					        	<span>Arquivo</span>
-					        	<input type="file" required="true">
+					        	<input type="file" accept=".xls" required="true" th:name="file">
 					      	</div>
 					      	<div class="file-path-wrapper">
 					        	<input class="file-path validate" type="text" placeholder="Selecione o arquivo com as atividades">
