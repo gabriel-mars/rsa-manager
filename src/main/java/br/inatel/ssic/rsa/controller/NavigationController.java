@@ -45,4 +45,9 @@ public class NavigationController {
 	public String getCadastroAtividade() {
 		return "atividade/cadastro";
 	}
+	
+	@GetMapping("/atividade/diario")
+	public String getAtividadeDiaria() {
+		return "atividade/lista";
+	}
 }
