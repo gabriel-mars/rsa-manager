@@ -20,7 +20,7 @@ public class Atividade extends AbstractEntity<Long>{
 	@Column(name = "os", nullable = false, length = 6)
 	private Integer os;
 	
-	@Column(name = "empresa", nullable = false, length = 6)
+	@Column(name = "empresa", nullable = false, length = 50)
 	private String empresa;
 
 	public String getSite() {

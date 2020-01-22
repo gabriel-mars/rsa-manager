@@ -37,7 +37,7 @@ public class Item extends Atividade{
 	@Column(name = "data_envio", nullable = false, length = 10)
 	private String dataEnvio;
 	
-	@Column(name = "hora_envio", nullable = false, length = 5)
+	@Column(name = "hora_envio", nullable = false, length = 8)
 	private String horaEnvio;
 	
 	@Column(name = "centro_rsa", nullable = false, length = 8)
@@ -46,7 +46,7 @@ public class Item extends Atividade{
 	@Column(name = "data_analise", nullable = false, length = 10)
 	private String dataAnalise;
 	
-	@Column(name = "hora_analise", nullable = false, length = 5)
+	@Column(name = "hora_analise", nullable = false, length = 8)
 	private String horaAnalise;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
