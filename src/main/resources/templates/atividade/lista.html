@@ -6,18 +6,18 @@
 	    	<div class="container row">
 	    		<h3 class="white-black">Atividades por colaborador</h3>
 		        <div th:replace="fragments/alert"></div>
-	        	<form  action="#" method="POST">
+	        	<form th:action="@{/atividade/relatorio}" th:object="${colaborador}" method="POST">
 	        		<div class="row">
 	        			<div class="input-field col s6">
-			          		<input id="data_inicio" type="text" class="datepicker" required="true">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true" th:field="*{dataInicioRSA}">
 			          		<label for="data_inicio">Dia para consulta</label>
 			        	</div>
 	        			<div class="file-field input-field col s6">
-				      		<select required="true">
+				      		<select required="true" th:field="*{organizacao}">
 						    	<option value="" disabled selected>Organização</option>
-						      	<option value="Ericsson">Ericsson</option>
-						      	<option value="Fitec">Fitec</option>
-						      	<option value="Inatel">Inatel</option>
+						      	<option value="ERICSSON">Ericsson</option>
+						      	<option value="FITEC">Fitec</option>
+						      	<option value="INATEL">Inatel</option>
 						    </select>
 					    </div>
 	        		</div>
@@ -31,33 +31,38 @@
 		        <table class="highlight">
 	        		<thead>
 			          	<tr>
-			            	<th>#</th>
-			              	<th>Nome</th>
-			              	<th>Abonado</th>
+			              	<th>Inspetor</th>
+			              	<th>Ap+Re*</th>
 			              	<th>Aprovado</th>
 			              	<th>Rejeitado</th>
+			              	<th>Abonado</th>
+			              	<th>Total</th>
 			          	</tr>
 	        		</thead>
 	
 	        		<tbody>
-		          		<!-- <tr th:each="c : ${colaboradores}">
-		              		<td th:text="${c[0]}">1</td>
-		              		<td th:text="${c[1]}">Colaborador</td>
-		              		<td th:text="${c[2]}">Email</td>
-		              		<td colspan="2">
-	                            <a class="waves-effect waves-light btn-small blue tooltipped" th:href="@{/colaborador/editar/{id} (id=${c[0]})}" data-position="right" data-tooltip="Editar">
-                                	<i class="material-icons">edit</i>
-                            	</a>
-	                        </td>
-		        		</tr> -->
+		          		<tr th:each="a : ${atividades}">
+		              		<td th:text="${a[0]}">Inspetor</td>
+		              		<td th:text="${a[4]}"></td>
+		              		<td th:text="${a[2]}">Aprovado</td>
+		              		<td th:text="${a[1]}">Rejeitado</td>
+		              		<td th:text="${a[3]}">Abonado</td>
+		              		<td th:text="${a[5]}"></td>
+		        		</tr>
 	        		</tbody>
 	      		</table>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<blockquote>
+	        		<strong>*Ap+Re:</strong> somatória dos itens aprovados com os reprovados	    	
+			    </blockquote>
 	        </div>
 	        <script>
 				$(document).ready(function(){
 			    	$('select').formSelect();			    	
 			    	$('.datepicker').datepicker({
-			    		format: 'dd-mm-yyyy'
+			    		format: 'dd/mm/yyyy'
 			    	});
 				});
 			</script>

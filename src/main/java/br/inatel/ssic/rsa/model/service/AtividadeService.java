@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.inatel.ssic.rsa.model.base.AtividadeInterface;
 import br.inatel.ssic.rsa.model.dao.AtividadeDAO;
-import br.inatel.ssic.rsa.model.entity.Atividade;
 import br.inatel.ssic.rsa.model.entity.Item;
 
 @Service
@@ -38,6 +37,7 @@ public class AtividadeService implements AtividadeInterface{
 		    	
 		    	// Construção Item
 		    	Integer aux = (int) Double.parseDouble(row.getCell(0).toString());
+		    	String inspetor = row.getCell(15).toString();
 		    
 		    	item.setOs(aux);
 		    	item.setSite(row.getCell(5).toString());
@@ -49,7 +49,25 @@ public class AtividadeService implements AtividadeInterface{
 		    	item.setOfensor(row.getCell(9).toString());
 		    	item.setAsp(row.getCell(12).toString());
 		    	item.setCentroRsa(row.getCell(14).toString());
-		    	item.setInspetor(row.getCell(15).toString());
+		    	
+		    	if (inspetor.intern().equals(" ") || inspetor.intern().equals("")) {
+					inspetor = "JOSÉ";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("ANA")) {
+					inspetor = "ANA C.";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("Ana")) {
+					inspetor = "ANA L.";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("GABRIEL")) {
+					inspetor = "GABRIEL M.";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("Gabriel")) {
+					inspetor = "GABRIEL J.";
+					item.setInspetor(inspetor);
+				} else {
+					item.setInspetor(row.getCell(15).toString().toUpperCase());
+				}
 		    	
 		    	// Split para separação de data e hora
 		    	// Envio
@@ -80,5 +98,13 @@ public class AtividadeService implements AtividadeInterface{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Item> getAtividades(String data, String organizacao) {
+		List<Item> atividades = dao.getAtividades(data, organizacao);
+		
+		return atividades;
 	}
 }

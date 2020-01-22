@@ -47,7 +47,10 @@ public class NavigationController {
 	}
 	
 	@GetMapping("/atividade/diario")
-	public String getAtividadeDiaria() {
+	public String getAtividadeDiaria(ModelMap model) {
+		Colaborador colaborador = new Colaborador();
+		
+		model.addAttribute("colaborador", colaborador);
 		return "atividade/lista";
 	}
 }

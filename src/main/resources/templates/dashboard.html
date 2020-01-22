@@ -25,22 +25,26 @@
 	
 	<body id="page-top">
 		<!-- Page Wrapper -->
-		<div id="wrapper">
+		<div class="geral" id="wrapper">
 			<!-- Content Wrapper -->
 			<div id="content-wrapper" class="d-flex flex-column">
 				<!-- Main Content -->
 				<div id="content">
-					<div th:replace="fragments/header :: cabecalho">
-						<div>navbar</div>
-					</div>
-					<!-- Begin Page Content -->
+					<header>
+						<div th:replace="fragments/header :: cabecalho">
+							<div>navbar</div>
+						</div>
+					</header>
+					<main>
+						<!-- Begin Page Content -->
 					<section layout:fragment="conteudo">
 						<div class="container-fluid">conteudo principal das páginas</div>
 					</section>
+					</main>
+					<footer th:replace="fragments/footer :: rodape">
+						<div>footer</div>
+					</footer>
 				</div>
-				<footer th:replace="fragments/footer :: rodape">
-					<div>footer</div>
-				</footer>
 			</div>
 		</div>
 	
