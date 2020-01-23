@@ -14,7 +14,13 @@
 			<ul id="dropdownAtividades" class="dropdown-content">
 				<li><a th:href="@{/atividade/cadastro}">Cadastrar atividades</a></li>
 			  	<li class="divider"></li>
-			  	<li><a th:href="@{/atividade/diario}">Atividades por dia</a></li>
+			  	<li><a th:href="@{/atividade/diario}">Atividades diárias</a></li>
+			</ul>
+				
+			<ul id="dropdownRelatorios" class="dropdown-content">
+				<li><a th:href="@{/relatorio/individual}">Relatório individual</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/relatorio/time}">Relatório time</a></li>
 			</ul>
 			
 			<nav id="nav" >
@@ -25,7 +31,7 @@
 			      	<ul id="nav-mobile" class="right hide-on-med-and-down">
 			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownColaboradores">Colaboradores<i class="material-icons right">arrow_drop_down</i></a></li>
 			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownAtividades">Atividades<i class="material-icons right">arrow_drop_down</i></a></li>
-			        	<li><a href="#!">Relatórios</a></li>
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownRelatorios">Relatórios<i class="material-icons right">arrow_drop_down</i></a></li>
 			        	<li><a class="modal-trigger" href="#modal1">Sair</a></li>
 			      	</ul>
 			    </div>

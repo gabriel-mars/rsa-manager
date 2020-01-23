@@ -1,5 +1,7 @@
 package br.inatel.ssic.rsa.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -7,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
+import br.inatel.ssic.rsa.model.service.AtividadeService;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
 
 @Controller
@@ -15,6 +19,9 @@ public class NavigationController {
 	
 	@Autowired
 	private ColaboradorService service;
+	
+	@Autowired
+	private AtividadeService atvService;
 	
 	@GetMapping("/")
 	public String getHome(ModelMap model) {
@@ -24,6 +31,7 @@ public class NavigationController {
 		return "index";
 	}
 	
+	// Métodos Colaborador
 	@GetMapping("/colaborador/cadastro")
 	public String getCadastroColaborador(ModelMap model) {
 		Colaborador colaborador = new Colaborador();
@@ -41,6 +49,7 @@ public class NavigationController {
 		return "colaborador/cadastro";
 	}
 	
+	// Métodos Atividade
 	@GetMapping("/atividade/cadastro")
 	public String getCadastroAtividade() {
 		return "atividade/cadastro";
@@ -52,5 +61,28 @@ public class NavigationController {
 		
 		model.addAttribute("colaborador", colaborador);
 		return "atividade/lista";
+	}
+	
+	// Métodos Relatório
+	@GetMapping("/relatorio/individual")
+	public String getRelatorioIndividual(ModelMap model) {
+		Item item = new Item();
+		
+		List<Item> colabsInatel = service.findByAtividade("INATEL");
+		List<Item> colabsFitec = service.findByAtividade("FITEC");
+		List<Item> colabsEricsson = service.findByAtividade("ERICSSON");
+		
+		model.addAttribute("item", item);
+		model.addAttribute("colasInatel", colabsInatel);
+		model.addAttribute("colabsFitec", colabsFitec);
+		model.addAttribute("colabsEricsson", colabsEricsson);
+
+		return "relatorio/individual";
+	}
+	
+	@GetMapping("/relatorio/time")
+	public String getRelatorioTime(ModelMap model) {
+		
+		return "relatorio/time";
 	}
 }

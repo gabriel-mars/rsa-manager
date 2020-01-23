@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	    	<div class="container row">
+	    		<h3 class="white-black">Relatório por colaborador</h3>
+		        <div th:replace="fragments/alert"></div>
+	        	<form action="#!" method="POST">
+	        		<div class="row">
+	        			<div class="file-field input-field col s4">
+				      		<select required="true" onchange="buscarColaboradores(this.value)">
+						    	<option value="" disabled selected>Organização</option>
+						      	<option value="ERICSSON">Ericsson</option>
+						      	<option value="FITEC">Fitec</option>
+						      	<option value="INATEL">Inatel</option>
+						    </select>
+					    </div>
+					    <div class="file-field input-field col s4">
+				      		<select required="true" id="colaborador" name="colaborador">
+						    	<option value="" disabled selected>Colaborador</option>
+						    </select>
+					    </div>
+					    <div class="input-field col s4">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true">
+			          		<label for="data_inicio">Mês</label>
+			        	</div>
+	        		</div>
+	        		<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+			  	</form>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+		        <!-- <table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Inspetor</th>
+			              	<th>Ap+Re*</th>
+			              	<th>Aprovado</th>
+			              	<th>Rejeitado</th>
+			              	<th>Abonado</th>
+			              	<th>Total</th>
+			          	</tr>
+	        		</thead>
+	
+	        		<tbody>
+		          		<tr th:each="a : ${atividades}">
+		              		<td th:text="${a[0]}">Inspetor</td>
+		              		<td th:text="${a[4]}"></td>
+		              		<td th:text="${a[2]}">Aprovado</td>
+		              		<td th:text="${a[1]}">Rejeitado</td>
+		              		<td th:text="${a[3]}">Abonado</td>
+		              		<td th:text="${a[5]}"></td>
+		        		</tr>
+	        		</tbody>
+	      		</table>  -->
+	        </div>
+	        <script>
+				$(document).ready(function(){
+			    	$('select').formSelect();
+			    	$('.datepicker').datepicker({
+			    		format: 'mm/yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>

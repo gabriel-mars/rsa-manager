@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.inatel.ssic.rsa.model.base.ColaboradorInterface;
 import br.inatel.ssic.rsa.model.dao.ColaboradorDAO;
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 
 @Service
@@ -89,4 +90,9 @@ public class ColaboradorService implements ColaboradorInterface{
         }
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<Item> findByAtividade(String org) {
+		return dao.findByAtividade(org);
+	}
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import br.inatel.ssic.rsa.model.base.BaseDAO;
 import br.inatel.ssic.rsa.model.base.ColaboradorInterface;
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 
 @Repository
@@ -73,5 +74,14 @@ public class ColaboradorDAO extends BaseDAO<Colaborador, Long> implements Colabo
 		
 		queryPessoa.executeUpdate();
 		queryColab.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Item> findByAtividade(String org) {
+		Query query = manager.createNativeQuery("SELECT DISTINCT I.inspetor FROM item I "
+				+ "WHERE I.centro_rsa = ? GROUP BY I.inspetor")
+				.setParameter(1, org);
+		return query.getResultList();
 	}
 }
