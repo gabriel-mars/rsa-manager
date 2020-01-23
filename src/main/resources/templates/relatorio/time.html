@@ -16,6 +16,10 @@
 						      	<option value="INATEL">Inatel</option>
 						    </select>
 					    </div>
+					    <div class="input-field col s6">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true">
+			          		<label for="data_inicio">Mês</label>
+			        	</div>
 	        		</div>
 	        		<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
 					    <i class="material-icons right">send</i>
@@ -50,7 +54,10 @@
 	        </div>
 	        <script>
 				$(document).ready(function(){
-			    	$('select').formSelect();			    	
+			    	$('select').formSelect();
+			    	$('.datepicker').datepicker({
+			    		format: 'mm/yyyy'
+			    	});
 				});
 			</script>
 	    </section>

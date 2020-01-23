@@ -1,7 +1,5 @@
 package br.inatel.ssic.rsa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import br.inatel.ssic.rsa.model.entity.Colaborador;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
-import br.inatel.ssic.rsa.model.service.AtividadeService;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
 
 @Controller
@@ -19,10 +16,7 @@ public class NavigationController {
 	
 	@Autowired
 	private ColaboradorService service;
-	
-	@Autowired
-	private AtividadeService atvService;
-	
+
 	@GetMapping("/")
 	public String getHome(ModelMap model) {
 		Pessoa pessoa = new Pessoa();
@@ -68,14 +62,7 @@ public class NavigationController {
 	public String getRelatorioIndividual(ModelMap model) {
 		Item item = new Item();
 		
-		List<Item> colabsInatel = service.findByAtividade("INATEL");
-		List<Item> colabsFitec = service.findByAtividade("FITEC");
-		List<Item> colabsEricsson = service.findByAtividade("ERICSSON");
-		
 		model.addAttribute("item", item);
-		model.addAttribute("colasInatel", colabsInatel);
-		model.addAttribute("colabsFitec", colabsFitec);
-		model.addAttribute("colabsEricsson", colabsEricsson);
 
 		return "relatorio/individual";
 	}

@@ -1,3 +1,4 @@
+// Validação do dos colaboradores de cada organização
 var colaboradoresInatel = [];
 var colaboradoresFitec = [];
 var colaboradoresEricsson = [];
@@ -61,4 +62,54 @@ function buscarColaboradores(e){
         	$('select').formSelect();
         }
     }
+}
+
+// Validação do formulário para o relatório
+function getDados() {
+	var ary = [];
+	let selectOrg = document.getElementById('organizacao');
+	let selectColab = document.getElementById('colaborador');
+	let date = document.getElementById('data_inicio').value;
+  
+	let strOrg = selectOrg.options[selectOrg.selectedIndex].value;
+	let strColab = selectColab.options[selectColab.selectedIndex].value;
+	
+	ary.push({ Org: strOrg, Colab: strColab, Data: date });
+  
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/colaborador",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			console.log(dataReturn);
+			drawCharts(dataReturn);
+		}
+	});
+}
+
+function drawCharts(infos){
+	var valoresChart = [];
+	
+	for(var i = 0; i < infos.length; i++){
+		valoresChart.push({x: label.val(), y: parseInt(x.val())});
+	}
+	
+	console.log(valoresChart[1]);
+	
+	var chart = new CanvasJS.Chart("chartContainer", {
+		title:{
+			text: "Atividades por mês"              
+		},
+		data: [              
+		{
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "column",
+			dataPoints: valoresChart
+		}
+		]
+	});
+	
+	chart.render();
 }
