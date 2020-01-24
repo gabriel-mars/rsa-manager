@@ -45,4 +45,32 @@ public class RelatorioDAO implements RelatorioInterface{
 				.setParameter(4, item.getDataEnvio());
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findStatusItemColab(Item item) {
+		Query query = manager.createNativeQuery("SELECT COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado') AS itens_rejeitados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados "
+				+ "FROM item I "
+				+ "WHERE I.inspetor = ? AND I.data_analise BETWEEN ? AND ?")
+				.setParameter(1, item.getInspetor())
+				.setParameter(2, item.getDataAnalise())
+				.setParameter(3, item.getDataEnvio());
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findStatusItemTime(Item item) {
+		Query query = manager.createNativeQuery("SELECT COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado') AS itens_rejeitados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados "
+				+ "FROM item I "
+				+ "WHERE I.centro_rsa = ? AND I.data_analise BETWEEN ? AND ?")
+				.setParameter(1, item.getCentroRsa())
+				.setParameter(2, item.getDataAnalise())
+				.setParameter(3, item.getDataEnvio());
+		return query.getResultList();
+	}
 }

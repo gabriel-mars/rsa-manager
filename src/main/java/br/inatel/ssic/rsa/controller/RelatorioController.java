@@ -88,4 +88,66 @@ public class RelatorioController {
 		
 		return auxJson.toString();
 	}
+	
+	@PostMapping("/relatorio/itens/colaborador")
+	@ResponseBody
+	public String getItensIndividual(@RequestBody String ary, Item item, ModelMap model) throws JSONException {
+		Object[] aux = null;
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		JSONObject auxJson = new JSONObject();
+		String org, colab, date = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		colab = obj.getString("Colab");
+		date = obj.getString("Data");
+		
+		item.setCentroRsa(org);
+		item.setInspetor(colab);
+		item.setDataAnalise(date);
+		
+		List<Object[]> dados = service.findStatusItemColab(item);
+		
+		for(int i = 0; i < dados.size(); i++) {
+			aux = dados.get(i);
+			
+			auxJson.put(aux[0].toString() + ':' + aux[1].toString(), aux[2]);
+		}
+
+		model.addAttribute("item", item);
+		
+		return auxJson.toString();
+	}
+	
+	@PostMapping("/relatorio/itens/time")
+	@ResponseBody
+	public String getItensTime(@RequestBody String ary, Item item, ModelMap model) throws JSONException {
+		Object[] aux = null;
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		JSONObject auxJson = new JSONObject();
+		String org, colab, date = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		colab = obj.getString("Colab");
+		date = obj.getString("Data");
+		
+		item.setCentroRsa(org);
+		item.setInspetor(colab);
+		item.setDataAnalise(date);
+		
+		List<Object[]> dados = service.findStatusItemTime(item);
+		
+		for(int i = 0; i < dados.size(); i++) {
+			aux = dados.get(i);
+
+			auxJson.put(aux[0].toString() + ':' + aux[1].toString(), aux[2]);
+		}
+
+		model.addAttribute("item", item);
+		
+		return auxJson.toString();
+	}
 }

@@ -8,4 +8,8 @@ public interface RelatorioInterface {
 	List<Object[]> findByColaborador(Item item);
 	
 	List<Object[]> findAvg(Item item);
+	
+	List<Object[]> findStatusItemColab(Item item);
+	
+	List<Object[]> findStatusItemTime(Item item);
 }

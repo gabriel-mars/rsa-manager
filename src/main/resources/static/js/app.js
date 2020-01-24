@@ -99,6 +99,8 @@ function getDados() {
 			// Set a callback to run when the Google Visualization API is loaded.
 			google.charts.setOnLoadCallback(drawColumn);
 			google.charts.setOnLoadCallback(getMedias);
+			google.charts.setOnLoadCallback(getItensColab);
+			google.charts.setOnLoadCallback(getItensTime);
 		}
 	});
 }
@@ -110,8 +112,6 @@ function drawColumn(){
     }); 
     
 	dados = result;
-	
-	console.log(result);
 	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
@@ -142,7 +142,7 @@ function drawColumn(){
 	chart.draw(data, options); 
 }
 
-// Gráfico de itens de acordo com a média
+// Chamada dos dados para o gráfico de acordo com a média
 function getMedias(){	
 	$.ajax({
 		type: "POST",
@@ -160,14 +160,12 @@ function getMedias(){
 	});
 }
 
+//Gráfico de itens de acordo com a média
 function drawLines(values){
 	var data = new google.visualization.DataTable();
     data.addColumn('string', 'Dias');
     data.addColumn('number', 'Média do dia');
     data.addColumn('number', 'Avaliado pelo colaborador');
-    
-    console.log(dados);
-    console.log(values);
 
     for(var i = 0; i < dados.length; i++){
 		var a = dados[i];
@@ -183,5 +181,108 @@ function drawLines(values){
     };
 
     var chart = new google.visualization.LineChart(document.getElementById("chartMediaDia"));
+    chart.draw(data, options);
+}
+
+// Chamada dos dados para o gráfico pizza Itens
+function getItensColab(){	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/itens/colaborador",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			var result = Object.keys(dataReturn).map(function (key) {       
+		        return [String(key), dataReturn[key]]; 
+		    });
+			
+			drawPieColab(result);
+		}
+	});
+}
+
+// Gráfico pizza Itens
+function drawPieColab(values){
+	// Create the data table for Anthony's pizza.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+    var abonados, rejeitados, aprovados;
+    var aux = [];
+	var array = [];
+	
+	for(var i = 0; i < values.length; i++){
+		var aux = values[i];
+		var array = aux[0].split(':');
+	}
+	
+	rejeitado = array[0];
+	abonados = array[1];
+	aprovados = aux[1];
+    
+	data.addRows([
+      ['Aprovados', parseInt(aprovados)],
+      ['Reprovados', parseInt(rejeitado)],
+      ['Abonados', parseInt(abonados)]
+    ]);
+
+    // Set options for Anthony's pie chart.
+    var options = {title:'Itens trabalhados no mês - Colaborador'};
+
+    // Instantiate and draw the chart for Anthony's pizza.
+    var chart = new google.visualization.PieChart(document.getElementById('colab_chart_div'));
+    chart.draw(data, options);
+}
+
+//Chamada dos dados para o gráfico pizza Itens
+function getItensTime(){	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/itens/time",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			var result = Object.keys(dataReturn).map(function (key) {       
+		        return [String(key), dataReturn[key]]; 
+		    });
+			
+			drawPieTime(result);
+		}
+	});
+}
+
+function drawPieTime(values){
+	// Create the data table for Sarah's pizza.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+    var abonados, rejeitados, aprovados;
+    var aux = [];
+	var array = [];
+	
+	for(var i = 0; i < values.length; i++){
+		var aux = values[i];
+		var array = aux[0].split(':');
+	}
+	
+	rejeitado = array[0];
+	abonados = aux[1];
+	aprovados = array[1];
+	
+    data.addRows([
+      ['Aprovados', parseInt(aprovados)],
+      ['Reprovados', parseInt(rejeitado)],
+      ['Abonados', parseInt(abonados)]
+    ]);
+
+    // Set options for Sarah's pie chart.
+    var options = {title:'Itens trabalhados no mês - TIME'};
+
+    // Instantiate and draw the chart for Sarah's pizza.
+    var chart = new google.visualization.PieChart(document.getElementById('time_chart_div'));
     chart.draw(data, options);
 }

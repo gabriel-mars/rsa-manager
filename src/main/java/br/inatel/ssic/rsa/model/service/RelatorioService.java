@@ -68,4 +68,34 @@ public class RelatorioService implements RelatorioInterface{
 		
 		return listMedia;
 	}
+
+	@Override
+	public List<Object[]> findStatusItemColab(Item item) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+		
+		return dao.findStatusItemColab(item);
+	}
+
+	@Override
+	public List<Object[]> findStatusItemTime(Item item) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+		
+		return dao.findStatusItemTime(item);
+	}
 }
