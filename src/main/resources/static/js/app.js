@@ -1,6 +1,12 @@
+// Dados colaborador
+var ary = [];
+
 //Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['corechart'], 'language': 'pt'});
+
+// Arrays com os dados para os gráficos
 var dados = [];
+var dadosMedia = [];
 
 // Validação do dos colaboradores de cada organização
 var colaboradoresInatel = [];
@@ -70,13 +76,15 @@ function buscarColaboradores(e){
 
 // Validação do formulário para o relatório
 function getDados() {
-	var ary = [];
+
 	let selectOrg = document.getElementById('organizacao');
 	let selectColab = document.getElementById('colaborador');
 	let date = document.getElementById('data_inicio').value;
   
 	let strOrg = selectOrg.options[selectOrg.selectedIndex].value;
 	let strColab = selectColab.options[selectColab.selectedIndex].value;
+	
+	ary = [];
 	
 	ary.push({ Org: strOrg, Colab: strColab, Data: date });
   
@@ -89,27 +97,34 @@ function getDados() {
 		success: function(dataReturn){
 			dados = dataReturn;
 			// Set a callback to run when the Google Visualization API is loaded.
-			google.charts.setOnLoadCallback(drawCharts);
+			google.charts.setOnLoadCallback(drawColumn);
+			google.charts.setOnLoadCallback(getMedias);
 		}
 	});
 }
 
-function drawCharts(){
+// Gráfico de atividades executadas por dia
+function drawColumn(){
 	var result = Object.keys(dados).map(function (key) {       
         return [String(key), dados[key]]; 
     }); 
-      
+    
+	dados = result;
+	
+	console.log(result);
+	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
 	data.addColumn('number', 'Itens avalidados');
   
 	for(var i = 0; i < result.length; i++){
 		var a = result[i];
+		
   	  	data.addRow([a[0], a[1]]); 
 	}
 
 	var options = {
-		  title:'Atividades por dia',
+		  title:'Itens avaliados por dia',
 		  hAxis: {
 	          title: 'Data',
 	          viewWindow: {
@@ -124,5 +139,49 @@ function drawCharts(){
 
 	// Instantiate and draw our chart, passing in some options.
 	var chart = new google.visualization.ColumnChart(document.getElementById('chartAtividadeDia'));
-	chart.draw(data, options);
+	chart.draw(data, options); 
+}
+
+// Gráfico de itens de acordo com a média
+function getMedias(){	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/media/dia",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			var result = Object.keys(dataReturn).map(function (key) {       
+		        return [String(key), dataReturn[key]]; 
+		    });
+			
+			drawLines(result);
+		}
+	});
+}
+
+function drawLines(values){
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Dias');
+    data.addColumn('number', 'Média do dia');
+    data.addColumn('number', 'Avaliado pelo colaborador');
+    
+    console.log(dados);
+    console.log(values);
+
+    for(var i = 0; i < dados.length; i++){
+		var a = dados[i];
+		var b = values[i];
+		
+  	  	data.addRow([a[0], b[1], a[1]]); 
+	}
+
+    var options = {
+    		title:'Comparativo de produção com o time',
+    		hAxis: {title: 'Data'},
+    		vAxis: {title: 'Itens'}
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById("chartMediaDia"));
+    chart.draw(data, options);
 }

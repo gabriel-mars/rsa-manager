@@ -30,4 +30,19 @@ public class RelatorioDAO implements RelatorioInterface{
 				.setParameter(4, item.getDataEnvio());
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findAvg(Item item) {
+		Query query = manager.createNativeQuery("SELECT I.data_analise, "
+				+ "COUNT (DISTINCT I.inspetor) FILTER (WHERE I.centro_rsa = ?) AS num_sup_rsa, "
+				+ "COUNT (I.status) FILTER (WHERE I.centro_rsa = ? AND I.status = 'Rejeitado' OR I.status = 'Aprovado') AS num_itens "
+				+ "FROM item I WHERE I.data_analise BETWEEN ? AND ? "
+				+ "GROUP BY I.data_analise")
+				.setParameter(1, item.getCentroRsa())
+				.setParameter(2, item.getCentroRsa())
+				.setParameter(3, item.getDataAnalise())
+				.setParameter(4, item.getDataEnvio());
+		return query.getResultList();
+	}
 }

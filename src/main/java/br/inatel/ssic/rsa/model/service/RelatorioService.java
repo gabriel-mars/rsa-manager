@@ -1,12 +1,9 @@
 package br.inatel.ssic.rsa.model.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +35,37 @@ public class RelatorioService implements RelatorioInterface{
 		item.setDataEnvio(dateFinish.format(format));
 		
 		return dao.findByColaborador(item);
+	}
+
+	@Override
+	public List<Object[]> findAvg(Item item) {
+		List<Object[]> listMedia = new ArrayList<Object[]>();
+		Object[] aux = null;
+		Integer totalItens, numSup, media;
+		
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+		
+		List<Object[]> listAux = dao.findAvg(item);
+		
+		for (int i = 0; i < listAux.size(); i++) {
+			aux = listAux.get(i);
+			
+			totalItens = Integer.parseInt(aux[2].toString());
+			numSup = Integer.parseInt(aux[1].toString());
+			media = (int) (totalItens / numSup);
+			
+			aux[1] = media;
+			listMedia.add(aux);
+		}
+		
+		return listMedia;
 	}
 }
