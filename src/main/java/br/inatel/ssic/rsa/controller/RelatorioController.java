@@ -1,6 +1,5 @@
 package br.inatel.ssic.rsa.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -12,9 +11,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.service.RelatorioService;
@@ -31,6 +27,7 @@ public class RelatorioController {
 		Object[] aux = null;
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
+		JSONObject auxJson = new JSONObject();
 		String org, colab, date = null;
 		
 		obj = jsonArray.optJSONObject(0);
@@ -43,22 +40,15 @@ public class RelatorioController {
 		item.setDataAnalise(date);
 		
 		List<Object[]> dados = service.findByColaborador(item);
-	
-		JsonArray jsonDays = new JsonArray();
-		JsonArray jsonItensEsforco = new JsonArray();
-		JsonObject json = new JsonObject();
 		
 		for(int i = 0; i < dados.size(); i++) {
 			aux = dados.get(i);
-			jsonDays.add(aux[0].toString());
-			jsonItensEsforco.add(aux[1].toString());
+			
+			auxJson.put(aux[0].toString(), aux[1]);
 		}
-		
-		json.add("label", jsonDays);
-		json.add("x", jsonItensEsforco);
-		
+
 		model.addAttribute("item", item);
 		
-		return json.toString();
+		return auxJson.toString();
 	}
 }

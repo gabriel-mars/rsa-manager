@@ -1,3 +1,7 @@
+//Load the Visualization API and the corechart package.
+google.charts.load('current', {'packages':['corechart'], 'language': 'pt'});
+var dados = [];
+
 // Validação do dos colaboradores de cada organização
 var colaboradoresInatel = [];
 var colaboradoresFitec = [];
@@ -83,33 +87,42 @@ function getDados() {
 		url: "/relatorio/colaborador",
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
-			console.log(dataReturn);
-			drawCharts(dataReturn);
+			dados = dataReturn;
+			// Set a callback to run when the Google Visualization API is loaded.
+			google.charts.setOnLoadCallback(drawCharts);
 		}
 	});
 }
 
-function drawCharts(infos){
-	var valoresChart = [];
-	
-	for(var i = 0; i < infos.length; i++){
-		valoresChart.push({x: label.val(), y: parseInt(x.val())});
+function drawCharts(){
+	var result = Object.keys(dados).map(function (key) {       
+        return [String(key), dados[key]]; 
+    }); 
+      
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Topping');
+	data.addColumn('number', 'Itens avalidados');
+  
+	for(var i = 0; i < result.length; i++){
+		var a = result[i];
+  	  	data.addRow([a[0], a[1]]); 
 	}
-	
-	console.log(valoresChart[1]);
-	
-	var chart = new CanvasJS.Chart("chartContainer", {
-		title:{
-			text: "Atividades por mês"              
-		},
-		data: [              
-		{
-			// Change type to "doughnut", "line", "splineArea", etc.
-			type: "column",
-			dataPoints: valoresChart
-		}
-		]
-	});
-	
-	chart.render();
+
+	var options = {
+		  title:'Atividades por dia',
+		  hAxis: {
+	          title: 'Data',
+	          viewWindow: {
+	            min: [7, 30, 0],
+	            max: [17, 30, 0]
+	          }
+	        },
+	        vAxis: {
+	            title: 'Itens'
+	          }
+	 };
+
+	// Instantiate and draw our chart, passing in some options.
+	var chart = new google.visualization.ColumnChart(document.getElementById('chartAtividadeDia'));
+	chart.draw(data, options);
 }
