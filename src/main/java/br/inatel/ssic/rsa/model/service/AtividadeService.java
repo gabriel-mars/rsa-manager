@@ -107,4 +107,11 @@ public class AtividadeService implements AtividadeInterface{
 		
 		return atividades;
 	}
+
+	@Override
+	public List<Item> getAtividadesMensal(String dataInicial, String dataFinal, String organizacao) {
+		List<Item> atividades = dao.getAtividadesMensal(dataInicial, dataFinal, organizacao);
+		
+		return atividades;
+	}
 }

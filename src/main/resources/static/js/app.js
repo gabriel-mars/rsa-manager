@@ -254,8 +254,8 @@ function drawPieColab(values){
 	}
 	
 	rejeitado = array[0];
-	abonados = array[1];
-	aprovados = aux[1];
+	abonados = aux[1];
+	aprovados = array[1];
     
 	data.addRows([
       ['Aprovados', parseInt(aprovados)],

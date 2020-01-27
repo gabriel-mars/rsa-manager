@@ -57,6 +57,14 @@ public class NavigationController {
 		return "atividade/lista";
 	}
 	
+	@GetMapping("/atividade/mensal")
+	public String getAtividadeMensal(ModelMap model) {
+		Colaborador colaborador  = new Colaborador();
+		
+		model.addAttribute("colaborador", colaborador);
+		return "atividade/mensal";
+	}
+	
 	// Métodos Relatório
 	@GetMapping("/relatorio/individual")
 	public String getRelatorioIndividual(ModelMap model) {

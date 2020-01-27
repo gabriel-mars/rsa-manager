@@ -1,5 +1,8 @@
 package br.inatel.ssic.rsa.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -46,5 +49,25 @@ public class AtividadeController {
 		model.addAttribute("colaborador", colaborador);
 		
 		return "atividade/lista";
+	}
+	
+	@PostMapping("/atividade/mensal")
+	public String relatorioPorMes(Colaborador colaborador, ModelMap model) {
+		String organizacao = colaborador.getOrganizacao();
+		String data = colaborador.getDataInicioRSA();
+		
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(data, format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(data, format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		List<Item> atividades = service.getAtividadesMensal(dateInit.format(format), dateFinish.format(format), organizacao);
+		
+		model.addAttribute("atividades", atividades);
+		model.addAttribute("colaborador", colaborador);
+
+		return "atividade/mensal";
 	}
 }
