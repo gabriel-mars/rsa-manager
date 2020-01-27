@@ -113,6 +113,18 @@ function drawColumn(){
     
 	dados = result;
 	
+	dados.sort(function(a, b){
+		if(a[0] > b[0]){
+			return 1;
+		}
+		
+		if(a[0] < b[0]){
+			return -1;
+		}
+		
+		return 0;
+	});
+	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
 	data.addColumn('number', 'Itens avalidados');
@@ -162,16 +174,39 @@ function getMedias(){
 
 //Gráfico de itens de acordo com a média
 function drawLines(values){
+	var auxDp = [];
+	var soma = 0;
+	var media = 0;
+	var raiz = 0;
+	
 	var data = new google.visualization.DataTable();
     data.addColumn('string', 'Dias');
-    data.addColumn('number', 'Média do dia');
-    data.addColumn('number', 'Avaliado pelo colaborador');
-
+    data.addColumn('number', 'Média');
+    data.addColumn('number', 'Colaborador');
+    data.addColumn('number', 'DP inferior');
+    data.addColumn('number', 'DP superior');
+    
+    // Calculo do desvio padrão
     for(var i = 0; i < dados.length; i++){
 		var a = dados[i];
 		var b = values[i];
 		
-  	  	data.addRow([a[0], b[1], a[1]]); 
+		var sub = Math.pow(a[1] - b[1], 2);
+		auxDp.push(sub);
+	}
+    
+    for(var i = 0; i < auxDp.length; i++){
+    	soma += auxDp[i];
+    }
+    
+    media = (soma / (auxDp.length - 1));
+    raiz = Math.sqrt(media);
+    
+    for(var i = 0; i < dados.length; i++){
+		var a = dados[i];
+		var b = values[i];
+		
+  	  	data.addRow([a[0], b[1], a[1], 100, raiz*2]); 
 	}
 
     var options = {
