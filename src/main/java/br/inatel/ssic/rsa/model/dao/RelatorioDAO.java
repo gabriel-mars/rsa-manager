@@ -73,4 +73,19 @@ public class RelatorioDAO implements RelatorioInterface{
 				.setParameter(3, item.getDataEnvio());
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findByMes(Item item) {
+		Query query = manager.createNativeQuery("SELECT I.data_analise, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado') AS itens_rejeitados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados "
+				+ "FROM item I "
+				+ "WHERE I.centro_rsa = ? AND I.data_analise BETWEEN ? AND ? "
+				+ "GROUP BY I.data_analise ORDER BY I.data_analise")
+				.setParameter(1, item.getCentroRsa())
+				.setParameter(2, item.getDataAnalise())
+				.setParameter(3, item.getDataEnvio());
+		return query.getResultList();
+	}
 }

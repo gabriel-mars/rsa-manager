@@ -150,4 +150,33 @@ public class RelatorioController {
 		
 		return auxJson.toString();
 	}
+	
+	@PostMapping("/relatorio/time")
+	@ResponseBody
+	public String getRelatorioTime(@RequestBody String ary, Item item, ModelMap model) throws JSONException {
+		Object[] aux = null;
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		JSONObject auxJson = new JSONObject();
+		String org, date = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		date = obj.getString("Data");
+		
+		item.setCentroRsa(org);
+		item.setDataAnalise(date);
+		
+		List<Object[]> dados = service.findByMes(item);
+		
+		for(int i = 0; i < dados.size(); i++) {
+			aux = dados.get(i);
+			
+			auxJson.put(aux[0].toString() + ':' + aux[1].toString(), aux[2]);
+		}
+
+		model.addAttribute("item", item);
+		
+		return auxJson.toString();
+	}
 }
