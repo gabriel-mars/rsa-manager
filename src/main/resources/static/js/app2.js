@@ -27,7 +27,7 @@ function getDadosTime(){
 			var result = Object.keys(dataReturn).map(function (key) {       
 		        return [String(key), dataReturn[key]]; 
 		    });
-			console.log(result);
+			
 			dados = dataReturn;
 			// Set a callback to run when the Google Visualization API is loaded.
 			google.charts.setOnLoadCallback(drawColumn2(result));
@@ -40,18 +40,15 @@ function getDadosTime(){
 
 // Gráfico de itens consolidados de aprovados e rejeitados
 function drawColumn2(values){
-	
 	var aux = [];
 	var arrayStr = [];
 	var valoresAux = [];
 	
-	var result = Object.keys(values).map(function (key) {       
-        return [String(key), values[key]]; 
+	var result = Object.keys(dados).map(function (key) {       
+        return [String(key), dados[key]]; 
     }); 
 	
-	dados = values;
-	
-	values.sort(function(a, b){
+	result.sort(function(a, b){
 		if(a[0] > b[0]){
 			return 1;
 		}
@@ -63,28 +60,27 @@ function drawColumn2(values){
 		return 0;
 	});
 	
-	for(var i = 0; i < dados.length; i++){
-		aux = dados[i];
+	for(var i = 0; i < result.length; i++){
+		var aux2 = [];
+		aux = result[i];
 		arrayStr = aux[0].split(':');
-		
-		aux[0] = arrayStr[0];
-		aux[1] = parseInt(arrayStr[1]);
-		aux[2] = parseInt(values[i][1]);
-		
-		//console.log(aux);
-		
-		valoresAux.push(aux);
-	}
 
+		aux2[0] = arrayStr[0];
+		aux2[1] = parseInt(arrayStr[1]);
+		aux2[2] = parseInt(aux[1]);
+		
+		valoresAux.push(aux2);
+	}
 	
-	var data = google.visualization.arrayToDataTable([
-        ['Year', 'Asia', 'Europe'],
-        ['2012',  900,      390],
-        ['2013',  1000,      400],
-        ['2014',  1170,      440],
-        ['2015',  1250,       480],
-        ['2016',  1530,      540]
-     ]);
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Data');
+    data.addColumn('number', 'Aprovados');
+    data.addColumn('number', 'Rejeitados');
+	
+	for (var i = 0; i < valoresAux.length; i++){
+		var a = valoresAux[i];
+		data.addRow([a[0], a[2], a[1]]); 
+	}
 	
 	var options = {
 			title: "Consolidado de Itens Aprovados e Rejeitados",
