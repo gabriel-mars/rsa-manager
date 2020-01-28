@@ -88,4 +88,30 @@ public class RelatorioDAO implements RelatorioInterface{
 				.setParameter(3, item.getDataEnvio());
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findItensTrabalhadosMes(Item item) {
+		Query query = manager.createNativeQuery("SELECT COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado') AS itens_rejeitados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados "
+				+ "FROM item I "
+				+ "WHERE I.centro_rsa = ? AND I.data_analise BETWEEN ? AND ?")
+				.setParameter(1, item.getCentroRsa())
+				.setParameter(2, item.getDataAnalise())
+				.setParameter(3, item.getDataEnvio());
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findItensTotaisMes(Item item) {
+		Query query = manager.createNativeQuery("SELECT COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado' OR I.status = 'Aprovado') AS sum_itens_ap_re "
+				+ "FROM item I "
+				+ "WHERE I.centro_rsa = ? AND I.data_analise BETWEEN ? AND ?")
+				.setParameter(1, item.getCentroRsa())
+				.setParameter(2, item.getDataAnalise())
+				.setParameter(3, item.getDataEnvio());
+		return query.getResultList();
+	}
 }

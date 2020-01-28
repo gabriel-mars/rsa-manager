@@ -38,6 +38,7 @@ public class RelatorioService implements RelatorioInterface{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Object[]> findAvg(Item item) {
 		List<Object[]> listMedia = new ArrayList<Object[]>();
 		Object[] aux = null;
@@ -70,6 +71,7 @@ public class RelatorioService implements RelatorioInterface{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Object[]> findStatusItemColab(Item item) {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
@@ -85,6 +87,7 @@ public class RelatorioService implements RelatorioInterface{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Object[]> findStatusItemTime(Item item) {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
@@ -100,6 +103,7 @@ public class RelatorioService implements RelatorioInterface{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Object[]> findByMes(Item item) {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
@@ -112,5 +116,37 @@ public class RelatorioService implements RelatorioInterface{
 		item.setDataEnvio(dateFinish.format(format));
 		
 		return dao.findByMes(item);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object[]> findItensTrabalhadosMes(Item item) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+		
+		return dao.findItensTrabalhadosMes(item);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object[]> findItensTotaisMes(Item item) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+		
+		return dao.findItensTotaisMes(item);
 	}
 }

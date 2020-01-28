@@ -7,6 +7,10 @@ import br.inatel.ssic.rsa.model.entity.Item;
 public interface RelatorioInterface {
 	List<Object[]> findByMes(Item item);
 	
+	List<Object[]> findItensTrabalhadosMes(Item item);
+	
+	List<Object[]> findItensTotaisMes(Item item);
+	
 	List<Object[]> findByColaborador(Item item);
 	
 	List<Object[]> findAvg(Item item);

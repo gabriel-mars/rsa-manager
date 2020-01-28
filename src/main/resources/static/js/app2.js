@@ -31,8 +31,8 @@ function getDadosTime(){
 			dados = dataReturn;
 			// Set a callback to run when the Google Visualization API is loaded.
 			google.charts.setOnLoadCallback(drawColumn2(result));
-//			google.charts.setOnLoadCallback(getMedias);
-//			google.charts.setOnLoadCallback(getItensColab);
+			google.charts.setOnLoadCallback(getDadosItensMensal);
+			google.charts.setOnLoadCallback(getDadosItensTotais);
 //			google.charts.setOnLoadCallback(getItensTime);
 		}
 	});
@@ -89,4 +89,86 @@ function drawColumn2(values){
     
 	var chart = new google.visualization.ColumnChart(document.getElementById("chartAtividadeMes"));
 	chart.draw(data, options);
+}
+
+// Gráfico de Pizza dos itens trabalhados
+function getDadosItensMensal(){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/itens/trabalhado",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			
+			drawPieTrabalhados(dataReturn);
+		}
+	});
+}
+
+function drawPieTrabalhados(values){
+	var aux = [];
+	
+	var result = Object.keys(values).map(function (key) {       
+        return [Number(key), values[key]]; 
+    });
+	
+	aux = result[0];
+	
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+	data.addRows([
+      ['Aprovados', parseInt(aux[1])],
+      ['Reprovados', parseInt(aux[0])]
+    ]);
+
+    // Set options for Anthony's pie chart.
+    var options = {title:'Itens trabalhados no mês - TIME'};
+
+    // Instantiate and draw the chart for Anthony's pizza.
+    var chart = new google.visualization.PieChart(document.getElementById('chartItensTrabalhados'));
+    chart.draw(data, options);
+}
+
+//Gráfico de Pizza dos itens totais do mês
+function getDadosItensTotais(){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/itens/total",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			
+			drawPieTotais(dataReturn);
+		}
+	});
+}
+
+function drawPieTotais(values){
+	var aux = [];
+	
+	var result = Object.keys(values).map(function (key) {       
+        return [Number(key), values[key]]; 
+    });
+	
+	aux = result[0];
+	
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+	data.addRows([
+      ['Trabalhados', parseInt(aux[1])],
+      ['Abonados', parseInt(aux[0])]
+    ]);
+
+    // Set options for Anthony's pie chart.
+    var options = {title:'Itens totais no mês - TIME'};
+
+    // Instantiate and draw the chart for Anthony's pizza.
+    var chart = new google.visualization.PieChart(document.getElementById('chartItensTotais'));
+    chart.draw(data, options);
 }
