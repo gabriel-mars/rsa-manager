@@ -239,7 +239,6 @@ function getItensColab(){
 
 // Gráfico pizza Itens
 function drawPieColab(values){
-	// Create the data table for Anthony's pizza.
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Topping');
     data.addColumn('number', 'Slices');
@@ -263,10 +262,8 @@ function drawPieColab(values){
       ['Abonados', parseInt(abonados)]
     ]);
 
-    // Set options for Anthony's pie chart.
     var options = {title:'Itens trabalhados no mês - Colaborador'};
 
-    // Instantiate and draw the chart for Anthony's pizza.
     var chart = new google.visualization.PieChart(document.getElementById('colab_chart_div'));
     chart.draw(data, options);
 }
@@ -290,7 +287,6 @@ function getItensTime(){
 }
 
 function drawPieTime(values){
-	// Create the data table for Sarah's pizza.
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Topping');
     data.addColumn('number', 'Slices');
@@ -314,10 +310,8 @@ function drawPieTime(values){
       ['Abonados', parseInt(abonados)]
     ]);
 
-    // Set options for Sarah's pie chart.
     var options = {title:'Itens trabalhados no mês - TIME'};
 
-    // Instantiate and draw the chart for Sarah's pizza.
     var chart = new google.visualization.PieChart(document.getElementById('time_chart_div'));
     chart.draw(data, options);
 }

@@ -103,10 +103,16 @@ public class NavigationController {
 	}
 	
 	@GetMapping("/falha/individual")
-	public String getFalhaIndividual(ModelMap model) {
+	public String getFalhaIndividual(ModelMap model, HttpSession session) {
 		Item item = new Item();
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		List<Item> colaboradores = service.findByAtividade(sessaoAtual.getOrganizacao().toUpperCase());
 		
 		model.addAttribute("item", item);
+		model.addAttribute("colaboradores", colaboradores);
 
 		return "falha/individual";
 	}

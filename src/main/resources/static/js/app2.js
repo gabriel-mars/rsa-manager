@@ -33,7 +33,6 @@ function getDadosTime(){
 			google.charts.setOnLoadCallback(drawColumn2(result));
 			google.charts.setOnLoadCallback(getDadosItensMensal);
 			google.charts.setOnLoadCallback(getDadosItensTotais);
-//			google.charts.setOnLoadCallback(getItensTime);
 		}
 	});
 }
@@ -124,10 +123,8 @@ function drawPieTrabalhados(values){
       ['Reprovados', parseInt(aux[0])]
     ]);
 
-    // Set options for Anthony's pie chart.
     var options = {title:'Itens trabalhados no mês - TIME'};
 
-    // Instantiate and draw the chart for Anthony's pizza.
     var chart = new google.visualization.PieChart(document.getElementById('chartItensTrabalhados'));
     chart.draw(data, options);
 }
@@ -164,11 +161,104 @@ function drawPieTotais(values){
       ['Ap+Re*', parseInt(aux[1])],
       ['Abonados', parseInt(aux[0])]
     ]);
-
-    // Set options for Anthony's pie chart.
+	
     var options = {title:'Itens totais no mês - TIME'};
 
-    // Instantiate and draw the chart for Anthony's pizza.
     var chart = new google.visualization.PieChart(document.getElementById('chartItensTotais'));
     chart.draw(data, options);
+}
+
+// Funções para relatórios de falhas no RSA
+function getFalhasColab(){
+	let selectColab = document.getElementById('colaborador');
+	let date = document.getElementById('data_inicio').value;
+  
+	let strColab = selectColab.options[selectColab.selectedIndex].value;
+	
+	ary = [];
+	
+	ary.push({ Data: date, Colab: strColab });
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/mensal/individual",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			var result = Object.keys(dataReturn).map(function (key) {       
+		        return [String(key), dataReturn[key]]; 
+		    });
+			google.charts.setOnLoadCallback(drawChartFalhas(result));
+		}
+	});
+}
+
+function drawChartFalhas(values){
+	var aux = [];
+	
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+    for(var i = 0; i < values.length; i++){
+    	aux = values[i];
+
+    	data.addRow([aux[0], aux[1]]);
+    }
+
+    var options = {title:'Falhas totais no mês - Individual'};
+
+    var chart = new google.visualization.PieChart(document.getElementById('chartFalhasColab'));
+    chart.draw(data, options);
+    
+    getDataTable();
+}
+
+function getDataTable(){
+	var dataTable = [];
+	var arrayStr = [];
+	
+	let tabela = document.getElementById('tabelaFalhas');
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/mensal/individual/detalhe",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			var result = Object.keys(dataReturn).map(function (key) {       
+		        return [String(key), dataReturn[key]]; 
+		    });
+			
+			for(var i = 0; i < result.length; i++){
+				var aux2 = [];
+				var aux = result[i];
+				arrayStr = aux[0].split(':');
+				
+				aux2[0] = arrayStr[0];
+				aux2[1] = arrayStr[1];
+				aux2[2] = aux[1];
+				
+				dataTable.push(aux2);
+				fillTable(dataTable);
+			}
+		}
+	});
+}
+
+function fillTable(values){
+	for (var i = 0; i < values.length; i++){
+		console.log(values[0]);
+		var aux = values[i];
+		
+		$('#tabelaFalhas').append('<tr>' +
+				'<td>' + aux[0] + '</td>' +
+				'<td>' + aux[1] + '</td>' +
+				'<td>' + aux[2] + '</td>' +
+				'</tr>');
+		
+		
+	}
 }
