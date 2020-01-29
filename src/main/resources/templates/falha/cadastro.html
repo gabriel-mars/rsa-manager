@@ -5,11 +5,11 @@
 	    <section class="layout-content" layout:fragment="conteudo">
 	        <div class=" container row">
 	        	<div th:replace="fragments/alert"></div>
-	        	<h3 class="white-black">Nova Falha</h3>
+	        	<h3 class="white-black">Cadastro Falha</h3>
 			    <form class="col s12" th:action="@{/falha/salvar}" th:object="${falha}" method="POST">
 			    	<div class="row">
 			        	<div class="input-field col s4">
-			          		<input id="first_name" type="text" class="validate" required="true" th:field="*{site}">
+			          		<input id="first_name" type="text" class="validate" required="true" th:field="*{site}" maxlength="10">
 			          		<label for="first_name">Site</label>
 			        	</div>
 			        	<div class="input-field col s4">
@@ -25,7 +25,6 @@
 			      	</div>
 			      	<div class="row">
 			        	<div class="input-field col s6">
-			        	
 			        		<select required="true" th:field="*{falhaPrimaria}" onchange="buscarFalhas(this.value)">
 						    	<option value="" selected>Falha Primária</option>
 						    	<option value="Site">Site</option>
