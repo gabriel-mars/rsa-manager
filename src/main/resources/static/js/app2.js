@@ -161,7 +161,7 @@ function drawPieTotais(values){
     data.addColumn('number', 'Slices');
     
 	data.addRows([
-      ['Trabalhados', parseInt(aux[1])],
+      ['Ap+Re*', parseInt(aux[1])],
       ['Abonados', parseInt(aux[0])]
     ]);
 

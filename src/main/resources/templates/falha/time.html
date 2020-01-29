@@ -4,7 +4,7 @@
 	<body>
 	    <section class="layout-content" layout:fragment="conteudo">
 	    	<div class="container row">
-	    		<h3 class="white-black">Relatório do time RSA</h3>
+	    		<h3 class="white-black">Falhas do time RSA</h3>
 		        <div th:replace="fragments/alert"></div>
 	        	<form>
 	        		<div class="row">
@@ -28,17 +28,6 @@
 	        </div>
 	        <div class="container row">
 	        	<div class="divider"></div>
-	        	<div id="chartAtividadeMes" style="height: 400px; width: 100%;"></div>
-	        	<div class="divider"></div>
-	        	<table class="chartPieTime">
-			    	<tr>
-			        	<td><div id="chartItensTrabalhados" style="width: 600px; height: 500px;"></div></td>
-			        	<td><div id="chartItensTotais" style="width: 600px; height: 500px;"></div></td>
-			      	</tr>
-			    </table>
-			    <blockquote>
-	        		<strong>*Ap+Re:</strong> somatória dos itens aprovados com os reprovados	    	
-			    </blockquote>
 	        </div>
 	        <script>
 				$(document).ready(function(){

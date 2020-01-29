@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	        <div class=" container row">
+	        	<div th:replace="fragments/alert"></div>
+	        	<h3 class="white-black">Nova Falha</h3>
+			    <form class="col s12" th:action="@{/falha/salvar}" th:object="${falha}" method="POST">
+			    	<div class="row">
+			        	<div class="input-field col s4">
+			          		<input id="first_name" type="text" class="validate" required="true" th:field="*{site}">
+			          		<label for="first_name">Site</label>
+			        	</div>
+			        	<div class="input-field col s4">
+			          		<select required="true" th:field="*{colaborador}">
+			          			<option th:each="c : ${colaboradores}"
+                                    	th:value="${c}" th:text="${c}">Colaborador</option>
+			          		</select>
+			        	</div>
+			        	<div class="input-field col s4">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true" th:field="*{data}">
+			          		<label for="data_inicio">Data</label>
+			        	</div>
+			      	</div>
+			      	<div class="row">
+			        	<div class="input-field col s6">
+			        	
+			        		<select required="true" th:field="*{falhaPrimaria}" onchange="buscarFalhas(this.value)">
+						    	<option value="" selected>Falha Primária</option>
+						    	<option value="Site">Site</option>
+						      	<option value="Infra - Solo">Infra - Solo</option>
+						      	<option value="Infra - Torre">Infra - Torre</option>
+						      	<option value="Gabinete | Container | Sala">Gabinete | Container | Sala</option>
+						      	<option value="Esteiramento">Esteiramento</option>
+						      	<option value="Elementos RF Down">Elementos RF Down</option>
+						      	<option value="Bússola">Bússola</option>
+						      	<option value="EPI">EPI</option>
+						      	<option value="Elementos RF Up">Elementos RF Up</option>
+						      	<option value="Sistema Irradiante">Sistema Irradiante</option>
+						      	<option value="Geral">Geral</option>
+						    </select>
+			        	</div>
+			        	<div class="input-field col s6">
+			          		<select id="falha" required="true" th:field="*{falhaSecundaria}">
+						    	<option value="" disabled selected>Falha Secundária</option>
+						    </select>
+			        	</div>
+			      	</div>
+			      	<div class="row">
+			        	<div class="input-field col s12">
+				            <textarea id="textarea2" class="materialize-textarea" data-length="255" required="true" th:field="*{descricao}"></textarea>
+				            <label for="textarea2">Descrição</label>
+				        </div>
+			      	</div>
+			      	
+			    	<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+				</form>
+			</div>
+			<script>
+				$(document).ready(function(){
+			    	$('select').formSelect();			    	
+			    	$('.datepicker').datepicker({
+			    		format: 'dd/mm/yyyy'
+			    	});
+			    	$('textarea#textarea2').characterCounter();
+				});
+			</script>
+	    </section>
+	</body>
+</html>		

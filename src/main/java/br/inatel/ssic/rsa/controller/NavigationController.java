@@ -1,5 +1,9 @@
 package br.inatel.ssic.rsa.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -7,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.Falha;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
@@ -16,7 +21,7 @@ public class NavigationController {
 	
 	@Autowired
 	private ColaboradorService service;
-
+	
 	@GetMapping("/")
 	public String getHome(ModelMap model) {
 		Pessoa pessoa = new Pessoa();
@@ -79,5 +84,39 @@ public class NavigationController {
 	public String getRelatorioTime(ModelMap model) {
 		
 		return "relatorio/time";
+	}
+	
+	// Métodos Falha
+	@GetMapping("/falha/cadastro")
+	public String getCadastroFalha(ModelMap model, HttpSession session) {
+		Falha falha = new Falha();
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		List<Item> colaboradores = service.findByAtividade(sessaoAtual.getOrganizacao().toUpperCase());
+		
+		model.addAttribute("falha", falha);
+		model.addAttribute("colaboradores", colaboradores);
+		
+		return "falha/cadastro";
+	}
+	
+	@GetMapping("/falha/individual")
+	public String getFalhaIndividual(ModelMap model) {
+		Item item = new Item();
+		
+		model.addAttribute("item", item);
+
+		return "falha/individual";
+	}
+	
+	@GetMapping("/falha/time")
+	public String getFalhaTime(ModelMap model) {
+		Item item = new Item();
+		
+		model.addAttribute("item", item);
+
+		return "falha/time";
 	}
 }
