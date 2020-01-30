@@ -62,7 +62,7 @@ public class FalhaController {
 		falha.setData(date);
 		falha.setColaborador(colab);
 		
-		List<Object[]> dados = service.getFalhasTime(falha);
+		List<Object[]> dados = service.getFalhasColab(falha);
 		
 		for(int i = 0; i < dados.size(); i++) {
 			aux = dados.get(i);
