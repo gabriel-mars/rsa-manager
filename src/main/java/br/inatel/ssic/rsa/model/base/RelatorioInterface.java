@@ -18,4 +18,6 @@ public interface RelatorioInterface {
 	List<Object[]> findStatusItemColab(Item item);
 	
 	List<Object[]> findStatusItemTime(Item item);
+	
+	List<Object[]> findItensByMes(Item item);
 }

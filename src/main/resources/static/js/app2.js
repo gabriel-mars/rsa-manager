@@ -33,6 +33,7 @@ function getDadosTime(){
 			google.charts.setOnLoadCallback(drawColumn2(result));
 			google.charts.setOnLoadCallback(getDadosItensMensal);
 			google.charts.setOnLoadCallback(getDadosItensTotais);
+			google.charts.setOnLoadCallback(getDadosItensMes);
 		}
 	});
 }
@@ -138,7 +139,6 @@ function getDadosItensTotais(){
 		url: "/relatorio/itens/total",
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
-			
 			drawPieTotais(dataReturn);
 		}
 	});
@@ -166,6 +166,104 @@ function drawPieTotais(values){
 
     var chart = new google.visualization.PieChart(document.getElementById('chartItensTotais'));
     chart.draw(data, options);
+}
+
+// Funções para os gráficos de ranqueamento
+function getDadosItensMes(){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/itens/mensal",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			drawChartTotais(dataReturn);
+		}
+	});
+}
+
+// Gráfico de ranqueamento DESCONSIDERANDO abonos
+function drawChartTotais(values){
+	var lstAux = [];
+	var result = Object.keys(values).map(function (key) {       
+        return [String(key), values[key]]; 
+    }); 
+	
+	for(var i = 0; i < result.length; i++){
+		var strArray = [];
+		var aux2 = [];
+		var aux = result[i];
+		
+		strArray = aux[0].split(':');
+		aux2[0] = strArray[0];
+		aux2[1] = parseInt(strArray[1]);
+		aux2[2] = aux[1];
+		
+		lstAux.push(aux2);
+	}
+	
+	lstAux.sort(function(a, b){
+		if(a[1] < b[1]){
+			return 1;
+		}
+		
+		if(a[1] > b[1]){
+			return -1;
+		}
+		
+		return 0;
+	});
+	
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Colaborador');
+    data.addColumn('number', 'Ap+Re*');
+	
+	for (var i = 0; i < lstAux.length; i++){
+		var a = lstAux[i];
+		data.addRow([a[0], a[1]]); 
+	}
+	
+	var options = {
+			title: "Ranqueamento de acordo com os itens AP + RE*",
+			isStacked: true
+	};
+    
+	var chart = new google.visualization.ColumnChart(document.getElementById("chartRankMes"));
+	chart.draw(data, options);
+	
+	drawChartAbonos(lstAux);
+}
+
+//Gráfico de ranqueamento CONSIDERANDO abonos
+function drawChartAbonos(values){
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Colaborador');
+    data.addColumn('number', 'Totais');
+    
+    values.sort(function(a, b){
+		if(a[2] < b[2]){
+			return 1;
+		}
+		
+		if(a[2] > b[2]){
+			return -1;
+		}
+		
+		return 0;
+	});
+	
+	for (var i = 0; i < values.length; i++){
+		var a = values[i];
+		data.addRow([a[0], a[2]]); 
+	}
+	
+	var options = {
+			title: "Ranqueamento de acordo com os itens totais",
+			isStacked: true
+	};
+    
+	var chart = new google.visualization.ColumnChart(document.getElementById("chartRankAbonoMes"));
+	chart.draw(data, options);
 }
 
 // Funções para relatórios de falhas INDIVIDUAIS no RSA

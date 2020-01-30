@@ -149,4 +149,20 @@ public class RelatorioService implements RelatorioInterface{
 		
 		return dao.findItensTotaisMes(item);
 	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> findItensByMes(Item item) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(item.getDataAnalise(), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+		
+		return dao.findItensByMes(item);
+	}
 }
