@@ -9,5 +9,9 @@ public interface FalhaInterface {
 	
 	List<Object[]> getFalhasColab(Falha falha);
 	
+	List<Object[]> getFalhasTime(Falha falha);
+	
 	List<Object[]> getFalhasColabDetail(Falha falha);
+	
+	List<Object[]> getFalhasTimeDetail(Falha falha);
 }

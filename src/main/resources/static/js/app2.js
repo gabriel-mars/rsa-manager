@@ -168,7 +168,7 @@ function drawPieTotais(values){
     chart.draw(data, options);
 }
 
-// Funções para relatórios de falhas no RSA
+// Funções para relatórios de falhas INDIVIDUAIS no RSA
 function getFalhasColab(){
 	let selectColab = document.getElementById('colaborador');
 	let date = document.getElementById('data_inicio').value;
@@ -250,15 +250,89 @@ function getDataTable(){
 
 function fillTable(values){
 	for (var i = 0; i < values.length; i++){
-		console.log(values[0]);
 		var aux = values[i];
 		
 		$('#tabelaFalhas').append('<tr>' +
 				'<td>' + aux[0] + '</td>' +
 				'<td>' + aux[1] + '</td>' +
 				'<td>' + aux[2] + '</td>' +
-				'</tr>');
-		
-		
+				'</tr>');	
 	}
+}
+
+//Funções para relatórios de falhas TIME no RSA
+function getFalhasTime(){
+	let date = document.getElementById('data_inicio').value;
+	
+	ary = [];
+	
+	ary.push({ Data: date });
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/mensal/time",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			var result = Object.keys(dataReturn).map(function (key) {       
+		        return [String(key), dataReturn[key]]; 
+		    });
+			google.charts.setOnLoadCallback(drawChartFalhasTime(result));
+		}
+	});
+}
+
+function drawChartFalhasTime(values){
+	var aux = [];
+	
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+    for(var i = 0; i < values.length; i++){
+    	aux = values[i];
+
+    	data.addRow([aux[0], aux[1]]);
+    }
+
+    var options = {title:'Falhas totais no mês - TIME'};
+
+    var chart = new google.visualization.PieChart(document.getElementById('chartFalhasTime'));
+    chart.draw(data, options);
+    
+    getDataTableTime();
+}
+
+function getDataTableTime(){
+	var dataTable = [];
+	var arrayStr = [];
+	
+	let tabela = document.getElementById('tabelaFalhas');
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/mensal/time/detalhe",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			var result = Object.keys(dataReturn).map(function (key) {       
+		        return [String(key), dataReturn[key]]; 
+		    });
+			
+			for(var i = 0; i < result.length; i++){
+				var aux2 = [];
+				var aux = result[i];
+				arrayStr = aux[0].split(':');
+				
+				aux2[0] = arrayStr[0];
+				aux2[1] = arrayStr[1];
+				aux2[2] = aux[1];
+				
+				dataTable.push(aux2);
+				fillTable(dataTable);
+			}
+		}
+	});
 }

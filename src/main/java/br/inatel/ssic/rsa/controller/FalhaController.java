@@ -62,7 +62,7 @@ public class FalhaController {
 		falha.setData(date);
 		falha.setColaborador(colab);
 		
-		List<Object[]> dados = service.getFalhasColab(falha);
+		List<Object[]> dados = service.getFalhasTime(falha);
 		
 		for(int i = 0; i < dados.size(); i++) {
 			aux = dados.get(i);
@@ -96,6 +96,68 @@ public class FalhaController {
 		falha.setColaborador(colab);
 		
 		List<Object[]> dados = service.getFalhasColabDetail(falha);
+		
+		for(int i = 0; i < dados.size(); i++) {
+			aux = dados.get(i);
+			
+			auxJson.put(aux[0].toString() + ':' + aux[1].toString(), aux[2]);
+		}
+
+		model.addAttribute("falha", falha);
+		
+		return auxJson.toString();
+	}
+	
+	@PostMapping("/falha/mensal/time")
+	@ResponseBody
+	public String getFalhasTimeMes(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+		Object[] aux = null;
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		JSONObject auxJson = new JSONObject();
+		String date = null;
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		obj = jsonArray.optJSONObject(0);
+		date = obj.getString("Data");
+		
+		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
+		falha.setData(date);
+		
+		List<Object[]> dados = service.getFalhasTime(falha);
+		
+		for(int i = 0; i < dados.size(); i++) {
+			aux = dados.get(i);
+			
+			auxJson.put(aux[1].toString(), aux[0]);
+		}
+
+		model.addAttribute("falha", falha);
+		
+		return auxJson.toString();
+	}
+	
+	@PostMapping("/falha/mensal/time/detalhe")
+	@ResponseBody
+	public String getFalhasTimeDetailsMes(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+		Object[] aux = null;
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		JSONObject auxJson = new JSONObject();
+		String date = null;
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		obj = jsonArray.optJSONObject(0);
+		date = obj.getString("Data");
+		
+		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
+		falha.setData(date);
+		
+		List<Object[]> dados = service.getFalhasTimeDetail(falha);
 		
 		for(int i = 0; i < dados.size(); i++) {
 			aux = dados.get(i);

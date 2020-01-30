@@ -8,30 +8,41 @@
 		        <div th:replace="fragments/alert"></div>
 	        	<form>
 	        		<div class="row">
-	        			<div class="file-field input-field col s6">
-				      		<select required="true" id="organizacao">
-						    	<option value="" disabled selected>Organização</option>
-						      	<option value="ERICSSON">Ericsson</option>
-						      	<option value="FITEC">Fitec</option>
-						      	<option value="INATEL">Inatel</option>
-						    </select>
-					    </div>
-					    <div class="input-field col s6">
+					    <div class="input-field col s12">
 			          		<input id="data_inicio" type="text" class="datepicker" required="true">
 			          		<label for="data_inicio">Mês</label>
 			        	</div>
 	        		</div>
-	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getDadosTime()">Enviar
+	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getFalhasTime()">Enviar
 					    <i class="material-icons right">send</i>
 					</button>
 			  	</form>
 	        </div>
 	        <div class="container row">
 	        	<div class="divider"></div>
+	        	<div id="chartFalhasTime" style="height: 400px; width: 100%;"></div>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Site</th>
+			              	<th>FP*</th>
+			              	<th>Descrição</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaFalhas"></tbody>
+	      		</table>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<blockquote>
+	        		<strong>*FP:</strong> Falha Primária	    	
+			    </blockquote>
 	        </div>
 	        <script>
 				$(document).ready(function(){
-			    	$('select').formSelect();
 			    	$('.datepicker').datepicker({
 			    		format: 'dd/mm/yyyy'
 			    	});

@@ -57,4 +57,36 @@ public class FalhaService implements FalhaInterface{
 		
 		return dao.getFalhasColabDetail(falha);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object[]> getFalhasTime(Falha falha) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(falha.getData(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(falha.getData(), format) // Data final de busca
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		falha.setData(dateInit.format(format));
+		falha.setFalhaPrimaria(dateFinish.format(format)); // Data final de busca
+		
+		return dao.getFalhasTime(falha);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> getFalhasTimeDetail(Falha falha) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(falha.getData(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(falha.getData(), format) // Data final de busca
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		falha.setData(dateInit.format(format));
+		falha.setFalhaPrimaria(dateFinish.format(format)); // Data final de busca
+		
+		return dao.getFalhasTimeDetail(falha);
+	}
 }

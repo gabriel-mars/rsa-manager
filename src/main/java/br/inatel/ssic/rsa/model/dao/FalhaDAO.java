@@ -44,4 +44,30 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 				.setParameter(4, falha.getFalhaPrimaria()); // Data final de busca
 		return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getFalhasTime(Falha falha) {
+		Query query = manager.createNativeQuery("SELECT DISTINCT COUNT (F.falha_primaria) FILTER (WHERE F.centro_RSA = ?) AS falhas, F.falha_primaria "
+				+ "FROM falha F "
+				+ "WHERE F.centro_RSA = ? AND F.data_falha BETWEEN ? AND ? "
+				+ "GROUP BY F.falha_primaria")
+				.setParameter(1, falha.getCentroRsa())
+				.setParameter(2, falha.getCentroRsa())
+				.setParameter(3, falha.getData())
+				.setParameter(4, falha.getFalhaPrimaria()); // Data final de busca
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getFalhasTimeDetail(Falha falha) {
+		Query query = manager.createNativeQuery("SELECT F.site, F.falha_primaria, F. descricao "
+				+ "FROM falha F "
+				+ "WHERE F.centro_RSA = ? AND F.data_falha BETWEEN ? AND ?")
+				.setParameter(1, falha.getCentroRsa())
+				.setParameter(2, falha.getData())
+				.setParameter(3, falha.getFalhaPrimaria()); // Data final de busca
+		return query.getResultList();
+	}
 }
