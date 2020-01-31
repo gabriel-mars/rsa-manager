@@ -435,6 +435,4 @@ function getDataTableTime(){
 			}
 		}
 	});
-	
-	console.log(dataTable);
 }
