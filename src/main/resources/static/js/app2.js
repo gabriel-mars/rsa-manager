@@ -318,6 +318,7 @@ function getDataTable(){
 	var arrayStr = [];
 	
 	let tabela = document.getElementById('tabelaFalhas');
+	$("#tabelaFalhas tr").remove();
 	
 	$.ajax({
 		type: "POST",
@@ -346,7 +347,7 @@ function getDataTable(){
 	});
 }
 
-function fillTable(values){
+function fillTable(values){	
 	for (var i = 0; i < values.length; i++){
 		var aux = values[i];
 		
@@ -407,6 +408,7 @@ function getDataTableTime(){
 	var arrayStr = [];
 	
 	let tabela = document.getElementById('tabelaFalhas');
+	$("#tabelaFalhas tr").remove();
 	
 	$.ajax({
 		type: "POST",
@@ -433,4 +435,6 @@ function getDataTableTime(){
 			}
 		}
 	});
+	
+	console.log(dataTable);
 }
