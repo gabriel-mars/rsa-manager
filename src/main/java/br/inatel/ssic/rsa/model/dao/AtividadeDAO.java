@@ -56,7 +56,7 @@ public class AtividadeDAO extends BaseDAO<Atividade, Long> implements AtividadeI
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado' OR I.status = 'Aprovado') AS sum_itens_ap_re, "
 				+ "COUNT (I.status) AS sum_total "
 				+ "FROM item I "
-				+ "WHERE I.centro_rsa = ? AND I.data_analise BETWEEN ? AND ?  "
+				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
 				+ "GROUP BY I.inspetor ORDER BY sum_itens_ap_re DESC")
 				.setParameter(1, organizacao)
 				.setParameter(2, dataInicial)
