@@ -83,14 +83,13 @@ public class FalhaController {
 		return auxJson.toString();
 	}
 	
-	@PostMapping("/falha/mensal/individual/detalhe")
+	@PostMapping("/falha/individual/detalhe")
 	@ResponseBody
 	public String getFalhasIndividuaisDetail(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
 		Object[] aux = null;
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
-		JSONObject auxJson = new JSONObject();
-		String date, colab = null;
+		String colab = null;
 		Colaborador sessaoAtual = new Colaborador();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
@@ -106,16 +105,11 @@ public class FalhaController {
 		falha.setColaborador(colab);
 		
 		List<Object[]> dados = service.getFalhasColabDetail(falha);
-		
-		for(int i = 0; i < dados.size(); i++) {
-			aux = dados.get(i);
-			
-			auxJson.put(aux[0].toString() + ':' + aux[1].toString(), aux[2]);
-		}
+		String data = new Gson().toJson(dados);	
 
 		model.addAttribute("falha", falha);
 		
-		return auxJson.toString();
+		return data;
 	}
 	
 	@PostMapping("/falha/mensal/time")
@@ -167,10 +161,10 @@ public class FalhaController {
 		
 		List<Object[]> dados = service.getFalhasTimeDetail(falha);
 		
-		String test = new Gson().toJson(dados);	
+		String data = new Gson().toJson(dados);	
 		
 		model.addAttribute("falha", falha);
 	
-		return test;
+		return data;
 	}
 }

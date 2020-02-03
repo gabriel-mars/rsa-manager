@@ -323,25 +323,10 @@ function getDataTable(){
 		type: "POST",
 		contentType : 'application/json; charset=utf-8',
 		dataType : 'json',
-		url: "/falha/mensal/individual/detalhe",
+		url: "/falha/individual/detalhe",
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
-			var result = Object.keys(dataReturn).map(function (key) {       
-		        return [String(key), dataReturn[key]]; 
-		    });
-			
-			for(var i = 0; i < result.length; i++){
-				var aux2 = [];
-				var aux = result[i];
-				arrayStr = aux[0].split(':');
-				
-				aux2[0] = arrayStr[0];
-				aux2[1] = arrayStr[1];
-				aux2[2] = aux[1];
-				
-				dataTable.push(aux2);
-				fillTable(dataTable);
-			}
+			fillTable(dataReturn);
 		}
 	});
 }
@@ -354,6 +339,7 @@ function fillTable(values){
 				'<td>' + aux[0] + '</td>' +
 				'<td>' + aux[1] + '</td>' +
 				'<td>' + aux[2] + '</td>' +
+				'<td>' + aux[3] + '</td>' +
 				'</tr>');	
 	}
 }

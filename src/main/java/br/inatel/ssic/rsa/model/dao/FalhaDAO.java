@@ -36,7 +36,7 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getFalhasColabDetail(Falha falha) {
-		Query query = manager.createNativeQuery("SELECT F.site, F.falha_primaria, F. descricao "
+		Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_primaria, F. descricao "
 				+ "FROM falha F WHERE F.centro_RSA = ? AND F.colaborador = ? AND DATE(F.data_falha) >= DATE(?) AND DATE(F.data_falha) <= DATE(?)")
 				.setParameter(1, falha.getCentroRsa())
 				.setParameter(2, falha.getColaborador())
