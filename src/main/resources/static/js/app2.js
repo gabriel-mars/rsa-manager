@@ -347,7 +347,7 @@ function getDataTable(){
 	});
 }
 
-function fillTable(values){	
+function fillTable(values){
 	for (var i = 0; i < values.length; i++){
 		var aux = values[i];
 		
@@ -417,22 +417,7 @@ function getDataTableTime(){
 		url: "/falha/mensal/time/detalhe",
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
-			var result = Object.keys(dataReturn).map(function (key) {       
-		        return [String(key), dataReturn[key]]; 
-		    });
-			
-			for(var i = 0; i < result.length; i++){
-				var aux2 = [];
-				var aux = result[i];
-				arrayStr = aux[0].split(':');
-				
-				aux2[0] = arrayStr[0];
-				aux2[1] = arrayStr[1];
-				aux2[2] = aux[1];
-				
-				dataTable.push(aux2);
-				fillTable(dataTable);
-			}
+			fillTable(dataReturn);
 		}
 	});
 }

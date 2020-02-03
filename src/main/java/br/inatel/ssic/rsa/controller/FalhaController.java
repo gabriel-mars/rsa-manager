@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+
 import br.inatel.ssic.rsa.model.entity.Colaborador;
 import br.inatel.ssic.rsa.model.entity.Falha;
 import br.inatel.ssic.rsa.model.service.FalhaService;
@@ -142,10 +144,8 @@ public class FalhaController {
 	@PostMapping("/falha/mensal/time/detalhe")
 	@ResponseBody
 	public String getFalhasTimeDetailsMes(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
-		Object[] aux = null;
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
-		JSONObject auxJson = new JSONObject();
 		String date = null;
 		Colaborador sessaoAtual = new Colaborador();
 		
@@ -159,14 +159,10 @@ public class FalhaController {
 		
 		List<Object[]> dados = service.getFalhasTimeDetail(falha);
 		
-		for(int i = 0; i < dados.size(); i++) {
-			aux = dados.get(i);
-			
-			auxJson.put(aux[0].toString() + ':' + aux[1].toString(), aux[2]);
-		}
-
-		model.addAttribute("falha", falha);
+		String test = new Gson().toJson(dados);	
 		
-		return auxJson.toString();
+		model.addAttribute("falha", falha);
+	
+		return test;
 	}
 }
