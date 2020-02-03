@@ -1,9 +1,7 @@
 package br.inatel.ssic.rsa.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -55,7 +53,7 @@ public class FalhaController {
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
 		JSONObject auxJson = new JSONObject();
-		String date, colab = null;
+		String colab = null;
 		Colaborador sessaoAtual = new Colaborador();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
@@ -86,7 +84,6 @@ public class FalhaController {
 	@PostMapping("/falha/individual/detalhe")
 	@ResponseBody
 	public String getFalhasIndividuaisDetail(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
-		Object[] aux = null;
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
 		String colab = null;

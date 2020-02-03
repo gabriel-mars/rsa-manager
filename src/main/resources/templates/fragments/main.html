@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	    	<div class="container row">
+	    		<h3 class="white-black">Dashboard</h3>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div class="col s12 m6">
+			    	<div class="card horizontal">
+			      		<div class="card-stacked">
+			        		<div class="card-content">
+			        			<span class="card-title">Mês atual</span>
+			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item.item}"></span></p>
+			          			<p><u><strong>Média</strong></u>: <span th:text="${item.asp}"></span></p>
+			        		</div>
+			        		<div class="card-action">
+			          			<a th:href="@{/atividade/mensal}">Outros meses</a>
+			        		</div>
+			      		</div>
+			    	</div>
+		 	 	</div>
+		 	 	
+		 	 	<div class="col s12 m6">
+			    	<div class="card horizontal">
+			      		<div class="card-stacked">
+			        		<div class="card-content">
+			        			<span class="card-title">Último mês</span>
+			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item2.item}"></p>
+			          			<p><u><strong>Média</strong></u>: <span th:text="${item2.asp}"></p>
+			        		</div>
+			        		<div class="card-action">
+			          			<a th:href="@{/atividade/diario}">Diário</a>
+			        		</div>
+			      		</div>
+			    	</div>
+		 	 	</div>
+	        </div>
+	        <div class="container row">
+	        	<blockquote>
+	       			Os dados apontados consideram apenas o somatório de itens aprovados e reprovados do time RSA Inatel.    	
+		    	</blockquote>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        </div>
+	        <script></script>
+	    </section>
+	</body>
+</html>
