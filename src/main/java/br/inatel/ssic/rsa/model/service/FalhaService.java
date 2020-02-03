@@ -31,10 +31,10 @@ public class FalhaService implements FalhaInterface{
 		
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dateInit = LocalDate.parse(falha.getData(), format)
-	            .with(TemporalAdjusters.firstDayOfMonth());
+	            .with(TemporalAdjusters.firstDayOfYear());
 		
 		LocalDate dateFinish = LocalDate.parse(falha.getData(), format) // Data final de busca
-	            .with(TemporalAdjusters.lastDayOfMonth());
+	            .with(TemporalAdjusters.lastDayOfYear());
 		
 		falha.setData(dateInit.format(format));
 		falha.setFalhaPrimaria(dateFinish.format(format)); // Data final de busca
@@ -47,10 +47,10 @@ public class FalhaService implements FalhaInterface{
 	public List<Object[]> getFalhasColabDetail(Falha falha) {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dateInit = LocalDate.parse(falha.getData(), format)
-	            .with(TemporalAdjusters.firstDayOfMonth());
+	            .with(TemporalAdjusters.firstDayOfYear());
 		
 		LocalDate dateFinish = LocalDate.parse(falha.getData(), format) // Data final de busca
-	            .with(TemporalAdjusters.lastDayOfMonth());
+	            .with(TemporalAdjusters.lastDayOfYear());
 		
 		falha.setData(dateInit.format(format));
 		falha.setFalhaPrimaria(dateFinish.format(format)); // Data final de busca

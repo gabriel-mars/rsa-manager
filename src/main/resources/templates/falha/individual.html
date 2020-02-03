@@ -8,16 +8,12 @@
 		        <div th:replace="fragments/alert"></div>
 	        	<form>
 	        		<div class="row">
-					    <div class="file-field input-field col s6">
+					    <div class="file-field input-field col s12">
 				      		<select id="colaborador" required="true">
 			          			<option th:each="c : ${colaboradores}"
                                     	th:value="${c}" th:text="${c}">Colaborador</option>
 			          		</select>
 					    </div>
-					    <div class="input-field col s6">
-			          		<input id="data_inicio" type="text" class="datepicker" required="true">
-			          		<label for="data_inicio">Mês</label>
-			        	</div>
 	        		</div>
 	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getFalhasColab()">Enviar
 					    <i class="material-icons right">send</i>

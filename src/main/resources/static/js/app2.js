@@ -269,19 +269,18 @@ function drawChartAbonos(values){
 // Funções para relatórios de falhas INDIVIDUAIS no RSA
 function getFalhasColab(){
 	let selectColab = document.getElementById('colaborador');
-	let date = document.getElementById('data_inicio').value;
   
 	let strColab = selectColab.options[selectColab.selectedIndex].value;
 	
 	ary = [];
 	
-	ary.push({ Data: date, Colab: strColab });
+	ary.push({ Colab: strColab });
 	
 	$.ajax({
 		type: "POST",
 		contentType : 'application/json; charset=utf-8',
 		dataType : 'json',
-		url: "/falha/mensal/individual",
+		url: "/falha/individual",
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
 			var result = Object.keys(dataReturn).map(function (key) {       

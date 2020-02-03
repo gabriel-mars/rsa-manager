@@ -1,5 +1,9 @@
 package br.inatel.ssic.rsa.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -44,9 +48,9 @@ public class FalhaController {
 		}
 	}
 	
-	@PostMapping("/falha/mensal/individual")
+	@PostMapping("/falha/individual")
 	@ResponseBody
-	public String getFalhasIndividuaisMes(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+	public String getFalhasIndividuais(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
 		Object[] aux = null;
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
@@ -57,11 +61,13 @@ public class FalhaController {
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
 		
 		obj = jsonArray.optJSONObject(0);
-		date = obj.getString("Data");
 		colab = obj.getString("Colab");
 		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate localDate = LocalDate.now();
+		
 		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
-		falha.setData(date);
+		falha.setData(dtf.format(localDate));
 		falha.setColaborador(colab);
 		
 		List<Object[]> dados = service.getFalhasColab(falha);
@@ -79,7 +85,7 @@ public class FalhaController {
 	
 	@PostMapping("/falha/mensal/individual/detalhe")
 	@ResponseBody
-	public String getFalhasIndividuaisDetailsMes(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+	public String getFalhasIndividuaisDetail(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
 		Object[] aux = null;
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
@@ -90,11 +96,13 @@ public class FalhaController {
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
 		
 		obj = jsonArray.optJSONObject(0);
-		date = obj.getString("Data");
 		colab = obj.getString("Colab");
 		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate localDate = LocalDate.now();
+		
 		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
-		falha.setData(date);
+		falha.setData(dtf.format(localDate));
 		falha.setColaborador(colab);
 		
 		List<Object[]> dados = service.getFalhasColabDetail(falha);
