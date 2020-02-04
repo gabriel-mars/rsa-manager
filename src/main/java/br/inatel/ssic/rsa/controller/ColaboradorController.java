@@ -2,7 +2,6 @@ package br.inatel.ssic.rsa.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.inatel.ssic.rsa.model.entity.Colaborador;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
-import br.inatel.ssic.rsa.model.service.AtividadeService;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
 import br.inatel.ssic.rsa.model.service.RelatorioService;
 
@@ -32,9 +30,6 @@ public class ColaboradorController {
 	
 	@Autowired
 	private RelatorioService relService;
-	
-	@Autowired
-	private AtividadeService atvService;
 	
 	@PostMapping("/colaborador/entrar")
 	public String verificarLogin(Pessoa pessoa, HttpSession session, RedirectAttributes attr) {
@@ -66,6 +61,7 @@ public class ColaboradorController {
 		Item aux2 = new Item();
 		Item aux3 = new Item();
 		int media = 0;
+		int totalMes = 0;
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
 		
@@ -76,7 +72,9 @@ public class ColaboradorController {
 		item.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
 		item.setDataAnalise(dtf.format(localDate));
 		
+		// Mês atual
 		List<Object[]> dadosMedia = relService.findItensByMes(item);
+		
 		aux = dadosMedia.get(0);
 		
 		aux2.setItem(aux[1].toString()); // Máximo do mês
@@ -85,30 +83,39 @@ public class ColaboradorController {
 			aux = dadosMedia.get(i);
 			
 			media += Integer.parseInt(aux[1].toString());
+			totalMes += Integer.parseInt(aux[2].toString());
 		}
 		
+		aux2.setCentroRsa("" + totalMes); // Totoal de atividades do mês
+		aux2.setEmpresa("" + media); // Total de atividades AP + RE do mês
 		media = media / dadosMedia.size();
 		aux2.setAsp("" + media); // Média do mês
 		
+		// Último mês
 		item.setDataAnalise(dtf.format(lastMouth));
 		List<Object[]> dadosLastMouth = relService.findItensByMes(item);
+		
 		auxItem = dadosLastMouth.get(0);
 		aux3.setItem(auxItem[1].toString()); // Máximo do mês
 		
 		media = 0;
-		
+		totalMes = 0;
+
 		for(int i = 0; i < dadosLastMouth.size(); i++) {
 			auxItem = dadosLastMouth.get(i);
 			
 			media += Integer.parseInt(auxItem[1].toString());
+			totalMes += Integer.parseInt(auxItem[2].toString());
 		}
 		
+		aux3.setCentroRsa("" + totalMes); // Totoal de atividades do mês
+		aux3.setEmpresa("" + media); // Total de atividades AP + RE do mês
 		media = media / dadosLastMouth.size();
-		
 		aux3.setAsp("" + media); // Média do mês
 		
 		model.addAttribute("item", aux2);
 		model.addAttribute("item2", aux3);
+		
 		return "fragments/main";
 	}
 	

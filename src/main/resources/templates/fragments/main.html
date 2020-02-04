@@ -13,11 +13,15 @@
 			      		<div class="card-stacked">
 			        		<div class="card-content">
 			        			<span class="card-title">Mês atual</span>
-			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item.item}"></span></p>
-			          			<p><u><strong>Média</strong></u>: <span th:text="${item.asp}"></span></p>
+			        			<p>Descrição dos itens tratados pelo time RSA:</p>
+			        			<br/>
+			        			<p><u><strong>Total</strong></u>: <span th:text="${item.centroRsa}"></span></p>
+			        			<p><u><strong>Ap + Re*</strong></u>: <span th:text="${item.empresa}"></span></p>
+			          			<p><u><strong>Máximo**</strong></u>: <span th:text="${item.item}"></span></p>
+			          			<p><u><strong>Média**</strong></u>: <span th:text="${item.asp}"></span></p>
 			        		</div>
 			        		<div class="card-action">
-			          			<a th:href="@{/atividade/mensal}">Outros meses</a>
+			        			<a th:href="@{/atividade/diario}">Diário</a>
 			        		</div>
 			      		</div>
 			    	</div>
@@ -28,11 +32,15 @@
 			      		<div class="card-stacked">
 			        		<div class="card-content">
 			        			<span class="card-title">Último mês</span>
-			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item2.item}"></p>
-			          			<p><u><strong>Média</strong></u>: <span th:text="${item2.asp}"></p>
+			        			<p>Descrição dos itens tratados pelo time RSA:</p>
+			        			<br/>
+			        			<p><u><strong>Total</strong></u>: <span th:text="${item2.centroRsa}"></span></p>
+			        			<p><u><strong>Ap + Re*</strong></u>: <span th:text="${item2.empresa}"></span></p>
+			          			<p><u><strong>Máximo**</strong></u>: <span th:text="${item2.item}"></p>
+			          			<p><u><strong>Média**</strong></u>: <span th:text="${item2.asp}"></p>
 			        		</div>
 			        		<div class="card-action">
-			          			<a th:href="@{/atividade/diario}">Diário</a>
+			          			<a th:href="@{/atividade/mensal}">Outros meses</a>
 			        		</div>
 			      		</div>
 			    	</div>
@@ -40,7 +48,8 @@
 	        </div>
 	        <div class="container row">
 	        	<blockquote>
-	       			Os dados apontados consideram apenas o somatório de itens aprovados e reprovados do time RSA Inatel.    	
+	        		<p><strong>Ap + Re*</strong>: Somatório de itens aprovados e reprovados do time RSA Inatel.</p>
+	       			<p>Os dados de <strong>total, máximo e média</strong> apontados, consideram apenas os números de <u>Ap+Re</u>.</p> 	
 		    	</blockquote>
 	        </div>
 	        <div class="container row">
