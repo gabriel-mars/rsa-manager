@@ -166,7 +166,7 @@ function getMedias(){
 			var result = Object.keys(dataReturn).map(function (key) {       
 		        return [String(key), dataReturn[key]]; 
 		    });
-			
+
 			drawLines(result);
 		}
 	});
@@ -175,23 +175,46 @@ function getMedias(){
 //Gráfico de itens de acordo com a média
 function drawLines(values){
 	var auxDp = [];
+	var auxMedia = [];
 	var soma = 0;
 	var media = 0;
 	var raiz = 0;
 	
-	var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Dias');
-    data.addColumn('number', 'Média');
-    data.addColumn('number', 'Colaborador');
-    data.addColumn('number', 'DP inferior');
-    data.addColumn('number', 'DP superior');
-    
-    // Calculo do desvio padrão
-    for(var i = 0; i < dados.length; i++){
-		var a = dados[i];
-		var b = values[i];
+	values.sort(function(a, b){
+		if(a[0] > b[0]){
+			return 1;
+		}
 		
-		var sub = Math.pow(a[1] - b[1], 2);
+		if(a[0] < b[0]){
+			return -1;
+		}
+		
+		return 0;
+	});
+	
+	// Tratamento dos dados somente para os dias trabalhados pelo colaborador
+	for(var i = 0; i < dados.length; i++){
+    	var a = dados[i];
+    	var b;
+    	
+    	for(var j = 0; j < values.length; j++){
+    		b = values[j];
+    		
+    		if(a[0] === b[0]){
+    			var aux = [];
+    			aux[0] = a[0];
+    			aux[1] = a[1];
+    			aux[2] = b[1];
+    			auxMedia.push(aux);
+    		}
+    	}
+    }
+	
+	// Calculo do desvio padrão
+    for(var i = 0; i < auxMedia.length; i++){
+		var a = auxMedia[i];
+		
+		var sub = Math.pow((a[1] - a[2]), 2);
 		auxDp.push(sub);
 	}
     
@@ -202,11 +225,17 @@ function drawLines(values){
     media = (soma / (auxDp.length - 1));
     raiz = Math.sqrt(media);
     
-    for(var i = 0; i < dados.length; i++){
-		var a = dados[i];
-		var b = values[i];
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Dias');
+    data.addColumn('number', 'Média');
+    data.addColumn('number', 'Colaborador');
+    data.addColumn('number', 'DP inferior');
+    data.addColumn('number', 'DP superior'); 
+    
+    for(var i = 0; i < auxMedia.length; i++){
+		var c = auxMedia[i]
 		
-  	  	data.addRow([a[0], b[1], a[1], 100, raiz*2]); 
+  	  	data.addRow([c[0], c[2], c[1], (c[2] - raiz), ((raiz * 2) + c[2])]); 
 	}
 
     var options = {
