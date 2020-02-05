@@ -406,3 +406,91 @@ function getDataTableTime(){
 		}
 	});
 }
+
+function getDadosDiario(){
+	let selectOrg = document.getElementById('organizacao');
+	let date = document.getElementById('data_inicio').value;
+  
+	let strOrg = selectOrg.options[selectOrg.selectedIndex].value;
+	
+	ary = [];
+	
+	ary.push({ Org: strOrg, Data: date });
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/diario",
+		data: JSON.stringify(ary),
+		success: function(dataReturn){
+			
+			console.log(dataReturn);
+//			var result = Object.keys(dataReturn).map(function (key) {       
+//		        return [String(key), dataReturn[key]]; 
+//		    });
+//			
+//			dados = dataReturn;
+			// Set a callback to run when the Google Visualization API is loaded.
+			google.charts.setOnLoadCallback(drawColumnDiario(dataReturn));
+//			google.charts.setOnLoadCallback(getDadosItensMensal);
+//			google.charts.setOnLoadCallback(getDadosItensTotais);
+//			google.charts.setOnLoadCallback(getDadosItensMes);
+		}
+	});
+}
+
+function drawColumnDiario(dataReturn){
+	var soma = 0;
+	var media = 0;
+	var mediaAux = 0;
+	var auxDp = [];
+	
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Topping');
+	data.addColumn('number', 'Itens Ap+Re*');
+	data.addColumn('number', 'Média');
+	
+	for(var i = 0; i < dataReturn.length; i++){
+		var a = dataReturn[i];
+		
+		soma += parseInt(a[4]);
+	}
+  
+	media = soma / dataReturn.length;
+	soma = 0;
+	
+	for(var i = 0; i < dataReturn.length; i++){
+		var a = dataReturn[i];
+		
+		soma = soma + Math.pow((a[4] - media));
+	}
+	
+	
+	
+	for(var i = 0; i < dataReturn.length; i++){
+		var a = dataReturn[i];
+		
+  	  	data.addRow([a[0], a[4], media]); 
+	}
+
+	var options = {
+		  title:'Itens avaliados no dia',
+		  seriesType: 'bars',
+		  series: {1: {type: 'line'}},
+		  hAxis: {
+	          title: 'Colaborador',
+	          viewWindow: {
+	            min: [7, 30, 0],
+	            max: [17, 30, 0]
+	          }
+	        },
+	        vAxis: {
+	            title: 'Itens'
+	          }
+	 };
+
+	// Instantiate and draw our chart, passing in some options.
+	var chart = new google.visualization.ColumnChart(document.getElementById('chartAtividadeDiario'));
+	chart.draw(data, options); 
+}

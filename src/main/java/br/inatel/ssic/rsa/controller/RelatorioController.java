@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import br.inatel.ssic.rsa.model.entity.Item;
+import br.inatel.ssic.rsa.model.service.AtividadeService;
 import br.inatel.ssic.rsa.model.service.RelatorioService;
 
 @Controller
@@ -22,6 +23,9 @@ public class RelatorioController {
 	
 	@Autowired
 	private RelatorioService service;
+	
+	@Autowired
+	private AtividadeService atvService;
 
 	@PostMapping("/relatorio/colaborador")
 	@ResponseBody
@@ -255,5 +259,23 @@ public class RelatorioController {
 		model.addAttribute("item", item);
 		
 		return auxJson.toString();
+	}
+	
+	@PostMapping("/relatorio/diario")
+	@ResponseBody
+	public String getRelatorioDiario(@RequestBody String ary) throws JSONException {
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String org, date = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		date = obj.getString("Data");
+		
+		List<Item> dados = atvService.getAtividades(date, org);
+		
+		String data = new Gson().toJson(dados);	
+		
+		return data;
 	}
 }

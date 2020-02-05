@@ -82,8 +82,12 @@ public class NavigationController {
 	
 	@GetMapping("/relatorio/time")
 	public String getRelatorioTime(ModelMap model) {
-		
 		return "relatorio/time";
+	}
+	
+	@GetMapping("/relatorio/diario")
+	public String getRelatorioDiario(ModelMap model) {
+		return "relatorio/diario";
 	}
 	
 	// Métodos Falha
