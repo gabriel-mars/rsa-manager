@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.service.RelatorioService;
 
@@ -57,11 +59,9 @@ public class RelatorioController {
 	public String getMediaDiaria(@RequestBody String ary) throws JSONException {
 		Item item = new Item();
 		String org, colab, date = null;
-		Object[] aux = null;
 		
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
-		JSONObject auxJson = new JSONObject();
 		
 		obj = jsonArray.optJSONObject(0);
 		org = obj.getString("Org");
@@ -74,13 +74,9 @@ public class RelatorioController {
 		
 		List<Object[]> listMedia = service.findAvg(item);
 		
-		for(int i = 0; i < listMedia.size(); i++) {
-			aux = listMedia.get(i);
-			
-			auxJson.put(aux[0].toString(), aux[1]);
-		}
+		String data = new Gson().toJson(listMedia);	
 		
-		return auxJson.toString();
+		return data;
 	}
 	
 	@PostMapping("/relatorio/itens/colaborador")

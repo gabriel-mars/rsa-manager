@@ -96,8 +96,8 @@ function getDados() {
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
 			dados = dataReturn;
+			dadosMedia = [];
 			// Set a callback to run when the Google Visualization API is loaded.
-			google.charts.setOnLoadCallback(drawColumn);
 			google.charts.setOnLoadCallback(getMedias);
 			google.charts.setOnLoadCallback(getItensColab);
 			google.charts.setOnLoadCallback(getItensTime);
@@ -107,6 +107,8 @@ function getDados() {
 
 // Gráfico de atividades executadas por dia
 function drawColumn(){
+	var auxMedia = [];
+	
 	var result = Object.keys(dados).map(function (key) {       
         return [String(key), dados[key]]; 
     }); 
@@ -125,18 +127,42 @@ function drawColumn(){
 		return 0;
 	});
 	
+	// Tratamento dos dados somente para os dias trabalhados pelo colaborador
+	for(var i = 0; i < dados.length; i++){
+    	var a = dados[i];
+    	var b;
+    	 
+    	for(var j = 0; j < dadosMedia.length; j++){
+    		b = dadosMedia[j];
+
+    		if(a[0] === b[0]){
+    			var aux = [];
+    			aux[0] = a[0];
+    			aux[1] = a[1];
+    			aux[2] = b[1];
+    			aux[3] = b[2];
+    		
+    			auxMedia.push(aux);
+    		}
+    	}
+    }
+	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
 	data.addColumn('number', 'Itens avalidados');
+	data.addColumn('number', 'Média');
   
 	for(var i = 0; i < result.length; i++){
 		var a = result[i];
+		var b = auxMedia[i];
 		
-  	  	data.addRow([a[0], a[1]]); 
+  	  	data.addRow([a[0], a[1], b[3]]); 
 	}
 
 	var options = {
 		  title:'Itens avaliados por dia',
+		  seriesType: 'bars',
+		  series: {1: {type: 'line'}},
 		  hAxis: {
 	          title: 'Data',
 	          viewWindow: {
@@ -150,7 +176,7 @@ function drawColumn(){
 	 };
 
 	// Instantiate and draw our chart, passing in some options.
-	var chart = new google.visualization.ColumnChart(document.getElementById('chartAtividadeDia'));
+	var chart = new google.visualization.ComboChart(document.getElementById('chartAtividadeDia'));
 	chart.draw(data, options); 
 }
 
@@ -163,89 +189,25 @@ function getMedias(){
 		url: "/relatorio/media/dia",
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
-			var result = Object.keys(dataReturn).map(function (key) {       
-		        return [String(key), dataReturn[key]]; 
-		    });
-
-			drawLines(result);
+			for(var i = 0; i < dataReturn.length; i++){
+				var aux = [];
+				var data = [];
+				var strArray = [];
+				
+				aux = dataReturn[i];
+				strArray = aux[0].toString().split(':');
+				
+				data[0] = strArray[0];
+				data[1] = parseFloat(strArray[1]);
+				data[2] = aux[1];
+				data[3] = aux[2];
+				
+				dadosMedia.push(data);
+			}
+			
+			google.charts.setOnLoadCallback(drawColumn);
 		}
 	});
-}
-
-//Gráfico de itens de acordo com a média
-function drawLines(values){
-	var auxDp = [];
-	var auxMedia = [];
-	var soma = 0;
-	var media = 0;
-	var raiz = 0;
-	
-	values.sort(function(a, b){
-		if(a[0] > b[0]){
-			return 1;
-		}
-		
-		if(a[0] < b[0]){
-			return -1;
-		}
-		
-		return 0;
-	});
-	
-	// Tratamento dos dados somente para os dias trabalhados pelo colaborador
-	for(var i = 0; i < dados.length; i++){
-    	var a = dados[i];
-    	var b;
-    	
-    	for(var j = 0; j < values.length; j++){
-    		b = values[j];
-    		
-    		if(a[0] === b[0]){
-    			var aux = [];
-    			aux[0] = a[0];
-    			aux[1] = a[1];
-    			aux[2] = b[1];
-    			auxMedia.push(aux);
-    		}
-    	}
-    }
-	
-	// Calculo do desvio padrão
-    for(var i = 0; i < auxMedia.length; i++){
-		var a = auxMedia[i];
-		
-		var sub = Math.pow((a[1] - a[2]), 2);
-		auxDp.push(sub);
-	}
-    
-    for(var i = 0; i < auxDp.length; i++){
-    	soma += auxDp[i];
-    }
-    
-    media = (soma / (auxDp.length - 1));
-    raiz = Math.sqrt(media);
-    
-	var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Dias');
-    data.addColumn('number', 'Média');
-    data.addColumn('number', 'Colaborador');
-    data.addColumn('number', 'DP inferior');
-    data.addColumn('number', 'DP superior'); 
-    
-    for(var i = 0; i < auxMedia.length; i++){
-		var c = auxMedia[i]
-		
-  	  	data.addRow([c[0], c[2], c[1], (c[2] - raiz), ((raiz * 2) + c[2])]); 
-	}
-
-    var options = {
-    		title:'Comparativo de produção com o time',
-    		hAxis: {title: 'Data'},
-    		vAxis: {title: 'Itens'}
-    };
-
-    var chart = new google.visualization.LineChart(document.getElementById("chartMediaDia"));
-    chart.draw(data, options);
 }
 
 // Chamada dos dados para o gráfico pizza Itens

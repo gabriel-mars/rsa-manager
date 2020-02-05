@@ -1,5 +1,7 @@
 package br.inatel.ssic.rsa.model.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -42,7 +44,9 @@ public class RelatorioService implements RelatorioInterface{
 	public List<Object[]> findAvg(Item item) {
 		List<Object[]> listMedia = new ArrayList<Object[]>();
 		Object[] aux = null;
-		Integer totalItens, numSup, media;
+		Integer totalItens, numSup, media, mediaAux, soma, somaAux;
+		Double dp = 0.0;
+		Double coeficiente = 0.0;
 		
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format)
@@ -56,12 +60,51 @@ public class RelatorioService implements RelatorioInterface{
 		
 		List<Object[]> listAux = dao.findAvg(item);
 		
+		soma = 0;
+		somaAux = 0;
+		media = 0;
+		mediaAux = 0;
+		
 		for (int i = 0; i < listAux.size(); i++) {
 			aux = listAux.get(i);
 			
 			totalItens = Integer.parseInt(aux[2].toString());
+			soma = soma + totalItens;
+		}
+		
+		mediaAux = soma / listAux.size();
+		
+		for (int i = 0; i < listAux.size(); i++) {
+			aux = listAux.get(i);
+			
+			// Início do calculo do desvio padrão
+			totalItens = Integer.parseInt(aux[2].toString());
+			soma = (int) Math.pow((totalItens - mediaAux), 2); // Potência a ser somada
+			
+			somaAux = somaAux + soma;
+		}
+		
+		media = somaAux / listAux.size(); // Valor do desvio padrão
+		dp = Math.sqrt(media);
+		
+		coeficiente = dp / mediaAux;
+		
+		BigDecimal bd = new BigDecimal(coeficiente).setScale(2, RoundingMode.HALF_DOWN);
+		coeficiente = bd.doubleValue();
+		
+		coeficiente = coeficiente + 1;
+		
+		media = 0;
+		
+		for (int i = 0; i < listAux.size(); i++) {
+			aux = listAux.get(i);
+			
+			aux[0] = aux[0].toString() + ":" + coeficiente;
+			
+			totalItens = Integer.parseInt(aux[2].toString());
 			numSup = Integer.parseInt(aux[1].toString());
 			media = (int) (totalItens / numSup);
+			soma += totalItens;
 			
 			aux[1] = media;
 			listMedia.add(aux);
