@@ -33,7 +33,7 @@ public class ColaboradorDAO extends BaseDAO<Colaborador, Long> implements Colabo
 
 	@SuppressWarnings("unchecked")
 	public List<Object[]> verifyLogin(String email, String senha) {
-		Query query = manager.createNativeQuery("SELECT P.id as pessoa_id, P.nome, P.email, P.telefone, P.cpf "
+		Query query = manager.createNativeQuery("SELECT P.id as pessoa_id, P.nome, P.email, P.telefone, P.cpf, P.senha "
 				+ "FROM pessoa P "
 				+ "WHERE P.email = ? AND P.senha = ?")
 				.setParameter(1, email)
@@ -83,5 +83,14 @@ public class ColaboradorDAO extends BaseDAO<Colaborador, Long> implements Colabo
 				+ "WHERE I.centro_rsa = ? GROUP BY I.inspetor")
 				.setParameter(1, org);
 		return query.getResultList();
+	}
+
+	@Override
+	public void updateSenha(Colaborador colaborador) {
+		Query query = manager.createNativeQuery("UPDATE pessoa SET senha = ? WHERE email = ?")
+				.setParameter(1, colaborador.getSenha())
+				.setParameter(2, colaborador.getEmail());
+		
+		query.executeUpdate();
 	}
 }

@@ -52,6 +52,41 @@ public class ColaboradorController {
 		}
 	}
 	
+	@PostMapping("/colaborador/update/senha")
+	public String updateSenha(Pessoa pessoa, HttpSession session, RedirectAttributes attr) throws Exception {
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		Colaborador colaborador = service.verifyLogin(sessaoAtual.getEmail(), sessaoAtual.getSenha());
+		
+		if(colaborador.getSenha().intern().equals(pessoa.getNome())) {
+			attr.addFlashAttribute("fail", "Sua nova senha não deve ser igual a atual.");
+        	return "redirect:/colaborador/senha";
+		} else if(!colaborador.getSenha().intern().equals(pessoa.getSenha().intern())) {
+			attr.addFlashAttribute("fail", "Necessário informar a senha atual.");
+        	return "redirect:/colaborador/senha";
+		} else if(!pessoa.getEmail().intern().equals(pessoa.getNome())) {
+			attr.addFlashAttribute("fail", "Nova senha e confirmação devem ser iguais.");
+        	return "redirect:/colaborador/senha";
+		} else {
+			try {
+				colaborador.setSenha(pessoa.getEmail());
+				service.updateSenha(colaborador);
+				
+				attr.addFlashAttribute("success", "Senha alterada.");
+				
+				colaborador = service.verifyLogin(colaborador.getEmail(), colaborador.getSenha());
+				session.removeAttribute("colaboradorLogado");
+				session.setAttribute("colaboradorLogado", colaborador);
+				
+				return "redirect:/colaborador/senha";
+			} catch (Exception e) {
+				attr.addFlashAttribute("fail", "Não foi possível alterar a senha.");
+				return "redirect:/colaborador/senha";
+			}	
+		}
+	}
+	
 	@GetMapping("/dashboard")
 	public String getDashboard(HttpSession session, ModelMap model) {
 		Object[] aux = null;

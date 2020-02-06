@@ -12,6 +12,8 @@ public interface ColaboradorInterface {
     void update(Colaborador colaborador);
 
     void delete(Long id);
+    
+    void updateSenha(Colaborador colaborador);
 
     Colaborador findById(Long id);
     

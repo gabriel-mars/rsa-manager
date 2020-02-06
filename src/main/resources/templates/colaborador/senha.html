@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	        <div class=" container row">
+	        	<div th:replace="fragments/alert"></div>
+	        	<h3 class="white-black">Senha</h3>
+			    <form th:action="@{/colaborador/update/senha}" th:object="${pessoa}" method="POST">
+					<div class="row">
+						<div class="input-field col s4">
+							<input id="password" type="password" class="validate" th:field="*{senha}" required>
+          					<label for="password">Senha atual</label>
+						</div>
+						<div class="input-field col s4">
+							<input id="password" type="password" class="validate" th:field="*{email}" required>
+          					<label for="password">Nova senha</label>
+						</div>
+						<div class="input-field col s4">
+							<input id="password" type="password" class="validate" th:field="*{nome}" required>
+          					<label for="password">Repita a nova senha</label>
+						</div>
+					</div>
+					<div class="row">
+						<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    	<i class="material-icons right">send</i>
+						</button>
+					</div>				
+				</form>
+			</div>
+	    </section>
+	</body>
+</html>		

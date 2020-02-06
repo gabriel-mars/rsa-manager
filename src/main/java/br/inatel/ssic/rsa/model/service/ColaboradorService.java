@@ -85,6 +85,7 @@ public class ColaboradorService implements ColaboradorInterface{
 			sessaoAtual.setCpf(auxPessoa[4].toString());
 			sessaoAtual.setIdEricsson(auxColab[0].toString());
 			sessaoAtual.setOrganizacao(auxColab[1].toString());
+			sessaoAtual.setSenha(auxPessoa[5].toString());
 			
         	return sessaoAtual;
         }
@@ -94,5 +95,13 @@ public class ColaboradorService implements ColaboradorInterface{
 	@Transactional(readOnly = true)
 	public List<Item> findByAtividade(String org) {
 		return dao.findByAtividade(org);
+	}
+
+	@Override
+	public void updateSenha(Colaborador colaborador) {
+		System.out.println(colaborador.getEmail());
+		System.out.println(colaborador.getSenha());
+		
+		dao.updateSenha(colaborador);
 	}
 }

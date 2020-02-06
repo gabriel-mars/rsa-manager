@@ -48,6 +48,15 @@ public class NavigationController {
 		return "colaborador/cadastro";
 	}
 	
+	@GetMapping("/colaborador/senha")
+	public String getEditarSenha(ModelMap model) {
+		Pessoa pessoa = new Pessoa();
+		
+		model.addAttribute("pessoa", pessoa);
+		
+		return "colaborador/senha";
+	}
+	
 	// Métodos Atividade
 	@GetMapping("/atividade/cadastro")
 	public String getCadastroAtividade() {
