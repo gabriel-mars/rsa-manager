@@ -185,6 +185,11 @@ function getDadosItensMes(){
 // Gráfico de ranqueamento DESCONSIDERANDO abonos
 function drawChartTotais(values){
 	var lstAux = [];
+	var soma = 0;
+	var media = 0;
+	var mediaAux = 0;
+	var dp = 0;
+	
 	var result = Object.keys(values).map(function (key) {       
         return [String(key), values[key]]; 
     }); 
@@ -214,21 +219,54 @@ function drawChartTotais(values){
 		return 0;
 	});
 	
+	for(var i = 0; i < lstAux.length; i++){
+		var a = lstAux[i];
+		
+		soma += parseInt(a[1]);
+	}
+  
+	media = soma / lstAux.length;
+	
+	soma = 0;
+	
+	for(var i = 0; i < lstAux.length; i++){
+		var a = lstAux[i];
+		
+		soma = soma + Math.pow((a[1] - media), 2);
+	}
+	
+	mediaAux = soma / lstAux.length;
+	dp = Math.sqrt(mediaAux);
+	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Colaborador');
     data.addColumn('number', 'Ap+Re*');
+    data.addColumn('number', 'Média');
+	data.addColumn('number', 'DP superior');
+	data.addColumn('number', 'DP inferior');
 	
 	for (var i = 0; i < lstAux.length; i++){
 		var a = lstAux[i];
-		data.addRow([a[0], a[1]]); 
+		data.addRow([a[0], a[1], media, (media + dp), dp]); 
 	}
 	
 	var options = {
-			title: "Ranqueamento de acordo com os itens AP + RE*",
-			isStacked: true
-	};
+		  title: "Ranqueamento de acordo com os itens AP + RE*",
+		  seriesType: 'bars',
+		  series: {1: {type: 'line'}, 2: {type: 'line'}, 3: {type: 'line'}},
+		  hAxis: {
+	          title: 'Colaborador',
+	          viewWindow: {
+	            min: [7, 30, 0],
+	            max: [17, 30, 0]
+	          }
+	        },
+	        vAxis: {
+	            title: 'Itens'
+	          }
+	 };
     
-	var chart = new google.visualization.ColumnChart(document.getElementById("chartRankMes"));
+	var chart = new google.visualization.ComboChart(document.getElementById("chartRankMes"));
 	chart.draw(data, options);
 	
 	drawChartAbonos(lstAux);
