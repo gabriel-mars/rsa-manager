@@ -424,8 +424,6 @@ function getDadosDiario(){
 		url: "/relatorio/diario",
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
-			
-			console.log(dataReturn);
 //			var result = Object.keys(dataReturn).map(function (key) {       
 //		        return [String(key), dataReturn[key]]; 
 //		    });
@@ -444,12 +442,15 @@ function drawColumnDiario(dataReturn){
 	var soma = 0;
 	var media = 0;
 	var mediaAux = 0;
+	var dp = 0;
 	var auxDp = [];
 	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
 	data.addColumn('number', 'Itens Ap+Re*');
 	data.addColumn('number', 'Média');
+	data.addColumn('number', 'DP superior');
+	data.addColumn('number', 'DP inferior');
 	
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
@@ -458,26 +459,28 @@ function drawColumnDiario(dataReturn){
 	}
   
 	media = soma / dataReturn.length;
+	
 	soma = 0;
 	
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
 		
-		soma = soma + Math.pow((a[4] - media));
+		soma = soma + Math.pow((a[4] - media), 2);
 	}
 	
-	
+	mediaAux = soma / dataReturn.length;
+	dp = Math.sqrt(mediaAux);
 	
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
 		
-  	  	data.addRow([a[0], a[4], media]); 
+  	  	data.addRow([a[0], a[4], media, (media + dp), dp]); 
 	}
 
 	var options = {
 		  title:'Itens avaliados no dia',
 		  seriesType: 'bars',
-		  series: {1: {type: 'line'}},
+		  series: {1: {type: 'line'}, 2: {type: 'line'}, 3: {type: 'line'}},
 		  hAxis: {
 	          title: 'Colaborador',
 	          viewWindow: {
@@ -491,6 +494,6 @@ function drawColumnDiario(dataReturn){
 	 };
 
 	// Instantiate and draw our chart, passing in some options.
-	var chart = new google.visualization.ColumnChart(document.getElementById('chartAtividadeDiario'));
+	var chart = new google.visualization.ComboChart(document.getElementById('chartAtividadeDiario'));
 	chart.draw(data, options); 
 }
