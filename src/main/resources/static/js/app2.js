@@ -274,9 +274,17 @@ function drawChartTotais(values){
 
 //Gráfico de ranqueamento CONSIDERANDO abonos
 function drawChartAbonos(values){
+	var soma = 0;
+	var media = 0;
+	var mediaAux = 0;
+	var dp = 0;
+	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Colaborador');
     data.addColumn('number', 'Totais');
+    data.addColumn('number', 'Média');
+	data.addColumn('number', 'DP superior');
+	data.addColumn('number', 'DP inferior');
     
     values.sort(function(a, b){
 		if(a[2] < b[2]){
@@ -289,18 +297,48 @@ function drawChartAbonos(values){
 		
 		return 0;
 	});
+    
+    for(var i = 0; i < values.length; i++){
+		var a = values[i];
+		
+		soma += parseInt(a[2]);
+	}
+  
+	media = soma / values.length;
+	
+	soma = 0;
+	
+	for(var i = 0; i < values.length; i++){
+		var a = values[i];
+		
+		soma = soma + Math.pow((a[2] - media), 2);
+	}
+	
+	mediaAux = soma / values.length;
+	dp = Math.sqrt(mediaAux);
 	
 	for (var i = 0; i < values.length; i++){
 		var a = values[i];
-		data.addRow([a[0], a[2]]); 
+		data.addRow([a[0], a[2], media, (media + dp), dp]);  
 	}
 	
 	var options = {
-			title: "Ranqueamento de acordo com os itens totais",
-			isStacked: true
-	};
+		  title: "Ranqueamento de acordo com os itens totais",
+		  seriesType: 'bars',
+		  series: {1: {type: 'line'}, 2: {type: 'line'}, 3: {type: 'line'}},
+		  hAxis: {
+	          title: 'Colaborador',
+	          viewWindow: {
+	            min: [7, 30, 0],
+	            max: [17, 30, 0]
+	          }
+	        },
+	        vAxis: {
+	            title: 'Itens'
+	          }
+	 };
     
-	var chart = new google.visualization.ColumnChart(document.getElementById("chartRankAbonoMes"));
+	var chart = new google.visualization.ComboChart(document.getElementById("chartRankAbonoMes"));
 	chart.draw(data, options);
 }
 
