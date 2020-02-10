@@ -138,4 +138,15 @@ public class NavigationController {
 
 		return "falha/time";
 	}
+	
+	// Métodos para análise de Itens
+	@GetMapping("/relatorio/item/reprovado")
+	public String getItensReprovados() {
+		return "item/reprovado";
+	}
+	
+	@GetMapping("/relatorio/item/abonado")
+	public String getItensAbonados() {
+		return "item/abonado";
+	}
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	    	<div class="container row">
+	    		<h3 class="white-black">Itens reprovados pelo time RSA - Mensal</h3>
+		        <div th:replace="fragments/alert"></div>
+	        	<form>
+	        		<div class="row">
+					    <div class="input-field col s12">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true">
+			          		<label for="data_inicio">Mês</label>
+			        	</div>
+	        		</div>
+	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getDadosTime()">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+			  	</form>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div id="chartAtividadeMes" style="height: 400px; width: 100%;"></div>
+	        	<div class="divider"></div>
+	        	<table class="chartPieTime">
+			    	<tr>
+			        	<td><div id="chartItensTrabalhados" style="width: 600px; height: 500px;"></div></td>
+			        	<td><div id="chartItensTotais" style="width: 600px; height: 500px;"></div></td>
+			      	</tr>
+			    </table>
+			    <div class="divider"></div>
+			    <div id="chartRankMes" style="height: 400px; width: 100%;"></div>
+			    <div class="divider"></div>
+			    <div id="chartRankAbonoMes" style="height: 400px; width: 100%;"></div>
+	        </div>
+	        <script>
+				$(document).ready(function(){
+			    	$('.datepicker').datepicker({
+			    		format: 'dd/mm/yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>
