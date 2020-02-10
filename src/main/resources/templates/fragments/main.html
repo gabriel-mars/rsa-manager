@@ -47,6 +47,7 @@
 		 	 	</div>
 	        </div>
 	        <div class="container row">
+	        <div class="divider"></div>
 	        	<blockquote>
 	        		<p><strong>Ap + Re*</strong>: Somatório de itens aprovados e reprovados do time RSA Inatel.</p>
 	       			<p>Os dados de <strong>máximo e média</strong> apontados, consideram apenas os números de <u>Ap+Re</u>.</p> 	
@@ -54,37 +55,34 @@
 	        </div>
 	        <div class="container row">
 	        	<div class="divider"></div>
-	        	<div class="col s12 m6">
-			    	<div class="card horizontal">
-			      		<div class="card-stacked">
-			        		<div class="card-content">
-			        			<span class="card-title">Mês atual</span>
-			        			<p>Itens mais rejeitdados pelo time RSA:</p>
-	
-			        		</div>
-			        		<div class="card-action">
-			        			<a href="#">Diário</a>
-			        		</div>
-			      		</div>
-			    	</div>
-		 	 	</div>
-		 	 	
-		 	 	<div class="col s12 m6">
-			    	<div class="card horizontal">
-			      		<div class="card-stacked">
-			        		<div class="card-content">
-			        			<span class="card-title">Último mês</span>
-			        			<p>Itens mais rejeitdados pelo time RSA:</p>
-	
-			        		</div>
-			        		<div class="card-action">
-			          			<a href="#">Outros meses</a>
-			        		</div>
-			      		</div>
-			    	</div>
-		 	 	</div>
+	        	<blockquote>
+	       			<p>Itens mais rejeitados no mês anterior pelo time RSA Inatel.</p> 	
+		    	</blockquote>
+	        	<table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Item</th>
+			              	<th>Quantidade</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaReprovados"></tbody>
+	      		</table>
 	        </div>
-	        <script></script>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<blockquote>
+	       			<p>Itens mais abonados no mês anterior pelo time RSA Inatel.</p> 	
+		    	</blockquote>
+	        	<table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Item</th>
+			              	<th>Quantidade</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaAbonados"></tbody>
+	      		</table>
+	        </div>
 	    </section>
 	</body>
 </html>

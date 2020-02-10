@@ -131,4 +131,40 @@ public class RelatorioDAO implements RelatorioInterface{
 				.setParameter(3, item.getDataEnvio());
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findByMaisRejeitados(Item item) {
+		Query query = manager.createNativeQuery("SELECT DISTINCT I.descricao, COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado') AS itens_rejeitados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados "
+				+ "FROM item I "
+				+ "WHERE I.centro_rsa = ? "
+				+ "AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
+				+ "AND I.item != 'CHECKLIST CLEANUP' AND I.item NOT LIKE 'PENDÊNCIA%' "
+				+ "GROUP BY I.descricao "
+				+ "ORDER BY itens_rejeitados DESC "
+				+ "LIMIT 5")
+				.setParameter(1, item.getCentroRsa())
+				.setParameter(2, item.getDataAnalise())
+				.setParameter(3, item.getDataEnvio());
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findByMaisAbonados(Item item) {
+		Query query = manager.createNativeQuery("SELECT DISTINCT I.descricao, COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado') AS itens_rejeitados, "
+				+ "COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados "
+				+ "FROM item I "
+				+ "WHERE I.centro_rsa = ? "
+				+ "AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
+				+ "AND I.item != 'CHECKLIST CLEANUP' AND I.item NOT LIKE 'PENDÊNCIA%' "
+				+ "GROUP BY I.descricao "
+				+ "ORDER BY itens_abonados DESC "
+				+ "LIMIT 5")
+				.setParameter(1, item.getCentroRsa())
+				.setParameter(2, item.getDataAnalise())
+				.setParameter(3, item.getDataEnvio());
+		return query.getResultList();
+	}
 }

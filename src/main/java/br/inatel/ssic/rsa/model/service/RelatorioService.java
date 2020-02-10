@@ -208,4 +208,38 @@ public class RelatorioService implements RelatorioInterface{
 		
 		return dao.findItensByMes(item);
 	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> findByMaisRejeitados(Item item) {
+		LocalDate localDate = LocalDate.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(format.format(localDate), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(format.format(localDate), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+		
+		return dao.findByMaisRejeitados(item);
+	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> findByMaisAbonados(Item item) {
+		LocalDate localDate = LocalDate.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(format.format(localDate), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(format.format(localDate), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+		
+		return dao.findByMaisAbonados(item);
+	}
 }

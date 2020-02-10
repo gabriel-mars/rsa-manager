@@ -20,4 +20,8 @@ public interface RelatorioInterface {
 	List<Object[]> findStatusItemTime(Item item);
 	
 	List<Object[]> findItensByMes(Item item);
+	
+	List<Object[]> findByMaisRejeitados(Item item);
+	
+	List<Object[]> findByMaisAbonados(Item item);
 }
