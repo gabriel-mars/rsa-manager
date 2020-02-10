@@ -1,4 +1,4 @@
-function fillTable(values){
+function fillTableReprovado(values){
 	for (var i = 0; i < values.length; i++){
 		var aux = values[i];
 		
@@ -7,6 +7,7 @@ function fillTable(values){
 				'<td>' + aux[1] + '</td>' +
 				'</tr>');	
 	}
+	console.log('Reprovados');
 }
 
 function fillTableAbono(values){
@@ -18,6 +19,8 @@ function fillTableAbono(values){
 				'<td>' + aux[2] + '</td>' +
 				'</tr>');	
 	}
+	
+	console.log('Abonados');
 }
 
 $(document).ready(function(){
@@ -32,7 +35,7 @@ $(document).ready(function(){
 		dataType : 'json',
 		url: "/relatorio/dashboard/reprovado",
 		success: function(dataReturn){
-			fillTable(dataReturn);
+			fillTableReprovado(dataReturn);
 			getDadosAbono();
 		}
 	});
