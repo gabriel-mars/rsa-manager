@@ -310,4 +310,52 @@ public class RelatorioController {
 		
 		return data;
 	}
+	
+	@PostMapping("/relatorio/time/reprovado")
+	@ResponseBody
+	public String getRelatorioRejeitados(@RequestBody String ary, HttpSession session) throws JSONException {
+		Colaborador sessaoAtual = new Colaborador();
+		Item item = new Item();
+		
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String date = null;
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+	
+		obj = jsonArray.optJSONObject(0);
+		date = obj.getString("Data");
+		item.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
+		item.setDataAnalise(date);
+		
+		List<Object[]> dados = service.findByMaisRejeitados(item);
+		
+		String data = new Gson().toJson(dados);	
+		
+		return data;
+	}
+	
+	@PostMapping("/relatorio/time/abonado")
+	@ResponseBody
+	public String getRelatorioAbonados(@RequestBody String ary,HttpSession session) throws JSONException {
+		Colaborador sessaoAtual = new Colaborador();
+		Item item = new Item();
+		
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String date = null;
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		obj = jsonArray.optJSONObject(0);
+		date = obj.getString("Data");
+		item.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
+		item.setDataAnalise(date);
+		
+		List<Object[]> dados = service.findByMaisAbonados(item);
+		
+		String data = new Gson().toJson(dados);	
+		
+		return data;
+	}
 }

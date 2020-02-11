@@ -13,25 +13,18 @@
 			          		<label for="data_inicio">Mês</label>
 			        	</div>
 	        		</div>
-	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getDadosTime()">Enviar
+	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getDadosReprovado()">Enviar
 					    <i class="material-icons right">send</i>
 					</button>
 			  	</form>
 	        </div>
 	        <div class="container row">
 	        	<div class="divider"></div>
-	        	<div id="chartAtividadeMes" style="height: 400px; width: 100%;"></div>
-	        	<div class="divider"></div>
 	        	<table class="chartPieTime">
 			    	<tr>
-			        	<td><div id="chartItensTrabalhados" style="width: 600px; height: 500px;"></div></td>
-			        	<td><div id="chartItensTotais" style="width: 600px; height: 500px;"></div></td>
+			        	<td><div id="chartItensReprovados" style="width: 600px; height: 500px;"></div></td>
 			      	</tr>
 			    </table>
-			    <div class="divider"></div>
-			    <div id="chartRankMes" style="height: 400px; width: 100%;"></div>
-			    <div class="divider"></div>
-			    <div id="chartRankAbonoMes" style="height: 400px; width: 100%;"></div>
 	        </div>
 	        <script>
 				$(document).ready(function(){
