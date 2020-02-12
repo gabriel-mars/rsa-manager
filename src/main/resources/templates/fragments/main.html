@@ -55,33 +55,33 @@
 	        </div>
 	        <div class="container row">
 	        	<div class="divider"></div>
-	        	<blockquote>
-	       			<p>Itens mais rejeitados no mês anterior pelo time RSA Inatel.</p> 	
-		    	</blockquote>
-	        	<table class="highlight">
-	        		<thead>
-			          	<tr>
-			              	<th>Item</th>
-			              	<th>Quantidade</th>
-			          	</tr>
-	        		</thead>
-	        		<tbody id="tabelaReprovados"></tbody>
-	      		</table>
-	        </div>
-	        <div class="container row">
-	        	<div class="divider"></div>
-	        	<blockquote>
-	       			<p>Itens mais abonados no mês anterior pelo time RSA Inatel.</p> 	
-		    	</blockquote>
-	        	<table class="highlight">
-	        		<thead>
-			          	<tr>
-			              	<th>Item</th>
-			              	<th>Quantidade</th>
-			          	</tr>
-	        		</thead>
-	        		<tbody id="tabelaAbonados"></tbody>
-	      		</table>
+	        	<div class="col s12 m6">
+			    	<div class="card horizontal">
+			      		<div class="card-stacked">
+			        		<div class="card-content">
+			        			<span class="card-title">Itens reprovados</span>
+			        			<p>Consulte os itens mais <strong>reprovados</strong> pelo time RSA Inatel.</p>
+			        		</div>
+			        		<div class="card-action">
+			        			<a th:href="@{/relatorio/item/reprovado}">Relatório</a>
+			        		</div>
+			      		</div>
+			    	</div>
+		 	 	</div>
+		 	 	
+		 	 	<div class="col s12 m6">
+			    	<div class="card horizontal">
+			      		<div class="card-stacked">
+			        		<div class="card-content">
+			        			<span class="card-title">Itens abonados</span>
+			        			<p>Consulte os itens mais <strong>abonados</strong> pelo time RSA Inatel.</p>
+			        		</div>
+			        		<div class="card-action">
+			          			<a th:href="@{/relatorio/item/abonado}">Relatório</a>
+			        		</div>
+			      		</div>
+			    	</div>
+		 	 	</div>
 	        </div>
 	    </section>
 	</body>

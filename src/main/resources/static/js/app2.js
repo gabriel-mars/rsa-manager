@@ -23,6 +23,9 @@ function getDadosTime(){
 		dataType : 'json',
 		url: "/relatorio/time",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			var result = Object.keys(dataReturn).map(function (key) {       
 		        return [String(key), dataReturn[key]]; 
@@ -34,6 +37,9 @@ function getDadosTime(){
 			google.charts.setOnLoadCallback(getDadosItensMensal);
 			google.charts.setOnLoadCallback(getDadosItensTotais);
 			google.charts.setOnLoadCallback(getDadosItensMes);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -99,9 +105,14 @@ function getDadosItensMensal(){
 		dataType : 'json',
 		url: "/relatorio/itens/trabalhado",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
-			
 			drawPieTrabalhados(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -138,8 +149,14 @@ function getDadosItensTotais(){
 		dataType : 'json',
 		url: "/relatorio/itens/total",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			drawPieTotais(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -176,8 +193,14 @@ function getDadosItensMes(){
 		dataType : 'json',
 		url: "/relatorio/itens/mensal",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			drawChartTotais(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -358,11 +381,17 @@ function getFalhasColab(){
 		dataType : 'json',
 		url: "/falha/individual",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			var result = Object.keys(dataReturn).map(function (key) {       
 		        return [String(key), dataReturn[key]]; 
 		    });
 			google.charts.setOnLoadCallback(drawChartFalhas(result));
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -401,8 +430,14 @@ function getDataTable(){
 		dataType : 'json',
 		url: "/falha/individual/detalhe",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			fillTable(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -434,11 +469,17 @@ function getFalhasTime(){
 		dataType : 'json',
 		url: "/falha/mensal/time",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			var result = Object.keys(dataReturn).map(function (key) {       
 		        return [String(key), dataReturn[key]]; 
 		    });
 			google.charts.setOnLoadCallback(drawChartFalhasTime(result));
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -477,8 +518,14 @@ function getDataTableTime(){
 		dataType : 'json',
 		url: "/falha/mensal/time/detalhe",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			fillTable(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -499,17 +546,14 @@ function getDadosDiario(){
 		dataType : 'json',
 		url: "/relatorio/diario",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
-//			var result = Object.keys(dataReturn).map(function (key) {       
-//		        return [String(key), dataReturn[key]]; 
-//		    });
-//			
-//			dados = dataReturn;
-			// Set a callback to run when the Google Visualization API is loaded.
 			google.charts.setOnLoadCallback(drawColumnDiario(dataReturn));
-//			google.charts.setOnLoadCallback(getDadosItensMensal);
-//			google.charts.setOnLoadCallback(getDadosItensTotais);
-//			google.charts.setOnLoadCallback(getDadosItensMes);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }

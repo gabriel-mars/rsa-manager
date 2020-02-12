@@ -94,13 +94,18 @@ function getDados() {
 		dataType : 'json',
 		url: "/relatorio/colaborador",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			dados = dataReturn;
 			dadosMedia = [];
-			// Set a callback to run when the Google Visualization API is loaded.
 			google.charts.setOnLoadCallback(getMedias);
 			google.charts.setOnLoadCallback(getItensColab);
 			google.charts.setOnLoadCallback(getItensTime);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -188,6 +193,9 @@ function getMedias(){
 		dataType : 'json',
 		url: "/relatorio/media/dia",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			for(var i = 0; i < dataReturn.length; i++){
 				var aux = [];
@@ -206,6 +214,9 @@ function getMedias(){
 			}
 			
 			google.charts.setOnLoadCallback(drawColumn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -218,12 +229,18 @@ function getItensColab(){
 		dataType : 'json',
 		url: "/relatorio/itens/colaborador",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			var result = Object.keys(dataReturn).map(function (key) {       
 		        return [String(key), dataReturn[key]]; 
 		    });
 			
 			drawPieColab(result);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -267,12 +284,18 @@ function getItensTime(){
 		dataType : 'json',
 		url: "/relatorio/itens/time",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
 			var result = Object.keys(dataReturn).map(function (key) {       
 		        return [String(key), dataReturn[key]]; 
 		    });
 			
 			drawPieTime(result);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }

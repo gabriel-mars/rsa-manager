@@ -29,20 +29,31 @@ function fillTableAbono(values){
 	}
 }
 
-$(document).ready(function(){
-	$("#tabelaReprovados tr").remove();
-	
-	$.ajax({
-		type: "GET",
-		contentType : 'application/json; charset=utf-8',
-		dataType : 'json',
-		url: "/relatorio/dashboard/reprovado",
-		success: function(dataReturn){
-			fillTableReprovado(dataReturn);
-			getDadosAbono();
-		}
-	});
-});
+function fillTableDetailAbono(values){
+	for (var i = 0; i < values.length; i++){
+		var aux = values[i];
+		
+		$('#itens').append('<tr>' +
+				'<td>' + aux[0] + '</td>' +
+				'<td>' + aux[2] + '</td>' +
+				'<td>' + aux[1] + '</td>' +
+				'<td>' + aux[3] + '</td>' +
+				'</tr>');	
+	}
+}
+
+function fillTableDetailReprovado(values){
+	for (var i = 0; i < values.length; i++){
+		var aux = values[i];
+		
+		$('#itens').append('<tr>' +
+				'<td>' + aux[0] + '</td>' +
+				'<td>' + aux[1] + '</td>' +
+				'<td>' + aux[2] + '</td>' +
+				'<td>' + aux[3] + '</td>' +
+				'</tr>');	
+	}
+}
 
 function getDadosAbono() {	
 	$("#tabelaAbonados tr").remove();
@@ -51,9 +62,15 @@ function getDadosAbono() {
 		type: "GET",
 		contentType : 'application/json; charset=utf-8',
 		dataType : 'json',
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		url: "/relatorio/dashboard/abonado",
 		success: function(dataReturn){
 			fillTableAbono(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
@@ -62,6 +79,7 @@ function getDadosReprovado(){
 	let date = document.getElementById('data_inicio').value;
 	
 	ary = [];
+	$("#itens tr").remove();
 	
 	ary.push({ Data: date });
 	
@@ -69,18 +87,25 @@ function getDadosReprovado(){
 		type: "POST",
 		contentType : 'application/json; charset=utf-8',
 		dataType : 'json',
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		url: "/relatorio/time/reprovado",
 		data: JSON.stringify(ary),
 		success: function(dataReturn){
-			google.charts.setOnLoadCallback(drawPieReprovados(dataReturn));
+			fillTableDetailReprovado(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
 }
 
 function getDadosAbonado(){
-let date = document.getElementById('data_inicio').value;
+	let date = document.getElementById('data_inicio').value;
 	
 	ary = [];
+	$("#itens tr").remove();
 	
 	ary.push({ Data: date });
 	
@@ -90,46 +115,14 @@ let date = document.getElementById('data_inicio').value;
 		dataType : 'json',
 		url: "/relatorio/time/abonado",
 		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
 		success: function(dataReturn){
-			google.charts.setOnLoadCallback(drawPieAbonados(dataReturn));
+			fillTableDetailAbono(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
 		}
 	});
-}
-
-function drawPieReprovados(dataReturn){
-	var aux = [];
-	
-	var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
-    
-    for(var i = 0; i < dataReturn.length; i++){
-    	aux = dataReturn[i];
-
-    	data.addRow([aux[0], aux[1]]);
-    }
-
-    var options = {title:'Top 5 - Mais reprovados no mês'};
-
-    var chart = new google.visualization.PieChart(document.getElementById('chartItensReprovados'));
-    chart.draw(data, options);
-}
-
-function drawPieAbonados(dataReturn){
-	var aux = [];
-	
-	var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
-    
-    for(var i = 0; i < dataReturn.length; i++){
-    	aux = dataReturn[i];
-
-    	data.addRow([aux[0], aux[2]]);
-    }
-
-    var options = {title:'Top 5 - Mais abonados no mês'};
-
-    var chart = new google.visualization.PieChart(document.getElementById('chartItensAbonados'));
-    chart.draw(data, options);
 }
