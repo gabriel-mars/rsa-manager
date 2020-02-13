@@ -23,7 +23,7 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 	public List<Object[]> getFalhasColab(Falha falha) {
 		Query query = manager.createNativeQuery("SELECT DISTINCT COUNT (F.falha_primaria) FILTER (WHERE F.colaborador = ?) AS falhas, F.falha_primaria "
 				+ "FROM falha F "
-				+ "WHERE F.centro_RSA = ? AND F.colaborador = ? AND DATE(F.data_falha) >= DATE(?) AND DATE(F.data_falha) <= DATE(?)"
+				+ "WHERE F.centro_RSA = ? AND F.colaborador = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY'))"
 				+ "GROUP BY F.falha_primaria")
 				.setParameter(1, falha.getColaborador())
 				.setParameter(2, falha.getCentroRsa())
@@ -37,7 +37,7 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 	@Override
 	public List<Object[]> getFalhasColabDetail(Falha falha) {
 		Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao "
-				+ "FROM falha F WHERE F.centro_RSA = ? AND F.colaborador = ? AND DATE(F.data_falha) >= DATE(?) AND DATE(F.data_falha) <= DATE(?)")
+				+ "FROM falha F WHERE F.centro_RSA = ? AND F.colaborador = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
 				.setParameter(1, falha.getCentroRsa())
 				.setParameter(2, falha.getColaborador())
 				.setParameter(3, falha.getData())
@@ -50,7 +50,7 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 	public List<Object[]> getFalhasTime(Falha falha) {
 		Query query = manager.createNativeQuery("SELECT DISTINCT COUNT (F.falha_primaria) FILTER (WHERE F.centro_RSA = ?) AS falhas, F.falha_primaria "
 				+ "FROM falha F "
-				+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(?) AND DATE(F.data_falha) <= DATE(?) "
+				+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "GROUP BY F.falha_primaria")
 				.setParameter(1, falha.getCentroRsa())
 				.setParameter(2, falha.getCentroRsa())
@@ -62,7 +62,7 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getFalhasTimeDetail(Falha falha) {
-		Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao FROM falha F WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(?) AND DATE(F.data_falha) <= DATE(?)")
+		Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao FROM falha F WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
 				.setParameter(1, falha.getCentroRsa())
 				.setParameter(2, falha.getData())
 				.setParameter(3, falha.getFalhaPrimaria()); // Data final de busca

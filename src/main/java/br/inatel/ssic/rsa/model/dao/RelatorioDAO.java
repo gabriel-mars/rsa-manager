@@ -22,7 +22,7 @@ public class RelatorioDAO implements RelatorioInterface{
 		Query query = manager.createNativeQuery("SELECT I.data_analise, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado' OR I.status = 'Aprovado') AS sum_itens_ap_re "
 				+ "FROM item I "
-				+ "WHERE I.centro_rsa = ? AND I.inspetor = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
+				+ "WHERE I.centro_rsa = ? AND I.inspetor = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "GROUP BY I.data_analise ORDER BY I.data_analise")
 				.setParameter(1, item.getCentroRsa())
 				.setParameter(2, item.getInspetor())
@@ -37,7 +37,7 @@ public class RelatorioDAO implements RelatorioInterface{
 		Query query = manager.createNativeQuery("SELECT I.data_analise, "
 				+ "COUNT (DISTINCT I.inspetor) FILTER (WHERE I.centro_rsa = ?) AS num_sup_rsa, "
 				+ "COUNT (I.status) FILTER (WHERE I.centro_rsa = ? AND I.status = 'Rejeitado' OR I.status = 'Aprovado') AS num_itens "
-				+ "FROM item I WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
+				+ "FROM item I WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "GROUP BY I.data_analise ORDER BY I.data_analise")
 				.setParameter(1, item.getCentroRsa())
 				.setParameter(2, item.getCentroRsa())
@@ -54,7 +54,7 @@ public class RelatorioDAO implements RelatorioInterface{
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados "
 				+ "FROM item I "
-				+ "WHERE I.inspetor = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?)")
+				+ "WHERE I.inspetor = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
 				.setParameter(1, item.getInspetor())
 				.setParameter(2, item.getDataAnalise())
 				.setParameter(3, item.getDataEnvio());
@@ -68,7 +68,7 @@ public class RelatorioDAO implements RelatorioInterface{
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados "
 				+ "FROM item I "
-				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?)")
+				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
 				.setParameter(1, item.getCentroRsa())
 				.setParameter(2, item.getDataAnalise())
 				.setParameter(3, item.getDataEnvio());
@@ -82,7 +82,7 @@ public class RelatorioDAO implements RelatorioInterface{
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado') AS itens_rejeitados, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados "
 				+ "FROM item I "
-				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
+				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "GROUP BY I.data_analise ORDER BY I.data_analise")
 				.setParameter(1, item.getCentroRsa())
 				.setParameter(2, item.getDataAnalise())
@@ -96,7 +96,7 @@ public class RelatorioDAO implements RelatorioInterface{
 		Query query = manager.createNativeQuery("SELECT COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado') AS itens_rejeitados, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados "
 				+ "FROM item I "
-				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?)")
+				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
 				.setParameter(1, item.getCentroRsa())
 				.setParameter(2, item.getDataAnalise())
 				.setParameter(3, item.getDataEnvio());
@@ -109,7 +109,7 @@ public class RelatorioDAO implements RelatorioInterface{
 		Query query = manager.createNativeQuery("SELECT COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado' OR I.status = 'Aprovado') AS sum_itens_ap_re "
 				+ "FROM item I "
-				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?)")
+				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
 				.setParameter(1, item.getCentroRsa())
 				.setParameter(2, item.getDataAnalise())
 				.setParameter(3, item.getDataEnvio());
@@ -123,7 +123,7 @@ public class RelatorioDAO implements RelatorioInterface{
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado' OR I.status = 'Aprovado') AS sum_itens_ap_re, "
 				+ "COUNT (I.status) AS sum_total "
 				+ "FROM item I "
-				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
+				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "GROUP BY I.inspetor "
 				+ "ORDER BY sum_itens_ap_re DESC")
 				.setParameter(1, item.getCentroRsa())
@@ -140,7 +140,7 @@ public class RelatorioDAO implements RelatorioInterface{
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados "
 				+ "FROM item I "
 				+ "WHERE I.centro_rsa = ? "
-				+ "AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
+				+ "AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "AND I.item != 'CHECKLIST CLEANUP' AND I.item NOT LIKE 'PENDÊNCIA%' "
 				+ "GROUP BY I.descricao "
 				+ "ORDER BY itens_rejeitados DESC "
@@ -159,7 +159,7 @@ public class RelatorioDAO implements RelatorioInterface{
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados "
 				+ "FROM item I "
 				+ "WHERE I.centro_rsa = ? "
-				+ "AND DATE(I.data_analise) >= DATE(?) AND DATE(I.data_analise) <= DATE(?) "
+				+ "AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "AND I.item != 'CHECKLIST CLEANUP' AND I.item NOT LIKE 'PENDÊNCIA%' "
 				+ "GROUP BY I.descricao "
 				+ "ORDER BY itens_abonados DESC "
