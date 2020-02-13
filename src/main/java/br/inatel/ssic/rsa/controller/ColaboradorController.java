@@ -110,43 +110,45 @@ public class ColaboradorController {
 		// Mês atual
 		List<Object[]> dadosMedia = relService.findItensByMes(item);
 		
-		aux = dadosMedia.get(0);
-		
-		aux2.setItem(aux[1].toString()); // Máximo do mês
-		
-		for(int i = 0; i < dadosMedia.size(); i++) {
-			aux = dadosMedia.get(i);
+		if(dadosMedia.size() > 0) {
+			aux = dadosMedia.get(0);
 			
-			media += Integer.parseInt(aux[1].toString());
-			totalMes += Integer.parseInt(aux[2].toString());
-		}
-		
-		aux2.setCentroRsa("" + totalMes); // Totoal de atividades do mês
-		aux2.setEmpresa("" + media); // Total de atividades AP + RE do mês
-		media = media / dadosMedia.size();
-		aux2.setAsp("" + media); // Média do mês
-		
-		// Último mês
-		item.setDataAnalise(dtf.format(lastMouth));
-		List<Object[]> dadosLastMouth = relService.findItensByMes(item);
-		
-		auxItem = dadosLastMouth.get(0);
-		aux3.setItem(auxItem[1].toString()); // Máximo do mês
-		
-		media = 0;
-		totalMes = 0;
+			aux2.setItem(aux[1].toString()); // Máximo do mês
+			
+			for(int i = 0; i < dadosMedia.size(); i++) {
+				aux = dadosMedia.get(i);
+				
+				media += Integer.parseInt(aux[1].toString());
+				totalMes += Integer.parseInt(aux[2].toString());
+			}
+			
+			aux2.setCentroRsa("" + totalMes); // Totoal de atividades do mês
+			aux2.setEmpresa("" + media); // Total de atividades AP + RE do mês
+			media = media / dadosMedia.size();
+			aux2.setAsp("" + media); // Média do mês
+			
+			// Último mês
+			item.setDataAnalise(dtf.format(lastMouth));
+			List<Object[]> dadosLastMouth = relService.findItensByMes(item);
+			
+			auxItem = dadosLastMouth.get(0);
+			aux3.setItem(auxItem[1].toString()); // Máximo do mês
+			
+			media = 0;
+			totalMes = 0;
 
-		for(int i = 0; i < dadosLastMouth.size(); i++) {
-			auxItem = dadosLastMouth.get(i);
+			for(int i = 0; i < dadosLastMouth.size(); i++) {
+				auxItem = dadosLastMouth.get(i);
+				
+				media += Integer.parseInt(auxItem[1].toString());
+				totalMes += Integer.parseInt(auxItem[2].toString());
+			}
 			
-			media += Integer.parseInt(auxItem[1].toString());
-			totalMes += Integer.parseInt(auxItem[2].toString());
+			aux3.setCentroRsa("" + totalMes); // Totoal de atividades do mês
+			aux3.setEmpresa("" + media); // Total de atividades AP + RE do mês
+			media = media / dadosLastMouth.size();
+			aux3.setAsp("" + media); // Média do mês
 		}
-		
-		aux3.setCentroRsa("" + totalMes); // Totoal de atividades do mês
-		aux3.setEmpresa("" + media); // Total de atividades AP + RE do mês
-		media = media / dadosLastMouth.size();
-		aux3.setAsp("" + media); // Média do mês
 		
 		model.addAttribute("item", aux2);
 		model.addAttribute("item2", aux3);
