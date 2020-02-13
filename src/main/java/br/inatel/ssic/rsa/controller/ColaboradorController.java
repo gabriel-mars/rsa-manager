@@ -194,10 +194,16 @@ public class ColaboradorController {
 	
 	@PostMapping("/colaborador/cadastro/novo")
 	public String salvarSolicitacao(Colaborador colaborador, RedirectAttributes attr) {
-		colaborador.setDataInicioRSA("");
-		service.save(colaborador);
 		
-		attr.addFlashAttribute("success", "Solicitação realizada.");
-		return "redirect:/";
+		if(colaborador.getSenha().intern().equals(colaborador.getDataInicioRSA())) {
+			colaborador.setDataInicioRSA("");
+			service.save(colaborador);
+			
+			attr.addFlashAttribute("success", "Solicitação realizada.");
+			return "redirect:/";
+		} else {
+			attr.addFlashAttribute("fail", "As senhas devem ser correspondentes.");
+			return "redirect:/colaborado/solicitar";
+		}
 	}
 }
