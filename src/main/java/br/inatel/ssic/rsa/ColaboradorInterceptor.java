@@ -18,7 +18,9 @@ public class ColaboradorInterceptor extends HandlerInterceptorAdapter{
 				uri.contains("js") ||
 				uri.contains("img") ||
 				uri.contains("resources") ||
-				uri.endsWith("/entrar")){
+				uri.endsWith("/entrar") ||
+				uri.endsWith("/solicitar") ||
+				uri.endsWith("/novo")){
             return true;
         }
 		

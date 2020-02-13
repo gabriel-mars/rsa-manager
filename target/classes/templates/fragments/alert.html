@@ -1,0 +1,18 @@
+<div th:if="${fail} != null">
+	<div id="popup2" class="overlay" role="alert">
+	    <div class="popup2">
+	        <h2>Oops!</h2>
+	        <a class="close" href="javascript:window.location.reload(true)">&times;</a>
+	        <strong th:text="${fail}"></strong> 
+	    </div>
+	</div>
+</div>
+
+<div th:if="${success} != null">
+	<div id="popup1" class="overlay" role="alert">
+	    <div class="popup">
+	        <a class="close" href="javascript:window.location.reload(true)">&times;</a>
+	        <strong th:text="${success}"></strong> 
+	    </div>
+	</div>
+</div>

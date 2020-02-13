@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	    	<div class="container row">
+	    		<h3 class="white-black">Relatório por colaborador</h3>
+		        <div th:replace="fragments/alert"></div>
+	        	<form>
+	        		<div class="row">
+	        			<div class="file-field input-field col s4">
+				      		<select required="true" onchange="buscarColaboradores(this.value)" id="organizacao">
+						    	<option value="" disabled selected>Organização</option>
+						      	<option value="ERICSSON">Ericsson</option>
+						      	<option value="FITEC">Fitec</option>
+						      	<option value="INATEL">Inatel</option>
+						    </select>
+					    </div>
+					    <div class="file-field input-field col s4">
+				      		<select required="true" id="colaborador" name="colaborador">
+						    	<option value="" disabled selected>Colaborador</option>
+						    </select>
+					    </div>
+					    <div class="input-field col s4">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true">
+			          		<label for="data_inicio">Mês</label>
+			        	</div>
+	        		</div>
+	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getDados()">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+			  	</form>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div id="chartAtividadeDia" style="height: 300px; width: 100%;"></div>
+	        	<div class="divider"></div>
+	        	<table class="chartPieTime">
+			    	<tr>
+			        	<td><div id="colab_chart_div" style="width: 600px; height: 500px;"></div></td>
+			        	<td><div id="time_chart_div" style="width: 600px; height: 500px;"></div></td>
+			      	</tr>
+			    </table>
+	        </div>
+	        <script>
+				$(document).ready(function(){
+			    	$('select').formSelect();
+			    	$('.datepicker').datepicker({
+			    		format: 'dd/mm/yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>

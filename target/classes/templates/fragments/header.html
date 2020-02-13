@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<div class="navbar-fixed" th:fragment="cabecalho">
+			<ul id="dropdownColaboradores" class="dropdown-content">
+				<li><a th:href="@{/colaborador/cadastro}">Novo colaborador</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/colaborador/listar}">Ver colaboradores</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/colaborador/senha}">Senha</a></li>
+			</ul>
+			
+			<ul id="dropdownAtividades" class="dropdown-content">
+				<li><a th:href="@{/atividade/cadastro}">Cadastrar atividades</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/atividade/diario}">Atividades diárias</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/atividade/mensal}">Atividades mensais</a></li>
+			</ul>
+				
+			<ul id="dropdownRelatorios" class="dropdown-content">
+				<li><a th:href="@{/relatorio/individual}">Relatório individual</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/relatorio/time}">Relatório time - Mensal</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/relatorio/diario}">Relatório time - Diário</a></li>
+			</ul>
+			
+			<ul id="dropdownFalhas" class="dropdown-content">
+				<li><a th:href="@{/falha/cadastro}">Cadastrar</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/falha/individual}">Por Colaborador</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/falha/time}">Por Time</a></li>
+			</ul>
+			
+			<ul id="dropdownItens" class="dropdown-content">
+				<li><a th:href="@{/relatorio/item/reprovado}">Rejeitados</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/relatorio/item/abonado}">Abonados</a></li>
+			</ul>
+			
+			<nav id="nav" >
+				<div class="nav-wrapper">
+			    	<a th:href="@{/dashboard}" class="brand-logo">
+			    		<img alt="Logo" th:src="@{/img/rsa.jpeg}" width="65" height="65">
+			    	</a>
+			      	<ul id="nav-mobile" class="right hide-on-med-and-down">
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownColaboradores">Colaboradores<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownAtividades">Atividades<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownRelatorios">Relatórios<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownItens">Itens<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownFalhas">Falhas<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a class="modal-trigger" href="#modal1">Sair</a></li>
+			      	</ul>
+			    </div>
+			</nav>
+        	
+        	<script>
+        		$(document).ready(function(){
+        		    $('.sidenav').sidenav();
+        		    $('.dropdown-trigger').dropdown();
+        		});
+        	</script>
+        	<!-- End of Topbar -->
+		</div>
+	</body>
+</html>

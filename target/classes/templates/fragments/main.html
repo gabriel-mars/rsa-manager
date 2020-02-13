@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	    	<div class="container row">
+	    		<h3 class="white-black">Dashboard</h3>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div class="col s12 m6">
+			    	<div class="card horizontal">
+			      		<div class="card-stacked">
+			        		<div class="card-content">
+			        			<span class="card-title">Mês atual</span>
+			        			<p>Descrição dos itens tratados pelo time RSA:</p>
+			        			<br/>
+			        			<p><u><strong>Total</strong></u>: <span th:text="${item.centroRsa}"></span></p>
+			        			<p><u><strong>Ap + Re*</strong></u>: <span th:text="${item.empresa}"></span></p>
+			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item.item}"></span></p>
+			          			<p><u><strong>Média</strong></u>: <span th:text="${item.asp}"></span></p>
+			        		</div>
+			        		<div class="card-action">
+			        			<a th:href="@{/atividade/diario}">Diário</a>
+			        		</div>
+			      		</div>
+			    	</div>
+		 	 	</div>
+		 	 	
+		 	 	<div class="col s12 m6">
+			    	<div class="card horizontal">
+			      		<div class="card-stacked">
+			        		<div class="card-content">
+			        			<span class="card-title">Último mês</span>
+			        			<p>Descrição dos itens tratados pelo time RSA:</p>
+			        			<br/>
+			        			<p><u><strong>Total</strong></u>: <span th:text="${item2.centroRsa}"></span></p>
+			        			<p><u><strong>Ap + Re*</strong></u>: <span th:text="${item2.empresa}"></span></p>
+			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item2.item}"></p>
+			          			<p><u><strong>Média</strong></u>: <span th:text="${item2.asp}"></p>
+			        		</div>
+			        		<div class="card-action">
+			          			<a th:href="@{/atividade/mensal}">Outros meses</a>
+			        		</div>
+			      		</div>
+			    	</div>
+		 	 	</div>
+	        </div>
+	        <div class="container row">
+	        <div class="divider"></div>
+	        	<blockquote>
+	        		<p><strong>Ap + Re*</strong>: Somatório de itens aprovados e reprovados do time RSA Inatel.</p>
+	       			<p>Os dados de <strong>máximo e média</strong> apontados, consideram apenas os números de <u>Ap+Re</u>.</p> 	
+		    	</blockquote>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div class="col s12 m6">
+			    	<div class="card horizontal">
+			      		<div class="card-stacked">
+			        		<div class="card-content">
+			        			<span class="card-title">Itens reprovados</span>
+			        			<p>Consulte os itens mais <strong>reprovados</strong> pelo time RSA Inatel.</p>
+			        		</div>
+			        		<div class="card-action">
+			        			<a th:href="@{/relatorio/item/reprovado}">Relatório</a>
+			        		</div>
+			      		</div>
+			    	</div>
+		 	 	</div>
+		 	 	
+		 	 	<div class="col s12 m6">
+			    	<div class="card horizontal">
+			      		<div class="card-stacked">
+			        		<div class="card-content">
+			        			<span class="card-title">Itens abonados</span>
+			        			<p>Consulte os itens mais <strong>abonados</strong> pelo time RSA Inatel.</p>
+			        		</div>
+			        		<div class="card-action">
+			          			<a th:href="@{/relatorio/item/abonado}">Relatório</a>
+			        		</div>
+			      		</div>
+			    	</div>
+		 	 	</div>
+	        </div>
+	    </section>
+	</body>
+</html>

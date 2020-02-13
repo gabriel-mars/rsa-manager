@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	        <div class=" container row">
+	        	<div th:replace="fragments/alert"></div>
+	        	<h3 class="white-black">Novo Colaborador</h3>
+			    <form class="col s12" th:action="@{${colaborador.id == null} ? @{/colaborador/salvar} : @{/colaborador/update}}" th:object="${colaborador}" method="POST">
+			    	<div class="row">
+			        	<div class="input-field col s6">
+			        		<input id="id-pessoa" type="hidden" th:field="*{id}" />
+			          		<input id="first_name" type="text" class="validate" required="true" th:field="*{nome}">
+			          		<label for="first_name">Nome</label>
+			        	</div>
+			        	<div class="input-field col s6">
+			          		<input id="email" type="email" class="validate" required="true" th:field="*{email}">
+			          		<label for="email">E-mail</label>
+			          		<span class="helper-text" data-error="Incorreto!" data-success="Ok!"></span>
+			        	</div>
+			      	</div>
+			      	<div class="row">
+			        	<div class="input-field col s4">
+			          		<input id="cpf" type="text" class="cpf validate" required="true" th:field="*{cpf}">
+			          		<label for="cpf">CPF</label>
+			        	</div>
+			        	<div class="input-field col s4">
+			          		<input id="phone" type="text" class="telefone validate" required="true" th:field="*{telefone}">
+			          		<label for="phone">Telefone</label>
+			        	</div>
+			        	<div class="input-field col s4">
+			          		<input id="id_ericsson" type="text" class="validate" required="true" th:field="*{idEricsson}" maxlength="7">
+			          		<label for="id_ericsson">ID Ericsson</label>
+			        	</div>
+			      	</div>
+			      	<div class="row">
+			        	<div class="input-field col s6">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true" th:field="*{dataInicioRSA}">
+			          		<label for="data_inicio">Início no RSA</label>
+			        	</div>
+			      	    <div class="input-field col s6">
+			          		<select required="true" th:field="*{organizacao}">
+						    	<option value="" disabled selected>Organização</option>
+						      	<option value="Ericsson">Ericsson</option>
+						      	<option value="Fitec">Fitec</option>
+						      	<option value="Inatel">Inatel</option>
+						    </select>
+			        	</div>
+			      	</div>
+			      	
+			    	<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+				</form>
+			</div>
+			<script>
+				$(document).ready(function(){
+			    	$('select').formSelect();			    	
+			    	$('.datepicker').datepicker({
+			    		format: 'dd/mm/yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>		

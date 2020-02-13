@@ -31,6 +31,14 @@ public class NavigationController {
 	}
 	
 	// Métodos Colaborador
+	@GetMapping("/colaborado/solicitar")
+	public String getSolicitacaoCadastro(ModelMap model) {
+		Colaborador colaborador = new Colaborador();
+		model.addAttribute("colaborador", colaborador);
+		
+		return "colaborador/solicitar";
+	}
+	
 	@GetMapping("/colaborador/cadastro")
 	public String getCadastroColaborador(ModelMap model) {
 		Colaborador colaborador = new Colaborador();

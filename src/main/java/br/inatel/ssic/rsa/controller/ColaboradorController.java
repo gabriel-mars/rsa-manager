@@ -191,4 +191,13 @@ public class ColaboradorController {
 		attr.addFlashAttribute("success", "Colaborador atualizado.");
 		return "redirect:/colaborador/cadastro";
 	}
+	
+	@PostMapping("/colaborador/cadastro/novo")
+	public String salvarSolicitacao(Colaborador colaborador, RedirectAttributes attr) {
+		colaborador.setDataInicioRSA("");
+		service.save(colaborador);
+		
+		attr.addFlashAttribute("success", "Solicitação realizada.");
+		return "redirect:/";
+	}
 }

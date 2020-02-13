@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	    	<div class="container row">
+	    		<h3 class="white-black">Relatório do time RSA - Diário</h3>
+		        <div th:replace="fragments/alert"></div>
+	        	<form>
+	        		<div class="row">
+	        			<div class="file-field input-field col s6">
+				      		<select required="true" id="organizacao">
+						    	<option value="" disabled selected>Organização</option>
+						      	<option value="ERICSSON">Ericsson</option>
+						      	<option value="FITEC">Fitec</option>
+						      	<option value="INATEL">Inatel</option>
+						    </select>
+					    </div>
+					    <div class="input-field col s6">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true">
+			          		<label for="data_inicio">Dia para consulta</label>
+			        	</div>
+	        		</div>
+	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getDadosDiario()">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+			  	</form>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div id="chartAtividadeDiario" style="height: 400px; width: 100%;"></div>
+	        	<div class="divider"></div>
+	        	<table class="chartPieTime">
+			    	<tr>
+			        	<td><div id="chartItensTrabalhados" style="width: 600px; height: 500px;"></div></td>
+			        	<td><div id="chartItensTotais" style="width: 600px; height: 500px;"></div></td>
+			      	</tr>
+			    </table>
+			    <div class="divider"></div>
+			    <div id="chartRankDiario" style="height: 400px; width: 100%;"></div>
+			    <div class="divider"></div>
+			    <div id="chartRankAbonoDiario" style="height: 400px; width: 100%;"></div>
+			    <blockquote>
+	        		<strong>*Ap+Re:</strong> somatória dos itens aprovados com os reprovados	    	
+			    </blockquote>
+	        </div>
+	        <script>
+				$(document).ready(function(){
+			    	$('select').formSelect();
+			    	$('.datepicker').datepicker({
+			    		format: 'dd/mm/yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>
