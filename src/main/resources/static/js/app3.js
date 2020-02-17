@@ -55,6 +55,20 @@ function fillTableDetailReprovado(values){
 	}
 }
 
+function fillTableFalhasPeriodo(values){
+	for (var i = 0; i < values.length; i++){
+		var aux = values[i];
+		
+		$('#tabelaSemanal').append('<tr>' +
+				'<td>' + aux[0] + '</td>' +
+				'<td>' + aux[4] + '</td>' +
+				'<td>' + aux[1] + '</td>' +
+				'<td>' + aux[2] + '</td>' +
+				'<td>' + aux[3] + '</td>' +
+				'</tr>');	
+	}
+}
+
 function getDadosAbono() {	
 	$("#tabelaAbonados tr").remove();
 	
@@ -128,27 +142,23 @@ function getDadosAbonado(){
 }
 
 function getFalhasSemanal(){
-	let selectColab = document.getElementById('colaborador');
 	let data_inicial = document.getElementById('data_inicio').value;
 	let data_final = document.getElementById('data_fim').value;
 	
-	let strColab = selectColab.options[selectColab.selectedIndex].value;
-	
 	ary = [];
 	
-	ary.push({ DataInicial: data_inicial, DataFinal: data_final, Colab: strColab });
+	ary.push({ DataInicial: data_inicial, DataFinal: data_final });
 	
 	$.ajax({
 		type: "POST",
 		contentType : 'application/json; charset=utf-8',
 		dataType : 'json',
-		url: "/falha/semanal/individual",
+		url: "/falha/periodo/individual",
 		data: JSON.stringify(ary),
 		beforeSend: function(){
 			$(".loader").show();
 		},
 		success: function(dataReturn){
-			// Set a callback to run when the Google Visualization API is loaded.
 			google.charts.setOnLoadCallback(drawPie(dataReturn));
 		},
 		complete: function(data){
@@ -157,6 +167,39 @@ function getFalhasSemanal(){
 	});
 }
 
+function getDataFalhasPeriodo(){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/periodo/individual/detail",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			fillTableFalhasPeriodo(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
 function drawPie(values){
-	console.log(values);
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+
+    for(var i = 0; i < values.length; i++){
+    	aux = values[i];
+
+    	data.addRow([aux[1], aux[0]]);
+    }
+
+    var options = {title:'Falhas totais no período - Time'};
+
+    var chart = new google.visualization.PieChart(document.getElementById('chartFalhasSemanal'));
+    chart.draw(data, options);
+    getDataFalhasPeriodo();
 }

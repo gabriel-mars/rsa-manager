@@ -148,13 +148,7 @@ public class NavigationController {
 	}
 	
 	@GetMapping("/falha/semanal/individual")
-	public String getFalhaColabSemanal(ModelMap model, HttpSession session) {
-		Colaborador sessaoAtual = new Colaborador();
-		
-		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
-		
-		List<Item> colaboradores = service.findByAtividade(sessaoAtual.getOrganizacao().toUpperCase());
-		model.addAttribute("colaboradores", colaboradores);
+	public String getFalhaColabSemanal() {
 		
 		return "falha/semanal";
 	}

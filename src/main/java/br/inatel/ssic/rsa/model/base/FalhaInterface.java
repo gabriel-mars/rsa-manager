@@ -14,8 +14,4 @@ public interface FalhaInterface {
 	List<Object[]> getFalhasColabDetail(Falha falha);
 	
 	List<Object[]> getFalhasTimeDetail(Falha falha);
-	
-	List<Object[]> getFalhasColabSemanal(Falha falha);
-	
-	List<Object[]> getFalhasColabDetailSemanal(Falha falha);
 }

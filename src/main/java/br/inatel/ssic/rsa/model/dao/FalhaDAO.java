@@ -62,39 +62,12 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getFalhasTimeDetail(Falha falha) {
-		Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao "
+		Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao, F.colaborador, F.falha_primaria "
 				+ "FROM falha F "
 				+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
 				.setParameter(1, falha.getCentroRsa())
 				.setParameter(2, falha.getData())
 				.setParameter(3, falha.getFalhaPrimaria()); // Data final de busca
-		return query.getResultList();
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Object[]> getFalhasColabSemanal(Falha falha) {
-		Query query = manager.createNativeQuery("SELECT DISTINCT COUNT (F.falha_primaria) FILTER (WHERE F.colaborador = ?) AS falhas, F.falha_primaria "
-				+ "FROM falha F "
-				+ "WHERE F.centro_RSA = ? AND F.colaborador = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY'))"
-				+ "GROUP BY F.falha_primaria")
-				.setParameter(1, falha.getColaborador())
-				.setParameter(2, falha.getCentroRsa())
-				.setParameter(3, falha.getColaborador())
-				.setParameter(4, falha.getData())
-				.setParameter(5, falha.getFalhaPrimaria()); // Data final de busca
-		return query.getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Object[]> getFalhasColabDetailSemanal(Falha falha) {
-		Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao "
-				+ "FROM falha F WHERE F.centro_RSA = ? AND F.colaborador = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
-				.setParameter(1, falha.getCentroRsa())
-				.setParameter(2, falha.getColaborador())
-				.setParameter(3, falha.getData())
-				.setParameter(4, falha.getFalhaPrimaria()); // Data final de busca
 		return query.getResultList();
 	}
 }

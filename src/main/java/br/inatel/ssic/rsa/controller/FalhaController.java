@@ -165,27 +165,52 @@ public class FalhaController {
 		return data;
 	}
 	
-	@PostMapping("/falha/semanal/individual")
+	@PostMapping("/falha/periodo/individual")
 	@ResponseBody
-	public String getFalhasIndividuaisSemanal(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+	public String getFalhasSemanal(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
-		String colab, dataInicial, dataFinal = null;
+		String dataInicial, dataFinal = null;
 		Colaborador sessaoAtual = new Colaborador();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
 		
 		obj = jsonArray.optJSONObject(0);
-		colab = obj.getString("Colab");
 		dataInicial = obj.getString("DataInicial");
 		dataFinal = obj.getString("DataFinal");
 		
 		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
 		falha.setData(dataInicial);
 		falha.setFalhaPrimaria(dataFinal);
-		falha.setColaborador(colab);
 		
-		List<Object[]> dados = service.getFalhasColabSemanal(falha);
+		List<Object[]> dados = service.getFalhasPeriodo(falha);
+		
+		String data = new Gson().toJson(dados);	
+
+		model.addAttribute("falha", falha);
+		
+		return data;
+	}
+	
+	@PostMapping("/falha/periodo/individual/detail")
+	@ResponseBody
+	public String getFalhasSemanalDetail(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String dataInicial, dataFinal = null;
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		obj = jsonArray.optJSONObject(0);
+		dataInicial = obj.getString("DataInicial");
+		dataFinal = obj.getString("DataFinal");
+		
+		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
+		falha.setData(dataInicial);
+		falha.setFalhaPrimaria(dataFinal);
+		
+		List<Object[]> dados = service.getFalhaPeriodoDetail(falha);
 		
 		String data = new Gson().toJson(dados);	
 
