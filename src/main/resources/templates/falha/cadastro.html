@@ -8,19 +8,26 @@
 	        	<h3 class="white-black">Cadastro Falha</h3>
 			    <form class="col s12" th:action="@{/falha/salvar}" th:object="${falha}" method="POST">
 			    	<div class="row">
-			        	<div class="input-field col s4">
+			        	<div class="input-field col s3">
 			          		<input id="first_name" type="text" class="validate" required="true" th:field="*{site}" maxlength="10">
 			          		<label for="first_name">Site</label>
 			        	</div>
-			        	<div class="input-field col s4">
+			        	<div class="input-field col s3">
 			          		<select required="true" th:field="*{colaborador}">
 			          			<option th:each="c : ${colaboradores}"
                                     	th:value="${c}" th:text="${c}">Colaborador</option>
 			          		</select>
 			        	</div>
-			        	<div class="input-field col s4">
+			        	<div class="input-field col s3">
 			          		<input id="data_inicio" type="text" class="datepicker" required="true" th:field="*{data}">
 			          		<label for="data_inicio">Data</label>
+			        	</div>
+			        	<div class="input-field col s3">
+			        		<select required="true" th:field="*{reportado}">
+						    	<option value="INATEL" selected>Inatel</option>
+						    	<option value="ERICSSON">Ericsson</option>
+						      	<option value="OMR - CLIENTE">OMR - Cliente</option>
+						    </select>
 			        	</div>
 			      	</div>
 			      	<div class="row">

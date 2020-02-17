@@ -35,6 +35,9 @@ public class Falha extends AbstractEntity<Long> {
 	
 	@Column(name = "centro_rsa", nullable = false, length = 8)
 	private String centroRsa;
+	
+	@Column(name = "reportado", nullable = false, length = 14)
+	private String reportado;
 
 	public String getSite() {
 		return site;
@@ -98,5 +101,13 @@ public class Falha extends AbstractEntity<Long> {
 
 	public void setCentroRsa(String centroRsa) {
 		this.centroRsa = centroRsa;
+	}
+
+	public String getReportado() {
+		return reportado;
+	}
+
+	public void setReportado(String reportado) {
+		this.reportado = reportado;
 	}
 }
