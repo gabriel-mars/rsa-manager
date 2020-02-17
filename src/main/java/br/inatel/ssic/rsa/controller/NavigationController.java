@@ -147,6 +147,18 @@ public class NavigationController {
 		return "falha/time";
 	}
 	
+	@GetMapping("/falha/semanal/individual")
+	public String getFalhaColabSemanal(ModelMap model, HttpSession session) {
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		List<Item> colaboradores = service.findByAtividade(sessaoAtual.getOrganizacao().toUpperCase());
+		model.addAttribute("colaboradores", colaboradores);
+		
+		return "falha/semanal";
+	}
+	
 	// Métodos para análise de Itens
 	@GetMapping("/relatorio/item/reprovado")
 	public String getItensReprovados() {

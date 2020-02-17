@@ -89,4 +89,16 @@ public class FalhaService implements FalhaInterface{
 		
 		return dao.getFalhasTimeDetail(falha);
 	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> getFalhasColabSemanal(Falha falha) {
+		return dao.getFalhasColabSemanal(falha);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> getFalhasColabDetailSemanal(Falha falha) {
+		return dao.getFalhasColabDetailSemanal(falha);
+	}
 }

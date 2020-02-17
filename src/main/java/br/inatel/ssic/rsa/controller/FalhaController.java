@@ -164,4 +164,33 @@ public class FalhaController {
 	
 		return data;
 	}
+	
+	@PostMapping("/falha/semanal/individual")
+	@ResponseBody
+	public String getFalhasIndividuaisSemanal(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String colab, dataInicial, dataFinal = null;
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		obj = jsonArray.optJSONObject(0);
+		colab = obj.getString("Colab");
+		dataInicial = obj.getString("DataInicial");
+		dataFinal = obj.getString("DataFinal");
+		
+		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
+		falha.setData(dataInicial);
+		falha.setFalhaPrimaria(dataFinal);
+		falha.setColaborador(colab);
+		
+		List<Object[]> dados = service.getFalhasColabSemanal(falha);
+		
+		String data = new Gson().toJson(dados);	
+
+		model.addAttribute("falha", falha);
+		
+		return data;
+	}
 }

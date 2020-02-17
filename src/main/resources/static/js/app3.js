@@ -126,3 +126,37 @@ function getDadosAbonado(){
 		}
 	});
 }
+
+function getFalhasSemanal(){
+	let selectColab = document.getElementById('colaborador');
+	let data_inicial = document.getElementById('data_inicio').value;
+	let data_final = document.getElementById('data_fim').value;
+	
+	let strColab = selectColab.options[selectColab.selectedIndex].value;
+	
+	ary = [];
+	
+	ary.push({ DataInicial: data_inicial, DataFinal: data_final, Colab: strColab });
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/semanal/individual",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			// Set a callback to run when the Google Visualization API is loaded.
+			google.charts.setOnLoadCallback(drawPie(dataReturn));
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function drawPie(values){
+	console.log(values);
+}
