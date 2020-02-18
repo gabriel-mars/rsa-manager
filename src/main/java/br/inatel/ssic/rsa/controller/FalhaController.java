@@ -170,7 +170,7 @@ public class FalhaController {
 	public String getFalhasSemanal(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
-		String dataInicial, dataFinal = null;
+		String org, dataInicial, dataFinal = null;
 		Colaborador sessaoAtual = new Colaborador();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
@@ -178,10 +178,14 @@ public class FalhaController {
 		obj = jsonArray.optJSONObject(0);
 		dataInicial = obj.getString("DataInicial");
 		dataFinal = obj.getString("DataFinal");
+		org = obj.getString("Org");
 		
 		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
 		falha.setData(dataInicial);
 		falha.setFalhaPrimaria(dataFinal);
+		falha.setReportado(org);
+		
+		System.out.println(org);
 		
 		List<Object[]> dados = service.getFalhasPeriodo(falha);
 		
@@ -197,7 +201,7 @@ public class FalhaController {
 	public String getFalhasSemanalDetail(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
-		String dataInicial, dataFinal = null;
+		String org, dataInicial, dataFinal = null;
 		Colaborador sessaoAtual = new Colaborador();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
@@ -205,6 +209,8 @@ public class FalhaController {
 		obj = jsonArray.optJSONObject(0);
 		dataInicial = obj.getString("DataInicial");
 		dataFinal = obj.getString("DataFinal");
+		org = obj.getString("Org");
+		falha.setReportado(org);
 		
 		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
 		falha.setData(dataInicial);

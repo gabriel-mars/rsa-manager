@@ -17,14 +17,14 @@
 			          		<label for="data_fim">Fim</label>
 			        	</div>
 	        		</div>
-	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getFalhasSemanal()">Enviar
+	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getFalhasInatel()">Enviar
 					    <i class="material-icons right">send</i>
 					</button>
 			  	</form>
 	        </div>
 	        <div class="container row">
 	        	<div class="divider"></div>
-	        	<div id="chartFalhasSemanal" style="height: 400px; width: 100%;"></div>
+	        	<div id="chartFalhasInatel" style="height: 400px; width: 100%;"></div>
 	        </div>
 	        <div class="row" style="padding: 5%;">
 	        	<div class="divider"></div>
@@ -38,7 +38,45 @@
 			              	<th>Descrição</th>
 			          	</tr>
 	        		</thead>
-	        		<tbody id="tabelaSemanal"></tbody>
+	        		<tbody id="tabelaFalhasInatel"></tbody>
+	      		</table>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div id="chartFalhasEricsson" style="height: 400px; width: 100%;"></div>
+	        </div>
+	        <div class="row" style="padding: 5%;">
+	        	<div class="divider"></div>
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Site</th>
+			              	<th>Colaborador</th>
+			              	<th>Data</th>
+			              	<th>FS*</th>
+			              	<th>Descrição</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaFalhasEricsson"></tbody>
+	      		</table>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div id="chartFalhasOMR" style="height: 400px; width: 100%;"></div>
+	        </div>
+	        <div class="row" style="padding: 5%;">
+	        	<div class="divider"></div>
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Site</th>
+			              	<th>Colaborador</th>
+			              	<th>Data</th>
+			              	<th>FS*</th>
+			              	<th>Descrição</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaFalhasOMR"></tbody>
 	      		</table>
 	        </div>
 	        <div class="container row">

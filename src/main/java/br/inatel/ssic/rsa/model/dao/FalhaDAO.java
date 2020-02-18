@@ -48,26 +48,51 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getFalhasTime(Falha falha) {
-		Query query = manager.createNativeQuery("SELECT DISTINCT COUNT (F.falha_primaria) FILTER (WHERE F.centro_RSA = ?) AS falhas, F.falha_primaria "
-				+ "FROM falha F "
-				+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
-				+ "GROUP BY F.falha_primaria")
-				.setParameter(1, falha.getCentroRsa())
-				.setParameter(2, falha.getCentroRsa())
-				.setParameter(3, falha.getData())
-				.setParameter(4, falha.getFalhaPrimaria()); // Data final de busca
-		return query.getResultList();
+		if(falha.getReportado() == null) {
+			Query query = manager.createNativeQuery("SELECT DISTINCT COUNT (F.falha_primaria) FILTER (WHERE F.centro_RSA = ?) AS falhas, F.falha_primaria "
+					+ "FROM falha F "
+					+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
+					+ "GROUP BY F.falha_primaria")
+					.setParameter(1, falha.getCentroRsa())
+					.setParameter(2, falha.getCentroRsa())
+					.setParameter(3, falha.getData())
+					.setParameter(4, falha.getFalhaPrimaria()); // Data final de busca
+			return query.getResultList();
+		} else {
+			Query query = manager.createNativeQuery("SELECT DISTINCT COUNT (F.falha_primaria) FILTER (WHERE F.centro_RSA = ?) AS falhas, F.falha_primaria "
+					+ "FROM falha F "
+					+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY')) AND F.reportado = ? "
+					+ "GROUP BY F.falha_primaria")
+					.setParameter(1, falha.getCentroRsa())
+					.setParameter(2, falha.getCentroRsa())
+					.setParameter(3, falha.getData())
+					.setParameter(4, falha.getFalhaPrimaria())
+					.setParameter(5, falha.getReportado()); // Data final de busca
+			return query.getResultList();
+		}
+		
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getFalhasTimeDetail(Falha falha) {
-		Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao, F.colaborador, F.falha_primaria "
-				+ "FROM falha F "
-				+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
-				.setParameter(1, falha.getCentroRsa())
-				.setParameter(2, falha.getData())
-				.setParameter(3, falha.getFalhaPrimaria()); // Data final de busca
-		return query.getResultList();
+		if(falha.getReportado() == null) {
+			Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao, F.colaborador, F.falha_primaria "
+					+ "FROM falha F "
+					+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
+					.setParameter(1, falha.getCentroRsa())
+					.setParameter(2, falha.getData())
+					.setParameter(3, falha.getFalhaPrimaria()); // Data final de busca
+			return query.getResultList();
+		} else {
+			Query query = manager.createNativeQuery("SELECT F.site, F.data_falha, F.falha_secundaria, F. descricao, F.colaborador, F.falha_primaria "
+					+ "FROM falha F "
+					+ "WHERE F.centro_RSA = ? AND DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY')) AND F.reportado = ?")
+					.setParameter(1, falha.getCentroRsa())
+					.setParameter(2, falha.getData())
+					.setParameter(3, falha.getFalhaPrimaria())
+					.setParameter(4, falha.getReportado()); // Data final de busca
+			return query.getResultList();
+		}
 	}
 }
