@@ -358,4 +358,62 @@ public class RelatorioController {
 		
 		return data;
 	}
+	
+	@PostMapping("/relatorio/diario/trabalhado")
+	@ResponseBody
+	public String getItensTrabalhadosDario(@RequestBody String ary, Item item, ModelMap model) throws JSONException {
+		Object[] aux = null;
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		JSONObject auxJson = new JSONObject();
+		String org, date = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		date = obj.getString("Data");
+		
+		item.setCentroRsa(org);
+		item.setDataAnalise(date);
+		
+		List<Object[]> dados = service.findItensTrabalhadosDiario(item);
+		
+		for(int i = 0; i < dados.size(); i++) {
+			aux = dados.get(i);
+			
+			auxJson.put(aux[0].toString(), aux[1]);
+		}
+
+		model.addAttribute("item", item);
+		
+		return auxJson.toString();
+	}
+	
+	@PostMapping("/relatorio/diario/total")
+	@ResponseBody
+	public String getItensTotaisDiario(@RequestBody String ary, Item item, ModelMap model) throws JSONException {
+		Object[] aux = null;
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		JSONObject auxJson = new JSONObject();
+		String org, date = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		date = obj.getString("Data");
+		
+		item.setCentroRsa(org);
+		item.setDataAnalise(date);
+		
+		List<Object[]> dados = service.findItensTotaisDiario(item);
+		
+		for(int i = 0; i < dados.size(); i++) {
+			aux = dados.get(i);
+			
+			auxJson.put(aux[0].toString(), aux[1]);
+		}
+
+		model.addAttribute("item", item);
+		
+		return auxJson.toString();
+	}
 }

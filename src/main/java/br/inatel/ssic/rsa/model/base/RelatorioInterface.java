@@ -24,4 +24,8 @@ public interface RelatorioInterface {
 	List<Object[]> findByMaisRejeitados(Item item);
 	
 	List<Object[]> findByMaisAbonados(Item item);
+	
+	List<Object[]> findItensTrabalhadosDiario(Item item);
+	
+	List<Object[]> findItensTotaisDiario(Item item);
 }

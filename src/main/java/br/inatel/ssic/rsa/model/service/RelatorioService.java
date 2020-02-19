@@ -265,4 +265,16 @@ public class RelatorioService implements RelatorioInterface{
 		
 		return dao.findByMaisAbonados(item);
 	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> findItensTrabalhadosDiario(Item item) {
+		return dao.findItensTrabalhadosDiario(item);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> findItensTotaisDiario(Item item) {
+		return dao.findItensTotaisDiario(item);
+	}
 }

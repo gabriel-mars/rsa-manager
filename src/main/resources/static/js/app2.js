@@ -558,6 +558,7 @@ function getDadosDiario(){
 	});
 }
 
+// Gráficos de relatório diário
 function drawColumnDiario(dataReturn){
 	var soma = 0;
 	var media = 0;
@@ -615,5 +616,96 @@ function drawColumnDiario(dataReturn){
 
 	// Instantiate and draw our chart, passing in some options.
 	var chart = new google.visualization.ComboChart(document.getElementById('chartAtividadeDiario'));
-	chart.draw(data, options); 
+	chart.draw(data, options);
+	
+	getDadosItensDiario();
+}
+
+function getDadosItensDiario(){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/diario/trabalhado",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			drawPieTrabalhadosDiario(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function drawPieTrabalhadosDiario(values){
+	var aux = [];
+	
+	var result = Object.keys(values).map(function (key) {       
+        return [Number(key), values[key]]; 
+    });
+	
+	aux = result[0];
+	
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+	data.addRows([
+      ['Aprovados', parseInt(aux[1])],
+      ['Reprovados', parseInt(aux[0])]
+    ]);
+
+    var options = {title:'Itens trabalhados no dia - TIME'};
+
+    var chart = new google.visualization.PieChart(document.getElementById('chartItensTrabalhadosDiario'));
+    chart.draw(data, options);
+    
+    getDadosItensTotaisDiario();
+}
+
+//Gráfico de Pizza dos itens totais do mês
+function getDadosItensTotaisDiario(){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/diario/total",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			drawPieTotaisDiario(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function drawPieTotaisDiario(values){
+	var aux = [];
+	
+	var result = Object.keys(values).map(function (key) {       
+        return [Number(key), values[key]]; 
+    });
+	
+	aux = result[0];
+	
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+	data.addRows([
+      ['Ap+Re*', parseInt(aux[1])],
+      ['Abonados', parseInt(aux[0])]
+    ]);
+	
+    var options = {title:'Itens totais no dia - TIME'};
+
+    var chart = new google.visualization.PieChart(document.getElementById('chartItensTotaisDiario'));
+    chart.draw(data, options);
 }
