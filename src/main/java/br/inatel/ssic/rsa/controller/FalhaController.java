@@ -224,4 +224,58 @@ public class FalhaController {
 		
 		return data;
 	}
+	
+	@PostMapping("/falha/mensal/individual")
+	@ResponseBody
+	public String getFalhasMensal(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String colab, dataInicial = null;
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		obj = jsonArray.optJSONObject(0);
+		dataInicial = obj.getString("Data");
+		colab = obj.getString("Colab");
+		
+		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
+		falha.setData(dataInicial);
+		falha.setColaborador(colab);
+				
+		List<Object[]> dados = service.getFalhasMensalColab(falha);
+		
+		String data = new Gson().toJson(dados);	
+
+		model.addAttribute("falha", falha);
+		
+		return data;
+	}
+	
+	@PostMapping("/falha/mensal/individual/detail")
+	@ResponseBody
+	public String getFalhasMensalDetail(@RequestBody String ary, Falha falha, ModelMap model, HttpSession session) throws JSONException {
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String colab, dataInicial = null;
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		obj = jsonArray.optJSONObject(0);
+		dataInicial = obj.getString("Data");
+		colab = obj.getString("Colab");
+		
+		falha.setCentroRsa(sessaoAtual.getOrganizacao().toUpperCase());
+		falha.setData(dataInicial);
+		falha.setColaborador(colab);
+				
+		List<Object[]> dados = service.getFalhasMensalDetail(falha);
+		
+		String data = new Gson().toJson(dados);	
+
+		model.addAttribute("falha", falha);
+		
+		return data;
+	}
 }

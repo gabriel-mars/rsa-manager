@@ -28,7 +28,6 @@ public class FalhaService implements FalhaInterface{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Object[]> getFalhasColab(Falha falha) {
-		
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dateInit = LocalDate.parse(falha.getData(), format)
 	            .with(TemporalAdjusters.firstDayOfYear());
@@ -98,5 +97,34 @@ public class FalhaService implements FalhaInterface{
 	@Transactional(readOnly = true)
 	public List<Object[]> getFalhaPeriodoDetail(Falha falha) {
 		return dao.getFalhasTimeDetail(falha);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Object[]> getFalhasMensalColab(Falha falha) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(falha.getData(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(falha.getData(), format) // Data final de busca
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		falha.setData(dateInit.format(format));
+		falha.setFalhaPrimaria(dateFinish.format(format)); // Data final de busca
+		
+		return dao.getFalhasColab(falha);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Object[]> getFalhasMensalDetail(Falha falha) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(falha.getData(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		LocalDate dateFinish = LocalDate.parse(falha.getData(), format) // Data final de busca
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		falha.setData(dateInit.format(format));
+		falha.setFalhaPrimaria(dateFinish.format(format)); // Data final de busca
+		
+		return dao.getFalhasColabDetail(falha);
 	}
 }

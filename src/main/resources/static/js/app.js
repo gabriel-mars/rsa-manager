@@ -76,7 +76,6 @@ function buscarColaboradores(e){
 
 // Validação do formulário para o relatório
 function getDados() {
-
 	let selectOrg = document.getElementById('organizacao');
 	let selectColab = document.getElementById('colaborador');
 	let date = document.getElementById('data_inicio').value;
@@ -108,6 +107,8 @@ function getDados() {
 			$(".loader").hide();
 		}
 	});
+	
+	getFalhasColabMensal(ary);
 }
 
 // Gráfico de atividades executadas por dia
@@ -328,4 +329,82 @@ function drawPieTime(values){
 
     var chart = new google.visualization.PieChart(document.getElementById('time_chart_div'));
     chart.draw(data, options);
+}
+
+function getFalhasColabMensal(ary){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/mensal/individual",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			google.charts.setOnLoadCallback(drawChartFalhasMensal(dataReturn));
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function drawChartFalhasMensal(values){
+	var aux = [];
+	
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    
+    for(var i = 0; i < values.length; i++){
+    	aux = values[i];
+
+    	data.addRow([aux[1], aux[0]]);
+    }
+
+    var options = {title:'Falhas totais no mês - Individual'};
+
+    var chart = new google.visualization.PieChart(document.getElementById('chartFalhasColabMensal'));
+    chart.draw(data, options);
+    
+    getDataTableFalhas();
+}
+
+function getDataTableFalhas(){
+	var dataTable = [];
+	var arrayStr = [];
+	
+	let tabela = document.getElementById('tabelaFalhasColab');
+	$("#tabelaFalhasColab tr").remove();
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/mensal/individual/detail",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			fillTableFalhasColab(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function fillTableFalhasColab(values){
+	for (var i = 0; i < values.length; i++){
+		var aux = values[i];
+		
+		$('#tabelaFalhasColab').append('<tr>' +
+				'<td>' + aux[0] + '</td>' +
+				'<td>' + aux[1] + '</td>' +
+				'<td>' + aux[2] + '</td>' +
+				'<td>' + aux[3] + '</td>' +
+				'</tr>');	
+	}
 }

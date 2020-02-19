@@ -37,10 +37,28 @@
 	        	<div class="divider"></div>
 	        	<table class="chartPieTime">
 			    	<tr>
-			        	<td><div id="colab_chart_div" style="width: 600px; height: 500px;"></div></td>
-			        	<td><div id="time_chart_div" style="width: 600px; height: 500px;"></div></td>
+			        	<td><div id="colab_chart_div" style="width: 600px; height: 400px;"></div></td>
+			        	<td><div id="time_chart_div" style="width: 600px; height: 400px;"></div></td>
 			      	</tr>
 			    </table>
+	        </div>
+	        <div class="container row">
+	        	<h4 class="white-black">Falhas registradas no período</h4>
+	        	<div id="chartFalhasColabMensal" style="height: 400px; width: 100%;"></div>
+	        </div>
+	        <div class="container row">
+				<div class="divider"></div>
+	        	<table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Site</th>
+			              	<th>Data</th>
+			              	<th>FS*</th>
+			              	<th>Descrição</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaFalhasColab"></tbody>
+	      		</table>
 	        </div>
 	        <script>
 				$(document).ready(function(){
