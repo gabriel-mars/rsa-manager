@@ -135,7 +135,7 @@ function drawPieTrabalhados(values){
       ['Reprovados', parseInt(aux[0])]
     ]);
 
-    var options = {title:'Itens trabalhados no mês - TIME'};
+    var options = {title:'Itens trabalhados no mês - TIME', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartItensTrabalhados'));
     chart.draw(data, options);
@@ -179,7 +179,7 @@ function drawPieTotais(values){
       ['Abonados', parseInt(aux[0])]
     ]);
 	
-    var options = {title:'Itens totais no mês - TIME'};
+    var options = {title:'Itens totais no mês - TIME', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartItensTotais'));
     chart.draw(data, options);
@@ -409,7 +409,7 @@ function drawChartFalhas(values){
     	data.addRow([aux[0], aux[1]]);
     }
 
-    var options = {title:'Falhas totais no mês - Individual'};
+    var options = {title:'Falhas totais no mês - Individual', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartFalhasColab'));
     chart.draw(data, options);
@@ -497,7 +497,7 @@ function drawChartFalhasTime(values){
     	data.addRow([aux[0], aux[1]]);
     }
 
-    var options = {title:'Falhas totais no mês - TIME'};
+    var options = {title:'Falhas totais no mês - TIME', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartFalhasTime'));
     chart.draw(data, options);
@@ -658,7 +658,7 @@ function drawPieTrabalhadosDiario(values){
       ['Reprovados', parseInt(aux[0])]
     ]);
 
-    var options = {title:'Itens trabalhados no dia - TIME'};
+    var options = {title:'Itens trabalhados no dia - TIME', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartItensTrabalhadosDiario'));
     chart.draw(data, options);
@@ -704,7 +704,7 @@ function drawPieTotaisDiario(values){
       ['Abonados', parseInt(aux[0])]
     ]);
 	
-    var options = {title:'Itens totais no dia - TIME'};
+    var options = {title:'Itens totais no dia - TIME', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartItensTotaisDiario'));
     chart.draw(data, options);

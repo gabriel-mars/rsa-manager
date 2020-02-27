@@ -233,7 +233,7 @@ function drawPie(values){
     	data.addRow([aux[1], aux[0]]);
     }
 
-    var options = {title:'Falhas totais no período - INATEL'};
+    var options = {title:'Falhas totais no período - INATEL', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartFalhasInatel'));
     chart.draw(data, options);
@@ -271,7 +271,7 @@ function drawPieEricsson(values){
     	data.addRow([aux[1], aux[0]]);
     }
 
-    var options = {title:'Falhas totais no período - Ericsson'};
+    var options = {title:'Falhas totais no período - Ericsson', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartFalhasEricsson'));
     chart.draw(data, options);
@@ -337,7 +337,7 @@ function drawPieOMR(values){
     	data.addRow([aux[1], aux[0]]);
     }
 
-    var options = {title:'Falhas totais no período - OMR'};
+    var options = {title:'Falhas totais no período - OMR', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartFalhasOMR'));
     chart.draw(data, options);

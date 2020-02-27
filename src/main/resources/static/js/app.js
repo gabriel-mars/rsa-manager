@@ -271,7 +271,7 @@ function drawPieColab(values){
       ['Abonados', parseInt(abonados)]
     ]);
 
-    var options = {title:'Itens trabalhados no mês - Colaborador'};
+    var options = {title:'Itens trabalhados no mês - Colaborador', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('colab_chart_div'));
     chart.draw(data, options);
@@ -325,7 +325,7 @@ function drawPieTime(values){
       ['Abonados', parseInt(abonados)]
     ]);
 
-    var options = {title:'Itens trabalhados no mês - TIME'};
+    var options = {title:'Itens trabalhados no mês - TIME', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('time_chart_div'));
     chart.draw(data, options);
@@ -363,7 +363,7 @@ function drawChartFalhasMensal(values){
     	data.addRow([aux[1], aux[0]]);
     }
 
-    var options = {title:'Falhas totais no mês - Individual'};
+    var options = {title:'Falhas totais no mês - Individual', pieSliceText: 'value-and-percentage'};
 
     var chart = new google.visualization.PieChart(document.getElementById('chartFalhasColabMensal'));
     chart.draw(data, options);

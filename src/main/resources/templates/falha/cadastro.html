@@ -18,15 +18,23 @@
                                     	th:value="${c}" th:text="${c}">Colaborador</option>
 			          		</select>
 			        	</div>
-			        	<div class="input-field col s3">
+			        	<div class="input-field col s2">
 			          		<input id="data_inicio" type="text" class="datepicker" required="true" th:field="*{data}">
 			          		<label for="data_inicio">Data</label>
 			        	</div>
-			        	<div class="input-field col s3">
+			        	<div class="input-field col s2">
 			        		<select required="true" th:field="*{reportado}">
 						    	<option value="INATEL" selected>Inatel</option>
 						    	<option value="ERICSSON">Ericsson</option>
 						      	<option value="OMR - CLIENTE">OMR - Cliente</option>
+						    </select>
+			        	</div>
+			        	<div class="input-field col s2">
+			        		<select required="true" th:field="*{regional}">
+						    	<option value="SPM" selected>SPM</option>
+						    	<option value="SPI">SPI</option>
+						      	<option value="RJ">RJ</option>
+						      	<option value="RS">RS</option>
 						    </select>
 			        	</div>
 			      	</div>
@@ -34,17 +42,21 @@
 			        	<div class="input-field col s6">
 			        		<select required="true" th:field="*{falhaPrimaria}" onchange="buscarFalhas(this.value)">
 						    	<option value="" selected>Falha Primária</option>
-						    	<option value="Site">Site</option>
-						      	<option value="Infra - Solo">Infra - Solo</option>
-						      	<option value="Infra - Torre">Infra - Torre</option>
-						      	<option value="Gabinete | Container | Sala">Gabinete | Container | Sala</option>
-						      	<option value="Esteiramento">Esteiramento</option>
-						      	<option value="Elementos RF Down">Elementos RF Down</option>
-						      	<option value="Bússola">Bússola</option>
-						      	<option value="EPI">EPI</option>
-						      	<option value="Elementos RF Up">Elementos RF Up</option>
-						      	<option value="Sistema Irradiante">Sistema Irradiante</option>
-						      	<option value="Geral">Geral</option>
+						    	<option value="VERIFICAÇÃO REMOTA INICIAL - PARÂMETROS ACEITAÇÃO CLARO (VSWR E RSSI)">VERIFICAÇÃO REMOTA INICIAL - PARÂMETROS ACEITAÇÃO CLARO (VSWR E RSSI)</option>
+						      	<option value="SITE">SITE</option>
+						      	<option value="DESINSTALAÇÃO E LOGÍSTICA REVERSA">DESINSTALAÇÃO E LOGÍSTICA REVERSA</option>
+						      	<option value="INFRAESTRUTURA - SOLO">INFRAESTRUTURA - SOLO</option>
+						      	<option value="RBS - (DUW, DUS, DUG, BASE BAND)">RBS - (DUW, DUS, DUG, BASE BAND)</option>
+						      	<option value="ESTEIRAMENTO HORIZONTAL">ESTEIRAMENTO HORIZONTAL</option>
+						      	<option value="ELEMENTOS RF DOWN">ELEMENTOS RF DOWN</option>
+						      	<option value="BÚSSULA - AZIMUTE">BÚSSULA - AZIMUTE</option>
+						      	<option value="ESTEIRAMENTO VERTICAL">ESTEIRAMENTO VERTICAL</option>      	
+						      	<option value="INFRAESTRUTURA TORRE">INFRAESTRUTURA TORRE</option>
+						      	<option value="VERDE/VERMELHO">VERDE/VERMELHO</option>
+						      	<option value="INFRAESTRUTURA">INFRAESTRUTURA</option>
+						      	<option value="VERIFICAÇÃO REMOTA FINAL - PARÂMETROS ACEITAÇÃO CLARO (VSWR E RSSI)">VERIFICAÇÃO REMOTA FINAL - PARÂMETROS ACEITAÇÃO CLARO (VSWR E RSSI)</option>
+						      	<option value="ELEMENTOS RF">ELEMENTOS RF</option>
+								<option value="GABINETES/SALA/CONTAINER">GABINETES/SALA/CONTAINER</option>
 						    </select>
 			        	</div>
 			        	<div class="input-field col s6">
