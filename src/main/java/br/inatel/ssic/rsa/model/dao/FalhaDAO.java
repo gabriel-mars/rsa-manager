@@ -95,4 +95,20 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 			return query.getResultList();
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getFalhasQuantitativo(Falha falha) {
+		Query query = manager.createNativeQuery("SELECT DISTINCT F.colaborador, "
+				+ "COUNT(F.reportado) FILTER (WHERE F.reportado = 'OMR - CLIENTE') AS itens_omr, "
+				+ "COUNT(F.reportado) FILTER (WHERE F.reportado = 'ERICSSON') AS itens_ericsson, "
+				+ "COUNT(F.reportado) FILTER (WHERE F.reportado = 'INATEL') AS itens_inatel, "
+				+ "COUNT (F.reportado) AS sum_total "
+				+ "FROM falha F "
+				+ "WHERE DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
+				+ "GROUP BY F.colaborador ORDER BY itens_omr")
+				.setParameter(1, falha.getData())
+				.setParameter(2, falha.getFalhaPrimaria()); // Data final de busca
+		return query.getResultList();
+	}
 }

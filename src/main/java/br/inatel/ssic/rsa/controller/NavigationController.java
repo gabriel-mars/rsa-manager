@@ -1,5 +1,6 @@
 package br.inatel.ssic.rsa.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -151,6 +152,16 @@ public class NavigationController {
 	public String getFalhaColabSemanal() {
 		
 		return "falha/semanal";
+	}
+	
+	@GetMapping("/falha/quantitativo")
+	public String getFalhaQuantitativo(ModelMap model) {
+		Falha falha = new Falha();
+		List<Object[]> falhas = new ArrayList<Object[]>();
+		
+		model.addAttribute("falha", falha);
+		model.addAttribute("falhas", falhas);
+		return "falha/quantitativo";
 	}
 	
 	// Métodos para análise de Itens

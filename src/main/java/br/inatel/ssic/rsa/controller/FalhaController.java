@@ -278,4 +278,13 @@ public class FalhaController {
 		
 		return data;
 	}
+	
+	@PostMapping("/falha/quantitativo/periodo")
+	public String falhasQuantitativo(Falha falha, ModelMap model) {
+		List<Object[]> falhas = service.getFalhasQuantitativo(falha);
+		
+		model.addAttribute("falha", falha);
+		model.addAttribute("falhas", falhas);
+		return "falha/quantitativo";
+	}
 }

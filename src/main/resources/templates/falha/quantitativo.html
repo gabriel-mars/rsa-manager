@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	    	<div class="container row">
+	    		<h3 class="white-black">Análise quantitativa de falhas</h3>
+		        <div th:replace="fragments/alert"></div>
+	        	<form th:action="@{/falha/quantitativo/periodo}" th:object="${falha}" method="POST">
+	        		<div class="row">
+					    <div class="input-field col s6">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true" th:field="*{data}">
+			          		<label for="data_inicio">Início</label>
+			        	</div>
+			        	<div class="input-field col s6">
+			          		<input id="data_fim" type="text" class="datepicker" required="true" th:field="*{colaborador}">
+			          		<label for="data_fim">Fim</label>
+			        	</div>
+	        		</div>
+	        		<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+			  	</form>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Inspetor</th>
+			              	<th>OMR</th>
+			              	<th>Ericsson</th>
+			              	<th>Inatel</th>
+			              	<th>Total</th>
+			          	</tr>
+	        		</thead>
+	
+	        		<tbody>
+		          		<tr th:each="f : ${falhas}">
+		              		<td th:text="${f[0]}">Inspetor</td>
+		              		<td th:text="${f[1]}">OMR</td>
+		              		<td th:text="${f[2]}">Ericsson</td>
+		              		<td th:text="${f[3]}">Inatel</td>
+		              		<td th:text="${f[4]}">Total</td>
+		        		</tr>
+	        		</tbody>
+	      		</table>
+	        </div>
+	        <script>
+				$(document).ready(function(){			    	
+			    	$('.datepicker').datepicker({
+			    		format: 'dd/mm/yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>
