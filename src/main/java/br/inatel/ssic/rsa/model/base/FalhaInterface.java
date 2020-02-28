@@ -16,4 +16,6 @@ public interface FalhaInterface {
 	List<Object[]> getFalhasTimeDetail(Falha falha);
 	
 	List<Object[]> getFalhasQuantitativo(Falha falha);
+	
+	List<Object[]> getTotalReprovacoes(Falha falha);
 }

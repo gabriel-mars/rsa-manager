@@ -365,3 +365,79 @@ function getDataFalhasPeriodoOMR(){
 		}
 	});
 }
+
+// Análise de reprovações
+function getReprovacoes(){
+	let data_inicial = document.getElementById('data_inicio').value;
+	let data_final = document.getElementById('data_fim').value;
+	
+	ary = [];
+	
+	ary.push({ DataInicial: data_inicial, DataFinal: data_final});
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/melhoria/reprovacoes",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			google.charts.setOnLoadCallback(drawChartReprovacoes(dataReturn));
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function drawChartReprovacoes(values){
+	console.log(values);
+	var soma = 0;
+	var acumulado = 0;
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Topping');
+	data.addColumn('number', 'Reprovações');
+	data.addColumn('number', 'Porcentagem de falhas');
+	
+	for(var i = 0; i < values.length; i++){
+		var a = values[i];
+		soma += a[1]
+	}
+  
+	for(var i = 0; i < values.length; i++){
+		var a = values[i];
+		acumulado += a[1] / soma;
+  	  	data.addRow([a[0], a[1], acumulado]);
+	}
+
+	var options = {
+		  title:'Rejeições no Processo RSA',
+		  hAxis: {
+			  title: 'Reprovações',
+	          textStyle: {fontSize: 10},
+	          viewWindow: {
+	        	  min: [7, 30, 0],
+	        	  max: [17, 30, 0]
+	          },
+	      },
+	      vAxes: [
+	    	  {title: "Itens",
+	    	   gridlines: {count: 5},
+	    	   baseline: 0,
+	    	   format: "#"},
+	    	  {title: "",
+	    	   gridlines: {count: 2},
+	    	   baseline: 0,
+	    	   format: '#%'}
+	      ],
+		  series: [{ targetAxisIndex: 0 }, { targetAxisIndex: 1, type: "line" }],
+		  seriesType: 'bars'  
+	 };
+
+	// Instantiate and draw our chart, passing in some options.
+	var chart = new google.visualization.ComboChart(document.getElementById('chartTotalReprovacoes'));
+	chart.draw(data, options); 
+}

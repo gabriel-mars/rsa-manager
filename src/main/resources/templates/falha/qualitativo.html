@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	    	<div class="container row">
+	    		<h3 class="white-black">Análise qualitativa de falhas</h3>
+		        <div th:replace="fragments/alert"></div>
+	        	<form>
+	        		<div class="row">
+					    <div class="input-field col s6">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true">
+			          		<label for="data_inicio">Início</label>
+			        	</div>
+			        	<div class="input-field col s6">
+			          		<input id="data_fim" type="text" class="datepicker" required="true">
+			          		<label for="data_fim">Fim</label>
+			        	</div>
+	        		</div>
+	        		<button class="btn waves-effect waves-light blue" type="button" name="action" onclick="getFalhasInatel()">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+			  	</form>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div id="chartFalhasInatel" style="height: 400px; width: 100%;"></div>
+	        </div>
+	        <div class="row" style="padding: 5%;">
+	        	<div class="divider"></div>
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Site</th>
+			              	<th>Colaborador</th>
+			              	<th>Data</th>
+			              	<th>FS*</th>
+			              	<th>Descrição</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaFalhasInatel"></tbody>
+	      		</table>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div id="chartFalhasEricsson" style="height: 400px; width: 100%;"></div>
+	        </div>
+	        <div class="row" style="padding: 5%;">
+	        	<div class="divider"></div>
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Site</th>
+			              	<th>Colaborador</th>
+			              	<th>Data</th>
+			              	<th>FS*</th>
+			              	<th>Descrição</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaFalhasEricsson"></tbody>
+	      		</table>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<div id="chartFalhasOMR" style="height: 400px; width: 100%;"></div>
+	        </div>
+	        <div class="row" style="padding: 5%;">
+	        	<div class="divider"></div>
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Site</th>
+			              	<th>Colaborador</th>
+			              	<th>Data</th>
+			              	<th>FS*</th>
+			              	<th>Descrição</th>
+			          	</tr>
+	        		</thead>
+	        		<tbody id="tabelaFalhasOMR"></tbody>
+	      		</table>
+	        </div>
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<blockquote>
+	        		<strong>*FS:</strong> Falha Secundária	    	
+			    </blockquote>
+	        </div>
+	        <script>
+				$(document).ready(function(){
+			    	$('.datepicker').datepicker({
+			    		format: 'dd/mm/yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>

@@ -164,6 +164,16 @@ public class NavigationController {
 		return "falha/quantitativo";
 	}
 	
+	@GetMapping("/falha/qualitativo")
+	public String getFalhaQualitativo() {
+		return "falha/qualitativo";
+	}
+	
+	@GetMapping("/falha/melhoria")
+	public String getFalhaMelhoria() {
+		return "falha/melhoria";
+	}
+	
 	// Métodos para análise de Itens
 	@GetMapping("/relatorio/item/reprovado")
 	public String getItensReprovados() {
