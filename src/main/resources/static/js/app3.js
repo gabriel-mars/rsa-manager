@@ -394,13 +394,13 @@ function getReprovacoes(){
 }
 
 function drawChartReprovacoes(values){
-	console.log(values);
 	var soma = 0;
 	var acumulado = 0;
+	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
 	data.addColumn('number', 'Reprovações');
-	data.addColumn('number', 'Porcentagem de falhas');
+	data.addColumn('number', 'Porcentagem');
 	
 	for(var i = 0; i < values.length; i++){
 		var a = values[i];
@@ -431,8 +431,9 @@ function drawChartReprovacoes(values){
 	    	  {title: "",
 	    	   gridlines: {count: 2},
 	    	   baseline: 0,
-	    	   format: '#%'}
+	    	   format: 'percent'}
 	      ],
+	      pointsVisible: true,
 		  series: [{ targetAxisIndex: 0 }, { targetAxisIndex: 1, type: "line" }],
 		  seriesType: 'bars'  
 	 };

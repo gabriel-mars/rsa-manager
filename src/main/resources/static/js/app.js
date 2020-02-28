@@ -156,7 +156,7 @@ function drawColumn(){
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
 	data.addColumn('number', 'Itens avalidados');
-	data.addColumn('number', 'Média');
+	data.addColumn('number', 'Porcentagem');
   
 	for(var i = 0; i < result.length; i++){
 		var a = result[i];
@@ -177,7 +177,7 @@ function drawColumn(){
 	          }
 	        },
 	        vAxis: {
-	            title: 'Itens'
+	            title: 'Itens',
 	          }
 	 };
 
