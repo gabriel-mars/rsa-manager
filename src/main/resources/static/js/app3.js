@@ -490,7 +490,7 @@ function melhoriaDetail(values){
 				$(".loader").show();
 			},
 			success: function(dataReturn){
-				google.charts.setOnLoadCallback(drawChartMelhoriaDetail(dataReturn, positions));
+				google.charts.setOnLoadCallback(drawChartMelhoriaDetail(dataReturn, positions, values));
 			},
 			complete: function(data){
 				$(".loader").hide();
@@ -499,7 +499,8 @@ function melhoriaDetail(values){
 	}
 }
 
-function drawChartMelhoriaDetail(values, positions){	
+function drawChartMelhoriaDetail(values, positions, falhas){	
+	var falha = falhas[positions[0]];
 	
 	for (var j = 0; j < values.length; j++){
 		var aux = values[j];
@@ -523,7 +524,7 @@ function drawChartMelhoriaDetail(values, positions){
 		}
 
 		var options = {
-			  title:'Rejeições no Processo RSA',
+			  title: falha[0],
 			  hAxis: {
 				  title: 'Reprovações',
 		          textStyle: {fontSize: 10},
