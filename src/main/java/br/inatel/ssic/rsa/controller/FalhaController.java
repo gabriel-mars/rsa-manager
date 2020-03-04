@@ -310,4 +310,29 @@ public class FalhaController {
 		
 		return data;
 	}
+	
+	@PostMapping("/falha/melhoria/detail")
+	@ResponseBody
+	public String postMelhoriaDetail(@RequestBody String ary, Falha falha, ModelMap model) throws JSONException {
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String dataInicial, dataFinal, falhaSecundaria = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		dataInicial = obj.getString("DataInicial");
+		dataFinal = obj.getString("DataFinal");
+		falhaSecundaria = obj.getString("Falha");
+		
+		falha.setData(dataInicial);
+		falha.setFalhaPrimaria(dataFinal);
+		falha.setFalhaSecundaria(falhaSecundaria);
+				
+		List<Object[]> dados = service.getMelhoriaDetail(falha);
+		
+		String data = new Gson().toJson(dados);	
+
+		model.addAttribute("falha", falha);
+		
+		return data;
+	}
 }

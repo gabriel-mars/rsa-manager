@@ -7,6 +7,8 @@ var dados = [];
 //Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['corechart'], 'language': 'pt'});
 
+var positions = [];
+
 function fillTableReprovado(values){
 	for (var i = 0; i < values.length; i++){
 		var aux = values[i];
@@ -440,5 +442,115 @@ function drawChartReprovacoes(values){
 
 	// Instantiate and draw our chart, passing in some options.
 	var chart = new google.visualization.ComboChart(document.getElementById('chartTotalReprovacoes'));
-	chart.draw(data, options); 
+	chart.draw(data, options);
+	
+	getItensMelhoria(values, soma);
+}
+
+function getItensMelhoria(values, maximo){
+	var list = [];
+	var soma = 0;
+	
+	var x = maximo * 80;
+	x = x / 100;
+	
+	for(var i = 0; i < values.length; i++){
+		var aux = values[i];
+		
+		if(soma < x){
+			soma = soma + aux[1];
+			list.push(aux);
+		} else {
+			break;
+		}
+	}
+	
+	melhoriaDetail(list);
+}
+
+function melhoriaDetail(values){
+	
+	for(var i = 0; i < values.length; i++){
+		var aux = [];
+		var auxList = [];
+
+		$('#graficosMelhorias').append('<div class="container row"><div class="divider"></div><div id="chart'+ i +'" style="height: 400px; width: 100%;"></div></div>');
+		
+		aux = values[i];
+		auxList.push({ DataInicial: ary[0].DataInicial, DataFinal: ary[0].DataFinal, Falha: aux[0]});
+		positions.push(i);
+		
+		$.ajax({
+			type: "POST",
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			url: "/falha/melhoria/detail",
+			data: JSON.stringify(auxList),
+			beforeSend: function(){
+				$(".loader").show();
+			},
+			success: function(dataReturn){
+				google.charts.setOnLoadCallback(drawChartMelhoriaDetail(dataReturn, positions));
+			},
+			complete: function(data){
+				$(".loader").hide();
+			}
+		});
+	}
+}
+
+function drawChartMelhoriaDetail(values, positions){	
+	
+	for (var j = 0; j < values.length; j++){
+		var aux = values[j];
+		var soma = 0;
+		var acumulado = 0;
+		
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Topping');
+		data.addColumn('number', 'Reprovações');
+		data.addColumn('number', 'Porcentagem');
+		
+		for(var i = 0; i < values.length; i++){
+			var a = values[i];
+			soma += a[1]
+		}
+	  
+		for(var i = 0; i < values.length; i++){
+			var a = values[i];
+			acumulado += a[1] / soma;
+	  	  	data.addRow([a[0], a[1], acumulado]);
+		}
+
+		var options = {
+			  title:'Rejeições no Processo RSA',
+			  hAxis: {
+				  title: 'Reprovações',
+		          textStyle: {fontSize: 10},
+		          viewWindow: {
+		        	  min: [7, 30, 0],
+		        	  max: [17, 30, 0]
+		          },
+		      },
+		      vAxes: [
+		    	  {title: "Itens",
+		    	   gridlines: {count: 5},
+		    	   baseline: 0,
+		    	   format: "#"},
+		    	  {title: "",
+		    	   gridlines: {count: 2},
+		    	   baseline: 0,
+		    	   format: 'percent'}
+		      ],
+		      pointsVisible: true,
+			  series: [{ targetAxisIndex: 0 }, { targetAxisIndex: 1, type: "line" }],
+			  seriesType: 'bars'  
+		 };
+
+		// Instantiate and draw our chart, passing in some options.
+		var chart = new google.visualization.ComboChart(document.getElementById('chart' + positions[0] + ''));
+		chart.draw(data, options);	
+		positions.shift();
+		break;
+	}
 }
