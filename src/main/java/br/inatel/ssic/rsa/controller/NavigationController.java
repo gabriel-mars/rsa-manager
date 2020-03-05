@@ -165,7 +165,10 @@ public class NavigationController {
 	}
 	
 	@GetMapping("/falha/qualitativo")
-	public String getFalhaQualitativo() {
+	public String getFalhaQualitativo(ModelMap model) {
+		Falha falha = new Falha();
+		
+		model.addAttribute("falha", falha);
 		return "falha/qualitativo";
 	}
 	

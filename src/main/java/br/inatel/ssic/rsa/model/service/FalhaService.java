@@ -166,4 +166,17 @@ public class FalhaService implements FalhaInterface{
 		
 		return dao.getMelhoriaDetail(falha);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object[]> getFalhasQualitativo(Falha falha) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(falha.getData(), format);
+		LocalDate dateFinish = LocalDate.parse(falha.getFalhaPrimaria(), format); // Data final de busca
+		
+		falha.setData(dateInit.format(format));
+		falha.setFalhaPrimaria(dateFinish.format(format)); // Data final de busca
+		
+		return dao.getFalhasQualitativo(falha);
+	}
 }

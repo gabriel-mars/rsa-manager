@@ -138,4 +138,17 @@ public class FalhaDAO extends BaseDAO<Falha, Long> implements FalhaInterface{
 				.setParameter(3, falha.getFalhaPrimaria()); // Data final de busca 
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getFalhasQualitativo(Falha falha) {
+		Query query = manager.createNativeQuery("SELECT F.colaborador, "
+				+ "COUNT(F.reportado) FILTER (WHERE F.reportado = 'OMR - CLIENTE' OR F.reportado = 'ERICSSON') AS itens_reprovados "
+				+ "FROM falha F "
+				+ "WHERE DATE(F.data_falha) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.data_falha) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
+				+ "GROUP BY F.colaborador ORDER BY itens_reprovados DESC")
+				.setParameter(1, falha.getData())
+				.setParameter(2, falha.getFalhaPrimaria()); // Data final de busca 
+		return query.getResultList();
+	}
 }

@@ -368,7 +368,7 @@ function getDataFalhasPeriodoOMR(){
 	});
 }
 
-// Análise de reprovações
+// Análise de melhoria das reprovações
 function getReprovacoes(){
 	let data_inicial = document.getElementById('data_inicio').value;
 	let data_final = document.getElementById('data_fim').value;
@@ -554,4 +554,90 @@ function drawChartMelhoriaDetail(values, positions, falhas){
 		positions.shift();
 		break;
 	}
+}
+
+//Análise qualitativa de reprovações
+function getQualitativo(){
+	let data_inicial = document.getElementById('data_inicio').value;
+	let data_final = document.getElementById('data_fim').value;
+	
+	ary = [];
+	
+	ary.push({ DataInicial: data_inicial, DataFinal: data_final});
+	
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/falha/melhoria/qualitativo",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			console.log(dataReturn);
+			google.charts.setOnLoadCallback(drawChartQualitativo(dataReturn));
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function drawChartQualitativo(values){
+	for (var i = values.length; i > 0 ; i--){
+		var aux = values[i - 1];
+		
+		if(aux[1] === 0){
+			values.pop();
+		}
+	}
+	
+	var soma = 0;
+	var acumulado = 0;
+	
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Topping');
+	data.addColumn('number', 'Reprovações');
+	data.addColumn('number', 'Porcentagem');
+	
+	for(var i = 0; i < values.length; i++){
+		var a = values[i];
+		soma += a[1]
+	}
+  
+	for(var i = 0; i < values.length; i++){
+		var a = values[i];
+		acumulado += a[1] / soma;
+  	  	data.addRow([a[0], a[1], acumulado]);
+	}
+
+	var options = {
+		  title:'Rejeições por colaborador',
+		  hAxis: {
+			  title: 'Colaboradores',
+	          textStyle: {fontSize: 10},
+	          viewWindow: {
+	        	  min: [7, 30, 0],
+	        	  max: [17, 30, 0]
+	          },
+	      },
+	      vAxes: [
+	    	  {title: "Itens",
+	    	   gridlines: {count: 5},
+	    	   baseline: 0,
+	    	   format: "#"},
+	    	  {title: "",
+	    	   gridlines: {count: 2},
+	    	   baseline: 0,
+	    	   format: 'percent'}
+	      ],
+	      pointsVisible: true,
+		  series: [{ targetAxisIndex: 0 }, { targetAxisIndex: 1, type: "line" }],
+		  seriesType: 'bars'  
+	 };
+
+	// Instantiate and draw our chart, passing in some options.
+	var chart = new google.visualization.ComboChart(document.getElementById('chartTotalQualitativo'));
+	chart.draw(data, options);
 }
