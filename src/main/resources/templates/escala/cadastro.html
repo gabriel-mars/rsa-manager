@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	        <div class=" container row">
+	        	<div th:replace="fragments/alert"></div>
+	        	<h3 class="white-black">Nova Escala</h3>
+			    <form class="col s12" th:action="@{${escala.id == null} ? @{/escala/salvar} : @{/escala/update}}" th:object="${escala}" method="POST">
+			    	<div class="row">
+			        	<div class="input-field col s12">
+			        		<input id="id-escala" type="hidden" th:field="*{id}" />
+			          		<input id="first_name" type="text" class="validate" required="true" th:field="*{titulo}">
+			          		<label for="first_name">Titulo</label>
+			        	</div>
+			      	</div>
+			      	<div class="row">
+			        	<div class="input-field col s6">
+			          		<select required="true" th:field="*{inicioEscala}">
+						      	<option value="Segunda-feira">Segunda-feira</option>
+						      	<option value="Terça-feira">Terça-feira</option>
+						      	<option value="Quarta-feira">Quarta-feira</option>
+						      	<option value="Quinta-feira">Quinta-feira</option>
+						      	<option value="Sexta-feira">Sexta-feira</option>
+						      	<option value="Sábado">Sábado</option>
+						    </select>
+			        	</div>
+			      	    <div class="input-field col s6">
+			          		<select required="true" th:field="*{fimEscala}">
+						      	<option value="Segunda-feira">Segunda-feira</option>
+						      	<option value="Terça-feira">Terça-feira</option>
+						      	<option value="Quarta-feira">Quarta-feira</option>
+						      	<option value="Quinta-feira">Quinta-feira</option>
+						      	<option value="Sexta-feira">Sexta-feira</option>
+						      	<option value="Sábado">Sábado</option>
+						    </select>
+			        	</div>
+			      	</div>
+			    	<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+				</form>
+			</div>
+			<script>
+				$(document).ready(function(){
+			    	$('select').formSelect();			    	
+				});
+			</script>
+	    </section>
+	</body>
+</html>		

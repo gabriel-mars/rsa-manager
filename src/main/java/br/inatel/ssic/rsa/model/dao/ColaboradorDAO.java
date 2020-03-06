@@ -93,4 +93,10 @@ public class ColaboradorDAO extends BaseDAO<Colaborador, Long> implements Colabo
 		
 		query.executeUpdate();
 	}
+
+	@Override
+	public List<Object> findByColaboradoresSemEscala(String org) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -20,4 +20,6 @@ public interface ColaboradorInterface {
     List<Pessoa> findByOrganizacao(String org);
     
     List<Item> findByAtividade(String org);
+    
+    List<Object> findByColaboradoresSemEscala(String org);
 }

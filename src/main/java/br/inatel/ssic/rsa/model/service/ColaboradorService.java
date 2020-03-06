@@ -104,4 +104,11 @@ public class ColaboradorService implements ColaboradorInterface{
 		
 		dao.updateSenha(colaborador);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object> findByColaboradoresSemEscala(String org) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

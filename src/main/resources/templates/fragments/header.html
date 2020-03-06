@@ -8,8 +8,6 @@
 			<ul id="dropdownColaboradores" class="dropdown-content">
 				<li><a th:href="@{/colaborador/cadastro}">Novo colaborador</a></li>
 			  	<li class="divider"></li>
-			  	<li><a th:href="@{/colaborador/listar}">Ver colaboradores</a></li>
-			  	<li class="divider"></li>
 			  	<li><a th:href="@{/colaborador/senha}">Senha</a></li>
 			</ul>
 			
@@ -51,13 +49,26 @@
 			  	<li><a th:href="@{/relatorio/item/abonado}">Abonados</a></li>
 			</ul>
 			
+			<ul id="dropdownTime" class="dropdown-content">
+				<li><a th:href="@{/colaborador/listar}">Ver colaboradores</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/escala/cadastro}">Escala</a></li>
+			  	<li class="divider"></li>
+			  	<li><a th:href="@{/escala/lista}">Ver Escalas</a></li>
+			  	<li class="divider"></li>
+			  	<li><a href="#">Atribuir Escala</a></li>
+			  	<li class="divider"></li>
+			  	<li><a href="#">Férias</a></li>
+			</ul>
+			
 			<nav id="nav" >
 				<div class="nav-wrapper">
 			    	<a th:href="@{/dashboard}" class="brand-logo">
 			    		<img alt="Logo" th:src="@{/img/rsa.jpeg}" width="65" height="65">
 			    	</a>
 			      	<ul id="nav-mobile" class="right hide-on-med-and-down">
-			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownColaboradores">Colaboradores<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownColaboradores">Colaborador<i class="material-icons right">arrow_drop_down</i></a></li>
+			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownTime">Time<i class="material-icons right">arrow_drop_down</i></a></li>
 			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownAtividades">Atividades<i class="material-icons right">arrow_drop_down</i></a></li>
 			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownRelatorios">Relatórios<i class="material-icons right">arrow_drop_down</i></a></li>
 			        	<li><a class="dropdown-trigger" href="#!" data-target="dropdownItens">Itens<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -66,14 +77,12 @@
 			      	</ul>
 			    </div>
 			</nav>
-        	
         	<script>
         		$(document).ready(function(){
         		    $('.sidenav').sidenav();
         		    $('.dropdown-trigger').dropdown();
         		});
         	</script>
-        	<!-- End of Topbar -->
 		</div>
 	</body>
 </html>

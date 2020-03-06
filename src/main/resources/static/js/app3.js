@@ -575,7 +575,6 @@ function getQualitativo(){
 			$(".loader").show();
 		},
 		success: function(dataReturn){
-			console.log(dataReturn);
 			google.charts.setOnLoadCallback(drawChartQualitativo(dataReturn));
 		},
 		complete: function(data){

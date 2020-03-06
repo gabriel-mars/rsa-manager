@@ -12,16 +12,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.Escala;
 import br.inatel.ssic.rsa.model.entity.Falha;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
+import br.inatel.ssic.rsa.model.service.EscalaService;
 
 @Controller
 public class NavigationController {
 	
 	@Autowired
 	private ColaboradorService service;
+	
+	@Autowired
+	private EscalaService escalaService;
 	
 	@GetMapping("/")
 	public String getHome(ModelMap model) {
@@ -186,5 +191,30 @@ public class NavigationController {
 	@GetMapping("/relatorio/item/abonado")
 	public String getItensAbonados() {
 		return "item/abonado";
+	}
+	
+	// Métodos de escala
+	@GetMapping("/escala/cadastro")
+	public String novaEscala(ModelMap model) {
+		Escala escala = new Escala();
+		
+		model.addAttribute("escala", escala);
+		return "escala/cadastro";
+	}
+	
+	@GetMapping("/escala/lista")
+	public String listEscalas(ModelMap model) {
+		List<Escala> escalas = escalaService.findAll();		
+		
+		model.addAttribute("escalas", escalas);
+		return "escala/lista";
+	}
+	
+	@GetMapping("/escala/editar/{id}")
+	public String getEditarEscala(@PathVariable("id") Long id, ModelMap model) {
+		Escala escala = escalaService.findById(id);
+		
+		model.addAttribute("escala", escala);
+		return "escala/cadastro";
 	}
 }
