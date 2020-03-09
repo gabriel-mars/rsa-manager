@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import br.inatel.ssic.rsa.model.base.BaseDAO;
 import br.inatel.ssic.rsa.model.base.EscalaInterface;
 import br.inatel.ssic.rsa.model.entity.Escala;
+import br.inatel.ssic.rsa.model.entity.EscalaColaborador;
 
 @Repository
 public class EscalaDAO extends BaseDAO<Escala, Long> implements EscalaInterface{
@@ -22,6 +23,14 @@ public class EscalaDAO extends BaseDAO<Escala, Long> implements EscalaInterface{
 				.setParameter(2, escala.getInicioEscala())
 				.setParameter(3, escala.getFimEscala())
 				.setParameter(4, escala.getId());
+		query.executeUpdate();
+	}
+
+	@Override
+	public void atribuirEscala(EscalaColaborador escala) {
+		Query query = manager.createNativeQuery("INSERT INTO escala_colaborador (colaborador_id, escala_id) VALUES (?, ?)")
+				.setParameter(1, escala.getColaboradorId())
+				.setParameter(2, escala.getEscalaId());
 		query.executeUpdate();
 	}
 }

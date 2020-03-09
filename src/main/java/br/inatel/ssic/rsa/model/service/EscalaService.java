@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.inatel.ssic.rsa.model.base.EscalaInterface;
 import br.inatel.ssic.rsa.model.dao.EscalaDAO;
 import br.inatel.ssic.rsa.model.entity.Escala;
+import br.inatel.ssic.rsa.model.entity.EscalaColaborador;
 
 @Service
 @Transactional(readOnly = false)
@@ -42,5 +43,10 @@ public class EscalaService implements EscalaInterface{
 	@Transactional(readOnly = true)
 	public List<Escala> findAll() {
 		return dao.findAll();
+	}
+
+	@Override
+	public void atribuirEscala(EscalaColaborador escala) {
+		dao.atribuirEscala(escala);
 	}
 }

@@ -99,16 +99,12 @@ public class ColaboradorService implements ColaboradorInterface{
 
 	@Override
 	public void updateSenha(Colaborador colaborador) {
-		System.out.println(colaborador.getEmail());
-		System.out.println(colaborador.getSenha());
-		
 		dao.updateSenha(colaborador);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Object> findByColaboradoresSemEscala(String org) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Object[]> findByColaboradoresSemEscala(String org) {
+		return dao.findByColaboradoresSemEscala(org);
 	}
 }

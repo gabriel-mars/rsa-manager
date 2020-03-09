@@ -94,9 +94,15 @@ public class ColaboradorDAO extends BaseDAO<Colaborador, Long> implements Colabo
 		query.executeUpdate();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findByColaboradoresSemEscala(String org) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Object[]> findByColaboradoresSemEscala(String org) {
+		Query query = manager.createNativeQuery("SELECT P.nome, P.id "
+				+ "FROM pessoa P "
+				+ "INNER JOIN colaborador C ON C.pessoa_id = P.id "
+				+ "LEFT JOIN escala_colaborador EC ON EC.colaborador_id = P.id "
+				+ "WHERE C.organizacao = ? AND EC.colaborador_id IS NULL")
+				.setParameter(1, org);
+		return query.getResultList();
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import br.inatel.ssic.rsa.model.entity.Colaborador;
 import br.inatel.ssic.rsa.model.entity.Escala;
+import br.inatel.ssic.rsa.model.entity.EscalaColaborador;
 import br.inatel.ssic.rsa.model.entity.Falha;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
@@ -216,5 +217,20 @@ public class NavigationController {
 		
 		model.addAttribute("escala", escala);
 		return "escala/cadastro";
+	}
+	
+	@GetMapping("/escala/atribuir")
+	public String getAtribuirEscala(ModelMap model, HttpSession session) {
+		EscalaColaborador escala = new EscalaColaborador();
+		Colaborador sessaoAtual = new Colaborador();
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		List<Escala> escalas = escalaService.findAll();
+		List<Object[]> colaboradores = service.findByColaboradoresSemEscala(sessaoAtual.getOrganizacao());
+		
+		model.addAttribute("escala", escala);
+		model.addAttribute("colaboradores", colaboradores);
+		model.addAttribute("escalas", escalas);
+		return "escala/atribuir";
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.inatel.ssic.rsa.model.entity.Escala;
+import br.inatel.ssic.rsa.model.entity.EscalaColaborador;
 import br.inatel.ssic.rsa.model.service.EscalaService;
 
 @Controller
@@ -28,5 +29,13 @@ public class EscalaController {
 		
 		attr.addFlashAttribute("success", "Escala atualizada");
 		return "redirect:/escala/cadastro";
+	}
+	
+	@PostMapping("/escala/colaborador/atribuir")
+	public String atribuirEscala(EscalaColaborador escala, RedirectAttributes attr) {
+		service.atribuirEscala(escala);
+		
+		attr.addFlashAttribute("success", "Escala atualizada");
+		return "redirect:/escala/atribuir";
 	}
 }
