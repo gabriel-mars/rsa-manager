@@ -105,4 +105,17 @@ public class ColaboradorDAO extends BaseDAO<Colaborador, Long> implements Colabo
 				.setParameter(1, org);
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findByColaboradoresEscala(Long id) {
+		Query query = manager.createNativeQuery("SELECT P.nome, EC.id "
+				+ "FROM escala_colaborador EC "
+				+ "INNER JOIN escala E ON E.id = EC.escala_id "
+				+ "INNER JOIN colaborador C ON C.pessoa_id = EC.colaborador_id "
+				+ "INNER JOIN pessoa P ON P.id = C.pessoa_id "
+				+ "WHERE E.id = ?")
+				.setParameter(1, id);
+		return query.getResultList();
+	}
 }

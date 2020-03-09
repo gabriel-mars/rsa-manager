@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo">
+	        <div class="container row">
+	        	<h3 class="white-black">Colaboradores Nesta Escala</h3>
+		        <table class="highlight">
+	        		<thead>
+			          	<tr>
+			            	<th>#</th>
+			              	<th>Colaborador</th>
+			              	<th>Ações</th>
+			          	</tr>
+	        		</thead>
+	
+	        		<tbody>
+		          		<tr th:each="c : ${colaboradores}">
+		              		<td th:text="${c[1]}">1</td>
+		              		<td th:text="${c[0]}">Colaborador</td>
+		              		<td colspan="2">
+	                            <a class="waves-effect waves-light btn-small red tooltipped" th:href="@{/escala/editar/{id} (id=${c[1]})}" data-position="right" data-tooltip="Remover">
+                                	<i class="material-icons">remove</i>
+                            	</a>
+	                        </td>
+		        		</tr>
+	        		</tbody>
+	      		</table>
+	        </div>
+	    </section>
+	</body>
+</html>

@@ -107,4 +107,10 @@ public class ColaboradorService implements ColaboradorInterface{
 	public List<Object[]> findByColaboradoresSemEscala(String org) {
 		return dao.findByColaboradoresSemEscala(org);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object[]> findByColaboradoresEscala(Long id) {
+		return dao.findByColaboradoresEscala(id);
+	}
 }

@@ -233,4 +233,14 @@ public class NavigationController {
 		model.addAttribute("escalas", escalas);
 		return "escala/atribuir";
 	}
+	
+	@GetMapping("/escala/colaboradores/{id}")
+	public String colaboradoresEscala(@PathVariable("id") Long id, ModelMap model) {
+		Escala escala = escalaService.findById(id);
+		List<Object[]> colaboradores = service.findByColaboradoresEscala(id);
+		
+		model.addAttribute("escala", escala);
+		model.addAttribute("colaboradores", colaboradores);
+		return "escala/colaboradores";
+	}
 }
