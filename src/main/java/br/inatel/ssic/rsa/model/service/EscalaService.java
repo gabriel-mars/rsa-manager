@@ -49,4 +49,9 @@ public class EscalaService implements EscalaInterface{
 	public void atribuirEscala(EscalaColaborador escala) {
 		dao.atribuirEscala(escala);
 	}
+
+	@Override
+	public void removerColaborador(Long id) {
+		dao.removerColaborador(id);
+	}
 }

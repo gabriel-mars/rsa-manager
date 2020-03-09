@@ -2,6 +2,8 @@ package br.inatel.ssic.rsa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,5 +39,18 @@ public class EscalaController {
 		
 		attr.addFlashAttribute("success", "Escala atualizada");
 		return "redirect:/escala/atribuir";
+	}
+	
+	@GetMapping("/escala/remover/{id}")
+	public String removerColaboradorEscala(@PathVariable("id") Long id, RedirectAttributes attr) {
+		
+		try {
+			service.removerColaborador(id);
+			attr.addFlashAttribute("success", "Colaborador removido.");
+		} catch (Exception e) {
+			attr.addFlashAttribute("fail", "Não foi possível remover o colaborador solicitado.");
+		}
+		
+		return "redirect:/escala/lista";
 	}
 }

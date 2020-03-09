@@ -4,6 +4,7 @@
 	<body>
 	    <section class="layout-content" layout:fragment="conteudo">
 	        <div class="container row">
+	        	<div th:replace="fragments/alert"></div>
 	        	<h3 class="white-black">Escalas</h3>
 		        <table class="highlight">
 	        		<thead>
@@ -25,6 +26,9 @@
 		              		<td colspan="2">
 	                            <a class="waves-effect waves-light btn-small blue tooltipped" th:href="@{/escala/editar/{id} (id=${e.id})}" data-position="right" data-tooltip="Editar">
                                 	<i class="material-icons">edit</i>
+                            	</a>
+                            	<a class="waves-effect waves-light btn-small orange tooltipped" th:href="@{/escala/atribuir}" data-position="right" data-tooltip="Adicionar">
+                                	<i class="material-icons">add</i>
                             	</a>
                             	<a class="waves-effect waves-light btn-small green tooltipped" th:href="@{/escala/colaboradores/{id} (id=${e.id})}" data-position="right" data-tooltip="Colaboradores">
                                 	<i class="material-icons">list</i>

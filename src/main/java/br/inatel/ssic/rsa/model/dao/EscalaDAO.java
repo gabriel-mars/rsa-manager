@@ -33,4 +33,11 @@ public class EscalaDAO extends BaseDAO<Escala, Long> implements EscalaInterface{
 				.setParameter(2, escala.getEscalaId());
 		query.executeUpdate();
 	}
+
+	@Override
+	public void removerColaborador(Long id) {
+		Query query = manager.createNativeQuery("DELETE FROM escala_colaborador WHERE id = ?")
+				.setParameter(1, id);
+		query.executeUpdate();
+	}
 }
