@@ -15,6 +15,7 @@ import br.inatel.ssic.rsa.model.entity.Colaborador;
 import br.inatel.ssic.rsa.model.entity.Escala;
 import br.inatel.ssic.rsa.model.entity.EscalaColaborador;
 import br.inatel.ssic.rsa.model.entity.Falha;
+import br.inatel.ssic.rsa.model.entity.Ferias;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
@@ -242,5 +243,20 @@ public class NavigationController {
 		model.addAttribute("escala", escala);
 		model.addAttribute("colaboradores", colaboradores);
 		return "escala/colaboradores";
+	}
+	
+	// Métodos de Férias
+	@GetMapping("/ferias/cadastro")
+	public String cadastroFerias(ModelMap model, HttpSession session) {
+		Ferias ferias = new Ferias();
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		List<Pessoa> colaboradores = service.findByOrganizacao(sessaoAtual.getOrganizacao());
+		
+		model.addAttribute("ferias", ferias);
+		model.addAttribute("colaboradores", colaboradores);
+		return "ferias/cadastro";
 	}
 }

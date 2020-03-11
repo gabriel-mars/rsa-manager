@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html layout:decorate="~{dashboard}">
+	<head><meta charset="UTF-8"/></head>
+	<body>
+	    <section class="layout-content" layout:fragment="conteudo" id="graficosMelhorias">
+	    	<div class="container row">
+	    		<h3 class="white-black">Cadastro de Férias</h3>
+		        <div th:replace="fragments/alert"></div>
+	        	<form class="col s12" th:action="@{/ferias/atribuir}" th:object="${ferias}" method="POST">
+	        		<div class="row">
+	        			<div class="input-field col s4">
+			          		<select required="true" th:field="*{colaboradorId}">
+						      	<option disabled="disabled" value="">Escolha</option>
+                             	<option th:each="c : ${colaboradores}"
+                                	th:value="${c[0]}" th:text="${c[1]}">Colaborador</option>
+						    </select>
+			        	</div>
+					    <div class="input-field col s4">
+			          		<input id="data_inicio" type="text" class="datepicker" required="true" th:field="*{inicioFerias}">
+			          		<label for="data_inicio">Início</label>
+			        	</div>
+			        	<div class="input-field col s4">
+			          		<input id="data_fim" type="text" class="datepicker" required="true" th:field="*{fimFerias}">
+			          		<label for="data_fim">Fim</label>
+			        	</div>
+	        		</div>
+	        		<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+			  	</form>
+	        </div>
+	        <script>
+				$(document).ready(function(){
+					$('select').formSelect();	
+			    	$('.datepicker').datepicker({
+			    		format: 'dd/mm/yyyy'
+			    	});
+				});
+			</script>
+	    </section>
+	</body>
+</html>
