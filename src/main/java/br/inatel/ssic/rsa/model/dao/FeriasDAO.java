@@ -29,4 +29,13 @@ public class FeriasDAO extends BaseDAO<Ferias, Long> implements FeriasInterface{
 				.setParameter(1, ferias.getInicioFerias());
 		return query.getResultList();
 	}
+	
+	public void updateFerias(Ferias ferias) {
+		Query query = manager.createNativeQuery("UPDATE ferias SET colaborador_id = ?, inicio_ferias = ?, fim_ferias = ? WHERE id = ?")
+				.setParameter(1, ferias.getColaboradorId())
+				.setParameter(2, ferias.getInicioFerias())
+				.setParameter(3, ferias.getFimFerias())
+				.setParameter(4, ferias.getId());
+		query.executeUpdate();
+	}
 }

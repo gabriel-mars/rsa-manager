@@ -6,10 +6,11 @@
 	    	<div class="container row">
 	    		<h3 class="white-black">Cadastro de Férias</h3>
 		        <div th:replace="fragments/alert"></div>
-	        	<form class="col s12" th:action="@{/ferias/atribuir}" th:object="${ferias}" method="POST">
+	        	<form class="col s12" th:action="@{${ferias.id == null} ? @{/ferias/cadastro} : @{/ferias/update}}" th:object="${ferias}" method="POST">
 	        		<div class="row">
 	        			<div class="input-field col s4">
-			          		<select required="true" th:field="*{colaboradorId}">
+	        				<input id="id-ferias" type="hidden" th:field="*{id}" />
+			          		<select required="true" th:field="*{colaboradorId}" th:value="${colaborador.nome}">
 						      	<option disabled="disabled" value="">Escolha</option>
                              	<option th:each="c : ${colaboradores}"
                                 	th:value="${c[0]}" th:text="${c[1]}">Colaborador</option>

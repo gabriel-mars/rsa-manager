@@ -24,8 +24,7 @@ public class FeriasService implements FeriasInterface{
 
 	@Override
 	public void update(Ferias ferias) {
-		// TODO Auto-generated method stub
-		
+		dao.updateFerias(ferias);
 	}
 
 	@Override

@@ -254,12 +254,14 @@ public class NavigationController {
 	public String cadastroFerias(ModelMap model, HttpSession session) {
 		Ferias ferias = new Ferias();
 		Colaborador sessaoAtual = new Colaborador();
+		Colaborador colaborador = new Colaborador();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
 		
 		List<Pessoa> colaboradores = service.findByOrganizacao(sessaoAtual.getOrganizacao());
 		
 		model.addAttribute("ferias", ferias);
+		model.addAttribute("colaborador", colaborador);
 		model.addAttribute("colaboradores", colaboradores);
 		return "ferias/cadastro";
 	}
@@ -273,10 +275,19 @@ public class NavigationController {
 	}
 	
 	@GetMapping("/ferias/editar/{id}")
-	public String getEditarFerias(@PathVariable("id") Long id, ModelMap model) {
+	public String getEditarFerias(@PathVariable("id") Long id, ModelMap model, HttpSession session) {
 		Ferias ferias = feriasService.findById(id);
+		Colaborador colaborador = service.findById(ferias.getColaboradorId());
+		
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		
+		List<Pessoa> colaboradores = service.findByOrganizacao(sessaoAtual.getOrganizacao());
 		
 		model.addAttribute("ferias", ferias);
-		return "escala/cadastro";
+		model.addAttribute("colaborador", colaborador);
+		model.addAttribute("colaboradores", colaboradores);
+		return "ferias/cadastro";
 	}
 }

@@ -102,4 +102,12 @@ public class FeriasController {
 		model.addAttribute("listaFerias", listaFerias);
 		return "ferias/lista";
 	}
+	
+	@PostMapping("/ferias/update")
+	public String editarFerias(Ferias ferias, RedirectAttributes attr) {
+		service.update(ferias);
+		
+		attr.addFlashAttribute("success", "Férias atualizada!");
+		return "redirect:/ferias/cadastro";
+	}
 }
