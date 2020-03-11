@@ -29,8 +29,7 @@ public class FeriasService implements FeriasInterface{
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+		dao.delete(id);
 	}
 
 	@Override

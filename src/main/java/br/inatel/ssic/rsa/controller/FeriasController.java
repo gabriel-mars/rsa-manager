@@ -6,9 +6,13 @@ import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -109,5 +113,13 @@ public class FeriasController {
 		
 		attr.addFlashAttribute("success", "Férias atualizada!");
 		return "redirect:/ferias/cadastro";
+	}
+	
+	@GetMapping("/ferias/excluir/{id}")
+	public String getEditarFerias(@PathVariable("id") Long id, RedirectAttributes attr) {
+		service.delete(id);
+		
+		attr.addFlashAttribute("success", "Férias excluída.");
+		return "redirect:/ferias/lista";
 	}
 }
