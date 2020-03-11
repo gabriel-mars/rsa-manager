@@ -54,4 +54,10 @@ public class EscalaService implements EscalaInterface{
 	public void removerColaborador(Long id) {
 		dao.removerColaborador(id);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object[]> findByColaborador(Long id) {
+		return dao.findByColaborador(id);
+	}
 }

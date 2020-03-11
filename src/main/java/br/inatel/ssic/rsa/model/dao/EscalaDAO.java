@@ -1,5 +1,7 @@
 package br.inatel.ssic.rsa.model.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -39,5 +41,16 @@ public class EscalaDAO extends BaseDAO<Escala, Long> implements EscalaInterface{
 		Query query = manager.createNativeQuery("DELETE FROM escala_colaborador WHERE id = ?")
 				.setParameter(1, id);
 		query.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findByColaborador(Long id) {
+		Query query = manager.createNativeQuery("SELECT E.inicio_escala, E.titulo "
+				+ "FROM escala E "
+				+ "INNER JOIN escala_colaborador EC ON EC.escala_id = E.id "
+				+ "WHERE EC.colaborador_id = ?")
+				.setParameter(1, id);
+		return query.getResultList();
 	}
 }

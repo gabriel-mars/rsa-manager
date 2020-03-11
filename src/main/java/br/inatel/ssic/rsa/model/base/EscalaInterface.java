@@ -19,4 +19,6 @@ public interface EscalaInterface {
     void atribuirEscala(EscalaColaborador escala);
     
     void removerColaborador(Long id);
+    
+    List<Object[]> findByColaborador(Long id);
 }
