@@ -37,15 +37,19 @@ public class FeriasService implements FeriasInterface{
 	@Override
 	@Transactional(readOnly = true)
 	public Ferias findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Ferias> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object[]> findFeriasByPeriodo(Ferias ferias) {
+		return dao.findFeriasByPeriodo(ferias);
 	}
 
 }

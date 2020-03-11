@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,6 +24,9 @@ public class FeriasController {
 	
 	@Autowired
 	private EscalaService escalaService;
+	
+	@Autowired
+	private FeriasService feriasService;
 	
 	@PostMapping("/ferias/atribuir")
 	public String saveEscala(Ferias ferias, RedirectAttributes attr) {
@@ -87,5 +91,15 @@ public class FeriasController {
 			attr.addFlashAttribute("success", "Férias cadastrada");
 			return "redirect:/ferias/cadastro";
 		}
+	}
+	
+	@PostMapping("/ferias/lista/periodo")
+	public String listaFeriasPeriodo(Ferias ferias, ModelMap model) {
+			
+		List<Object[]> listaFerias = feriasService.findFeriasByPeriodo(ferias);
+		
+		model.addAttribute("ferias", ferias);
+		model.addAttribute("listaFerias", listaFerias);
+		return "ferias/lista";
 	}
 }

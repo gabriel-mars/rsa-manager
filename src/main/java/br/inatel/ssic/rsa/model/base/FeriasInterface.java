@@ -14,4 +14,6 @@ public interface FeriasInterface {
     Ferias findById(Long id);
     
     List<Ferias> findAll();
+    
+    List<Object[]> findFeriasByPeriodo(Ferias ferias);
 }

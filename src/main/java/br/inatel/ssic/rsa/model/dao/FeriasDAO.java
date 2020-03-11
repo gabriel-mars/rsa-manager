@@ -1,7 +1,10 @@
 package br.inatel.ssic.rsa.model.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +17,16 @@ public class FeriasDAO extends BaseDAO<Ferias, Long> implements FeriasInterface{
 
 	@PersistenceContext
 	private EntityManager manager;
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findFeriasByPeriodo(Ferias ferias) {
+		Query query = manager.createNativeQuery("SELECT F.id, P.nome, F.inicio_ferias, F.fim_ferias "
+				+ "FROM ferias F "
+				+ "INNER JOIN colaborador C ON C.pessoa_id = F.colaborador_id "
+				+ "INNER JOIN pessoa P ON P.id = C.pessoa_id "
+				+ "WHERE DATE(F.inicio_ferias) >= DATE(TO_DATE(?, 'DD/MM/YYY'))")
+				.setParameter(1, ferias.getInicioFerias());
+		return query.getResultList();
+	}
 }

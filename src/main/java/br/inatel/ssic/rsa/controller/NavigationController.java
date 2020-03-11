@@ -20,6 +20,7 @@ import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
 import br.inatel.ssic.rsa.model.service.EscalaService;
+import br.inatel.ssic.rsa.model.service.FeriasService;
 
 @Controller
 public class NavigationController {
@@ -29,6 +30,9 @@ public class NavigationController {
 	
 	@Autowired
 	private EscalaService escalaService;
+	
+	@Autowired
+	private FeriasService feriasService;
 	
 	@GetMapping("/")
 	public String getHome(ModelMap model) {
@@ -258,5 +262,21 @@ public class NavigationController {
 		model.addAttribute("ferias", ferias);
 		model.addAttribute("colaboradores", colaboradores);
 		return "ferias/cadastro";
+	}
+	
+	@GetMapping("/ferias/lista")
+	public String listaFerias(ModelMap model) {
+		Ferias ferias = new Ferias();
+		
+		model.addAttribute("ferias", ferias);
+		return "ferias/lista";
+	}
+	
+	@GetMapping("/ferias/editar/{id}")
+	public String getEditarFerias(@PathVariable("id") Long id, ModelMap model) {
+		Ferias ferias = feriasService.findById(id);
+		
+		model.addAttribute("ferias", ferias);
+		return "escala/cadastro";
 	}
 }
