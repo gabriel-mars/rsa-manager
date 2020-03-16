@@ -10,11 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import br.inatel.ssic.rsa.model.base.AtividadeInterface;
 import br.inatel.ssic.rsa.model.base.BaseDAO;
-import br.inatel.ssic.rsa.model.entity.Atividade;
 import br.inatel.ssic.rsa.model.entity.Item;
 
 @Repository
-public class AtividadeDAO extends BaseDAO<Atividade, Long> implements AtividadeInterface{
+public class AtividadeDAO extends BaseDAO<Item, Long> implements AtividadeInterface{
 	
 	@PersistenceContext
 	private EntityManager manager;

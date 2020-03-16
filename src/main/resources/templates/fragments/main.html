@@ -16,9 +16,9 @@
 			        			<p>Descrição dos itens tratados pelo time RSA:</p>
 			        			<br/>
 			        			<p><u><strong>Total</strong></u>: <span th:text="${item.centroRsa}"></span></p>
-			        			<p><u><strong>Ap + Re*</strong></u>: <span th:text="${item.empresa}"></span></p>
+			        			<p><u><strong>Ap + Re*</strong></u>: <span th:text="${item.inspetor}"></span></p>
 			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item.item}"></span></p>
-			          			<p><u><strong>Média</strong></u>: <span th:text="${item.asp}"></span></p>
+			          			<p><u><strong>Média</strong></u>: <span th:text="${item.site}"></span></p>
 			        		</div>
 			        		<div class="card-action">
 			        			<a th:href="@{/atividade/diario}">Diário</a>
@@ -35,9 +35,9 @@
 			        			<p>Descrição dos itens tratados pelo time RSA:</p>
 			        			<br/>
 			        			<p><u><strong>Total</strong></u>: <span th:text="${item2.centroRsa}"></span></p>
-			        			<p><u><strong>Ap + Re*</strong></u>: <span th:text="${item2.empresa}"></span></p>
-			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item2.item}"></p>
-			          			<p><u><strong>Média</strong></u>: <span th:text="${item2.asp}"></p>
+			        			<p><u><strong>Ap + Re*</strong></u>: <span th:text="${item2.inspetor}"></span></p>
+			          			<p><u><strong>Máximo</strong></u>: <span th:text="${item2.item}"></span></p>
+			          			<p><u><strong>Média</strong></u>: <span th:text="${item2.site}"></span></p>
 			        		</div>
 			        		<div class="card-action">
 			          			<a th:href="@{/atividade/mensal}">Outros meses</a>

@@ -123,9 +123,9 @@ public class ColaboradorController {
 			}
 			
 			aux2.setCentroRsa("" + totalMes); // Totoal de atividades do mês
-			aux2.setEmpresa("" + media); // Total de atividades AP + RE do mês
+			aux2.setInspetor("" + media); // Total de atividades AP + RE do mês
 			media = media / dadosMedia.size();
-			aux2.setAsp("" + media); // Média do mês
+			aux2.setSite("" + media); // Média do mês
 			
 			// Último mês
 			item.setDataAnalise(dtf.format(lastMouth));
@@ -145,9 +145,9 @@ public class ColaboradorController {
 			}
 			
 			aux3.setCentroRsa("" + totalMes); // Totoal de atividades do mês
-			aux3.setEmpresa("" + media); // Total de atividades AP + RE do mês
+			aux3.setInspetor("" + media); // Total de atividades AP + RE do mês
 			media = media / dadosLastMouth.size();
-			aux3.setAsp("" + media); // Média do mês
+			aux3.setSite("" + media); // Média do mês
 		}
 		
 		model.addAttribute("item", aux2);

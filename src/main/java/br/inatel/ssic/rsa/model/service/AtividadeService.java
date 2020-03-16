@@ -39,15 +39,12 @@ public class AtividadeService implements AtividadeInterface{
 		    	Integer aux = (int) Double.parseDouble(row.getCell(0).toString());
 		    	String inspetor = row.getCell(15).toString();
 		    
-		    	item.setOs(aux);
 		    	item.setSite(row.getCell(5).toString());
-		    	item.setEmpresa(row.getCell(11).toString());
 		    	item.setOrdem(row.getCell(1).toString());
 		    	item.setItem(row.getCell(2).toString());
 		    	item.setDescricao(row.getCell(3).toString());
 		    	item.setStatus(row.getCell(7).toString());
 		    	item.setOfensor(row.getCell(9).toString());
-		    	item.setAsp(row.getCell(12).toString());
 		    	item.setCentroRsa(row.getCell(14).toString());
 		    	
 		    	if (inspetor.intern().equals(" ") || inspetor.intern().equals("")) {

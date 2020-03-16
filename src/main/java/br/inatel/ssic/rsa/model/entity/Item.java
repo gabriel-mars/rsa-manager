@@ -2,11 +2,7 @@ package br.inatel.ssic.rsa.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -14,7 +10,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @Table(name = "item")
 @DynamicUpdate
-public class Item extends Atividade{
+public class Item extends AbstractEntity<Long>{
 	
 	@Column(name = "ordem", nullable = false, length = 7)
 	private String ordem;
@@ -31,9 +27,6 @@ public class Item extends Atividade{
 	@Column(name = "ofensor", nullable = false, length = 20)
 	private String ofensor;
 	
-	@Column(name = "asp", nullable = false, length = 30)
-	private String asp;
-	
 	@Column(name = "data_envio", nullable = false, length = 10)
 	private String dataEnvio;
 	
@@ -49,16 +42,11 @@ public class Item extends Atividade{
 	@Column(name = "hora_analise", nullable = false, length = 8)
 	private String horaAnalise;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_atividade")
-	@Transient
-	private Atividade atividade;
-	
-	@Column(name="id_atividade", updatable=false, insertable=false) 
-	private Long idAtividade;
-	
 	@Column(name = "inspetor", nullable = false, length = 30)
 	private String inspetor;
+	
+	@Column(name = "site", nullable = false, length = 25)
+	private String site;
 
 	public String getOrdem() {
 		return ordem;
@@ -98,14 +86,6 @@ public class Item extends Atividade{
 
 	public void setOfensor(String ofensor) {
 		this.ofensor = ofensor;
-	}
-
-	public String getAsp() {
-		return asp;
-	}
-
-	public void setAsp(String asp) {
-		this.asp = asp;
 	}
 
 	public String getDataEnvio() {
@@ -148,27 +128,19 @@ public class Item extends Atividade{
 		this.horaAnalise = horaAnalise;
 	}
 
-	public Atividade getAtividade() {
-		return atividade;
-	}
-
-	public void setAtividade(Atividade atividade) {
-		this.atividade = atividade;
-	}
-
-	public Long getIdAtividade() {
-		return idAtividade;
-	}
-
-	public void setIdAtividade(Long idAtividade) {
-		this.idAtividade = idAtividade;
-	}
-
 	public String getInspetor() {
 		return inspetor;
 	}
 
 	public void setInspetor(String inspetor) {
 		this.inspetor = inspetor;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
 	}
 }
