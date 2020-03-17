@@ -36,7 +36,8 @@ public class AtividadeDAO extends BaseDAO<Item, Long> implements AtividadeInterf
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Aprovado') AS itens_aprovados, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Abonado') AS itens_abonados, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado' OR I.status = 'Aprovado') AS sum_itens_ap_re, "
-				+ "COUNT (I.status) AS sum_total "
+				+ "COUNT (I.status) AS sum_total, "
+				+ "COUNT(DISTINCT I.site) AS sum_site "
 				+ "FROM item I "
 				+ "WHERE I.centro_rsa = ? AND I.data_analise = ? "
 				+ "GROUP BY I.inspetor ORDER BY sum_itens_ap_re DESC")

@@ -208,8 +208,6 @@ function getDadosItensMes(){
 // Gráfico de ranqueamento DESCONSIDERANDO abonos
 function drawChartTotais(values){
 	
-	console.log(values);
-	
 	var lstAux = [];
 	var soma = 0;
 	var media = 0;
@@ -578,6 +576,7 @@ function drawColumnDiario(dataReturn){
 	data.addColumn('number', 'Média');
 	data.addColumn('number', 'DP superior');
 	data.addColumn('number', 'DP inferior');
+	data.addColumn('number', 'Sites');
 	
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
@@ -601,13 +600,11 @@ function drawColumnDiario(dataReturn){
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
 		
-  	  	data.addRow([a[0], a[4], media, (media + dp), dp]); 
+  	  	data.addRow([a[0], a[4], media, (media + dp), dp, a[6]]); 
 	}
 
 	var options = {
 		  title:'Itens avaliados no dia',
-		  seriesType: 'bars',
-		  series: {1: {type: 'line'}, 2: {type: 'line'}, 3: {type: 'line'}},
 		  hAxis: {
 	          title: 'Colaborador',
 	          viewWindow: {
@@ -615,9 +612,16 @@ function drawColumnDiario(dataReturn){
 	            max: [17, 30, 0]
 	          }
 	        },
-	        vAxis: {
-	            title: 'Itens'
-	          }
+	        vAxis: [
+	            {title: 'Itens'},
+	            {title: 'Sites'}
+	          ],
+	        series: {
+		    	0: {type: 'bars', targetAxisIndex: 0},
+		    	1: {type: 'line', targetAxisIndex: 0},
+		    	2: {type: 'line', targetAxisIndex: 0},
+		    	3: {type: 'line', targetAxisIndex: 0},
+		    	4: {type: 'line', targetAxisIndex: 1}}
 	 };
 
 	// Instantiate and draw our chart, passing in some options.
