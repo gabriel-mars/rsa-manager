@@ -30,7 +30,7 @@ public class FeriasController {
 	@Autowired
 	private FeriasService feriasService;
 	
-	@PostMapping("/ferias/atribuir")
+	@PostMapping("/ferias/cadastro")
 	public String saveEscala(Ferias ferias, RedirectAttributes attr) {
 		String aux = "";
 		String inicioEscala = "";

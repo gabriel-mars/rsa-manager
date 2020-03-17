@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.Ferias;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
+import br.inatel.ssic.rsa.model.service.FeriasService;
 import br.inatel.ssic.rsa.model.service.RelatorioService;
 
 @Controller
@@ -30,6 +32,9 @@ public class ColaboradorController {
 	
 	@Autowired
 	private RelatorioService relService;
+	
+	@Autowired
+	private FeriasService ferService;
 	
 	@PostMapping("/colaborador/entrar")
 	public String verificarLogin(Pessoa pessoa, HttpSession session, RedirectAttributes attr) {
@@ -92,6 +97,7 @@ public class ColaboradorController {
 		Object[] aux = null;
 		Object[] auxItem = null;
 		Colaborador sessaoAtual = new Colaborador();
+		Ferias ferias = new Ferias();
 		Item item = new Item();
 		Item aux2 = new Item();
 		Item aux3 = new Item();
@@ -150,6 +156,53 @@ public class ColaboradorController {
 			aux3.setSite("" + media); // Média do mês
 		}
 		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate today = LocalDate.now();
+		String dia = today.getDayOfWeek().toString();
+		
+		switch (dia) {
+			case "MONDAY":
+				ferias.setInicioFerias(formatter.format(today.minusDays(1)).toString());
+				ferias.setFimFerias(formatter.format(today.plusDays(5)).toString());
+				break;
+				
+			case "TUESDAY":
+				ferias.setInicioFerias(formatter.format(today.minusDays(2)).toString());
+				ferias.setFimFerias(formatter.format(today.plusDays(4)).toString());
+				break;
+				
+			case "WEDNESDAY":		
+				ferias.setInicioFerias(formatter.format(today.minusDays(3)).toString());
+				ferias.setFimFerias(formatter.format(today.plusDays(3)).toString());
+				break;
+				
+			case "THURSDAY":	
+				ferias.setInicioFerias(formatter.format(today.minusDays(4)).toString());
+				ferias.setFimFerias(formatter.format(today.plusDays(2)).toString());
+				break;
+				
+			case "FRIDAY":
+				ferias.setInicioFerias(formatter.format(today.minusDays(5)).toString());
+				ferias.setFimFerias(formatter.format(today.plusDays(1)).toString());
+				break;
+				
+			case "SATURDAY":
+				ferias.setInicioFerias(formatter.format(today.minusDays(6)).toString());
+				ferias.setFimFerias(formatter.format(today).toString());
+				break;
+				
+			case "SUNDAY":
+				ferias.setInicioFerias(formatter.format(today).toString());
+				ferias.setFimFerias(formatter.format(today.plusDays(7)).toString());
+				break;
+	
+			default:
+				break;
+		}
+		
+		List<Object[]> colaboradores = ferService.findFeriasBySemana(ferias);
+		
+		model.addAttribute("colaboradores", colaboradores);
 		model.addAttribute("item", aux2);
 		model.addAttribute("item2", aux3);
 		

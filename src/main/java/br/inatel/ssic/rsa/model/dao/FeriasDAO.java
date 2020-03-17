@@ -38,4 +38,17 @@ public class FeriasDAO extends BaseDAO<Ferias, Long> implements FeriasInterface{
 				.setParameter(4, ferias.getId());
 		query.executeUpdate();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> findFeriasBySemana(Ferias ferias) {
+		Query query = manager.createNativeQuery("SELECT F.id, P.nome, F.inicio_ferias, F.fim_ferias "
+				+ "FROM ferias F "
+				+ "INNER JOIN colaborador C ON C.pessoa_id = F.colaborador_id "
+				+ "INNER JOIN pessoa P ON P.id = C.pessoa_id "
+				+ "WHERE DATE(F.inicio_ferias) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(F.inicio_ferias) <= DATE(TO_DATE(?, 'DD/MM/YYY'))")
+				.setParameter(1, ferias.getInicioFerias())
+				.setParameter(2, ferias.getFimFerias());
+		return query.getResultList();
+	}
 }

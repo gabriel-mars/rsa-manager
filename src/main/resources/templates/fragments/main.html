@@ -83,6 +83,27 @@
 			    	</div>
 		 	 	</div>
 	        </div>
+	        <div class="container row">
+	        <div class="divider"></div>
+	        	<h4 class="white-black">Colaboradores em férias nesta semana</h4>
+	        	<table class="highlight">
+	        		<thead>
+			          	<tr>
+			              	<th>Colaborador</th>
+			              	<th>Início</th>
+			              	<th>Fim</th>
+			          	</tr>
+	        		</thead>
+	
+	        		<tbody>
+ 		          		<tr th:each="c : ${colaboradores}">
+		              		<td th:text="${c[1]}">Nome</td>
+		              		<td th:text="${c[2]}">Início</td>
+		              		<td th:text="${c[3]}">Fim</td>
+		        		</tr>
+	        		</tbody>
+	      		</table>
+	        </div>
 	    </section>
 	</body>
 </html>

@@ -612,11 +612,13 @@ function drawColumnDiario(dataReturn){
 	            max: [17, 30, 0]
 	          }
 	        },
-	        vAxis: [
-	            {title: 'Itens'},
-	            {title: 'Sites'}
-	          ],
-	        series: {
+	        
+	        vAxes: [
+		    	  {title: "Itens"},
+		    	  {title: "Sites"}
+		      ],
+	        
+		      series: {
 		    	0: {type: 'bars', targetAxisIndex: 0},
 		    	1: {type: 'line', targetAxisIndex: 0},
 		    	2: {type: 'line', targetAxisIndex: 0},

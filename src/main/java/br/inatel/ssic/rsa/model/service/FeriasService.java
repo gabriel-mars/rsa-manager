@@ -50,4 +50,9 @@ public class FeriasService implements FeriasInterface{
 		return dao.findFeriasByPeriodo(ferias);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<Object[]> findFeriasBySemana(Ferias ferias) {
+		return dao.findFeriasBySemana(ferias);
+	}
 }
