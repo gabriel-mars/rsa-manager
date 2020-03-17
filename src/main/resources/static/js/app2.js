@@ -290,7 +290,7 @@ function drawChartTotais(values){
 		    	1: {type: 'line', targetAxisIndex: 0},
 		    	2: {type: 'line', targetAxisIndex: 0},
 		    	3: {type: 'line', targetAxisIndex: 0},
-		    	4: {type: 'line', targetAxisIndex: 1}}
+		    	4: {type: 'bars', targetAxisIndex: 1}}
 	 };
     
 	var chart = new google.visualization.ComboChart(document.getElementById("chartRankMes"));
@@ -623,7 +623,7 @@ function drawColumnDiario(dataReturn){
 		    	1: {type: 'line', targetAxisIndex: 0},
 		    	2: {type: 'line', targetAxisIndex: 0},
 		    	3: {type: 'line', targetAxisIndex: 0},
-		    	4: {type: 'line', targetAxisIndex: 1}}
+		    	4: {type: 'bars', targetAxisIndex: 1}}
 	 };
 
 	// Instantiate and draw our chart, passing in some options.
