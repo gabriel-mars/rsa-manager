@@ -121,7 +121,8 @@ public class RelatorioDAO implements RelatorioInterface{
 	public List<Object[]> findItensByMes(Item item) {
 		Query query = manager.createNativeQuery("SELECT DISTINCT I.inspetor, "
 				+ "COUNT(I.status) FILTER (WHERE I.status = 'Rejeitado' OR I.status = 'Aprovado') AS sum_itens_ap_re, "
-				+ "COUNT (I.status) AS sum_total "
+				+ "COUNT (I.status) AS sum_total, "
+				+ "COUNT(DISTINCT I.site) AS sum_site "
 				+ "FROM item I "
 				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) AND DATE(I.data_analise) <= DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "GROUP BY I.inspetor "

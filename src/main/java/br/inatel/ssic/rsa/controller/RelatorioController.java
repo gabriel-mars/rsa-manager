@@ -239,10 +239,8 @@ public class RelatorioController {
 	@PostMapping("/relatorio/itens/mensal")
 	@ResponseBody
 	public String getItensMes(@RequestBody String ary, Item item, ModelMap model) throws JSONException {
-		Object[] aux = null;
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
-		JSONObject auxJson = new JSONObject();
 		String org, date = null;
 		
 		obj = jsonArray.optJSONObject(0);
@@ -254,15 +252,9 @@ public class RelatorioController {
 		
 		List<Object[]> dados = service.findItensByMes(item);
 		
-		for(int i = 0; i < dados.size(); i++) {
-			aux = dados.get(i);
-			
-			auxJson.put(aux[0].toString() + ':' + aux[1], aux[2]);
-		}
-
-		model.addAttribute("item", item);
+		String data = new Gson().toJson(dados);
 		
-		return auxJson.toString();
+		return data;
 	}
 	
 	@PostMapping("/relatorio/diario")

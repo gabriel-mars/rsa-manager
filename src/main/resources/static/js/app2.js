@@ -207,25 +207,24 @@ function getDadosItensMes(){
 
 // Gráfico de ranqueamento DESCONSIDERANDO abonos
 function drawChartTotais(values){
+	
+	console.log(values);
+	
 	var lstAux = [];
 	var soma = 0;
 	var media = 0;
 	var mediaAux = 0;
 	var dp = 0;
 	
-	var result = Object.keys(values).map(function (key) {       
-        return [String(key), values[key]]; 
-    }); 
-	
-	for(var i = 0; i < result.length; i++){
+	for(var i = 0; i < values.length; i++){
 		var strArray = [];
 		var aux2 = [];
-		var aux = result[i];
+		var aux = values[i];
 		
-		strArray = aux[0].split(':');
-		aux2[0] = strArray[0];
-		aux2[1] = parseInt(strArray[1]);
-		aux2[2] = aux[1];
+		aux2[0] = aux[0];
+		aux2[1] = parseInt(aux[1]);
+		aux2[2] = aux[2];
+		aux2[3] = aux[3];
 		
 		lstAux.push(aux2);
 	}
@@ -267,16 +266,15 @@ function drawChartTotais(values){
     data.addColumn('number', 'Média');
 	data.addColumn('number', 'DP superior');
 	data.addColumn('number', 'DP inferior');
+	data.addColumn('number', 'Sites');
 	
 	for (var i = 0; i < lstAux.length; i++){
 		var a = lstAux[i];
-		data.addRow([a[0], a[1], media, (media + dp), dp]); 
+		data.addRow([a[0], a[1], media, (media + dp), dp, a[3]]); 
 	}
 	
 	var options = {
 		  title: "Ranqueamento de acordo com os itens AP + RE*",
-		  seriesType: 'bars',
-		  series: {1: {type: 'line'}, 2: {type: 'line'}, 3: {type: 'line'}},
 		  hAxis: {
 	          title: 'Colaborador',
 	          viewWindow: {
@@ -284,9 +282,17 @@ function drawChartTotais(values){
 	            max: [17, 30, 0]
 	          }
 	        },
-	        vAxis: {
-	            title: 'Itens'
-	          }
+	        vAxes: [
+		    	  {title: "Itens"},
+		    	  {title: "Sites"}
+		      ],
+		    
+		    series: {
+		    	0: {type: 'bars', targetAxisIndex: 0},
+		    	1: {type: 'line', targetAxisIndex: 0},
+		    	2: {type: 'line', targetAxisIndex: 0},
+		    	3: {type: 'line', targetAxisIndex: 0},
+		    	4: {type: 'line', targetAxisIndex: 1}}
 	 };
     
 	var chart = new google.visualization.ComboChart(document.getElementById("chartRankMes"));
