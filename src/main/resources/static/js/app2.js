@@ -765,12 +765,7 @@ function drawColumnSitesDiario(values){
 			data.addRow([a[0], c[0], c[1]]);
 		}
 	}
-	
-	var options = {
-			title: "Itens tratados por site",
-			isStacked: true
-	};
-    
+
 	var chart = new google.visualization.Table(document.getElementById("chartSiteDiario"));
 	chart.draw(data, {width: '100%', height: '100%'});
 }
