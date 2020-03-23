@@ -277,4 +277,16 @@ public class RelatorioService implements RelatorioInterface{
 	public List<Object[]> findItensTotaisDiario(Item item) {
 		return dao.findItensTotaisDiario(item);
 	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Object[]> findItensSiteDiario(Item item) {
+		return dao.findItensSiteDiario(item);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<String> findColaboradoresDiario(Item item) {
+		return dao.findColaboradoresDiario(item);
+	}
 }

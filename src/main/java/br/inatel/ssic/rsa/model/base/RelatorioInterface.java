@@ -28,4 +28,8 @@ public interface RelatorioInterface {
 	List<Object[]> findItensTrabalhadosDiario(Item item);
 	
 	List<Object[]> findItensTotaisDiario(Item item);
+	
+	List<Object[]> findItensSiteDiario(Item item);
+	
+	List<String> findColaboradoresDiario(Item item);
 }

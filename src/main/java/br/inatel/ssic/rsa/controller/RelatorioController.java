@@ -1,6 +1,8 @@
 package br.inatel.ssic.rsa.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -329,7 +331,7 @@ public class RelatorioController {
 	
 	@PostMapping("/relatorio/time/abonado")
 	@ResponseBody
-	public String getRelatorioAbonados(@RequestBody String ary,HttpSession session) throws JSONException {
+	public String getRelatorioAbonados(@RequestBody String ary, HttpSession session) throws JSONException {
 		Colaborador sessaoAtual = new Colaborador();
 		Item item = new Item();
 		
@@ -407,5 +409,37 @@ public class RelatorioController {
 		model.addAttribute("item", item);
 		
 		return auxJson.toString();
+	}
+	
+	@PostMapping("/relatorio/diario/sites")
+	@ResponseBody
+	public String getSitesDiario(@RequestBody String ary, Item item, HttpSession session) throws JSONException {
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String org, date = null;
+		Map<String, List<Object[]>> dados = new HashMap<String, List<Object[]>>();
+		String colaborador = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		date = obj.getString("Data");
+		
+		item.setCentroRsa(org);
+		item.setDataAnalise(date);
+		
+		List<String> colaboradores = service.findColaboradoresDiario(item);
+		
+		for (int i = 0; i < colaboradores.size(); i++) {
+			colaborador = colaboradores.get(i);
+			item.setInspetor(colaborador);
+			
+			List<Object[]> sitesColab = service.findItensSiteDiario(item);
+			
+			dados.put(colaborador, sitesColab);
+		}
+		
+		String data = new Gson().toJson(dados);	
+		
+		return data;
 	}
 }

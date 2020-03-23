@@ -720,4 +720,29 @@ function drawPieTotaisDiario(values){
 
     var chart = new google.visualization.PieChart(document.getElementById('chartItensTotaisDiario'));
     chart.draw(data, options);
+    
+    getItensSiteDiario();
+}
+
+function getItensSiteDiario(){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/diario/sites",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			drawColumnSitesDiario(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function drawColumnSitesDiario(values){
+	console.log(values);
 }
