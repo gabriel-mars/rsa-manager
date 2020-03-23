@@ -5,7 +5,7 @@ var ary = [];
 var dados = [];
 
 //Load the Visualization API and the corechart package.
-google.charts.load('current', {'packages':['corechart'], 'language': 'pt'});
+google.charts.load('current', {'packages':['corechart', 'table'], 'language': 'pt'});
 
 function getDadosTime(){
 	let selectOrg = document.getElementById('organizacao');
@@ -744,5 +744,33 @@ function getItensSiteDiario(){
 }
 
 function drawColumnSitesDiario(values){
-	console.log(values);
+	var aux = [];
+	
+	var result = Object.keys(values).map(function (key) {       
+        return [String(key), values[key]]; 
+    });
+	
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Colaborador');
+    data.addColumn('string', 'Site');
+    data.addColumn('number', 'Itens');
+	
+	for (var i = 0; i < result.length; i++){
+		var a = result[i];
+		var b = a[1]
+		
+		for(var j = 0; j < b.length; j++){
+			var c = b[j];
+
+			data.addRow([a[0], c[0], c[1]]);
+		}
+	}
+	
+	var options = {
+			title: "Itens tratados por site",
+			isStacked: true
+	};
+    
+	var chart = new google.visualization.Table(document.getElementById("chartSiteDiario"));
+	chart.draw(data, {width: '100%', height: '100%'});
 }
