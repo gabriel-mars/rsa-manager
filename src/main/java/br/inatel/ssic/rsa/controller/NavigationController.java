@@ -77,6 +77,22 @@ public class NavigationController {
 		return "colaborador/senha";
 	}
 	
+	@GetMapping("/colaborador/vincular")
+	public String getVincularForm(ModelMap model, HttpSession session) {
+		List<Pessoa> colaboradores = new ArrayList<Pessoa>(); 
+		Colaborador sessaoAtual = new Colaborador();
+		
+		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
+		colaboradores = service.findByOrganizacao(sessaoAtual.getOrganizacao());
+		
+		List<Item> nomesNro = service.findByAtividade(sessaoAtual.getOrganizacao().toUpperCase());
+		
+		model.addAttribute("colaboradores", colaboradores);
+		model.addAttribute("nomesNro", nomesNro);
+		
+		return "colaborador/vincular";
+	}
+	
 	// Métodos Atividade
 	@GetMapping("/atividade/cadastro")
 	public String getCadastroAtividade() {
