@@ -42,7 +42,7 @@ public class Item extends AbstractEntity<Long>{
 	@Column(name = "hora_analise", nullable = false, length = 8)
 	private String horaAnalise;
 	
-	@Column(name = "inspetor", nullable = false, length = 30)
+	@Column(name = "inspetor", nullable = false, length = 50)
 	private String inspetor;
 	
 	@Column(name = "site", nullable = false, length = 25)
