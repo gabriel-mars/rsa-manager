@@ -3,32 +3,38 @@
 	<head><meta charset="UTF-8"/></head>
 	<body>
 	    <section class="layout-content" layout:fragment="conteudo">
-	        <div class="container row">
-	        	<h3 class="white-black">Vincular colaboradores com NRO</h3>
-		        <table class="highlight">
-	        		<thead>
-			          	<tr>
-			            	<th>#</th>
-			              	<th>Nome</th>
-			              	<th>E-mail</th>
-			              	<th>Opções</th>
-			          	</tr>
-	        		</thead>
-	
-	        		<tbody>
-		          		<tr th:each="c : ${colaboradores}">
-		              		<td th:text="${c[0]}">1</td>
-		              		<td th:text="${c[1]}">Colaborador</td>
-		              		<td th:text="${c[2]}">Email</td>
-		              		<td colspan="2">
-	                            <a class="waves-effect waves-light btn-small blue tooltipped" th:href="@{/colaborador/editar/{id} (id=${c[0]})}" data-position="right" data-tooltip="Editar">
-                                	<i class="material-icons">edit</i>
-                            	</a>
-	                        </td>
-		        		</tr>
-	        		</tbody>
-	      		</table>
-	        </div>
+	    	<div class=" container row">
+	    		<div th:replace="fragments/alert"></div>
+		    		<h3 class="white-black">Vincular Colaboradores</h3>
+		    		<form class="col s12" th:object="${colaborador}" method="POST">
+			      	<div class="row">
+			        	<div class="input-field col s6">
+			          		<select id="inatel" required="true" th:field="*{colaborador_id}">
+						      	<option disabled="disabled" value="">Escolha</option>
+	                            	<option th:each="c : ${colaboradores}"
+	                               	th:value="${c[0]}" th:text="${c[1]}">Colaborador</option>
+						    </select>
+						    <label>Inatel</label>
+			        	</div>
+			      	    <div class="input-field col s6">
+			          		<select id="nro" required="true" th:field="*{nomeNro}">
+						      	<option disabled="disabled" value="">Escolha</option>
+	                            	<option th:each="n : ${nomesNro}"
+	                               	th:value="${n}" th:text="${n}">Nome NRO</option>
+						    </select>
+						    <label>NRO</label>
+			        	</div>
+			      	</div>
+			    	<button class="btn waves-effect waves-light blue" type="submit" name="action">Enviar
+					    <i class="material-icons right">send</i>
+					</button>
+				</form>
+	    	</div>
+			<script>
+				$(document).ready(function(){
+			    	$('select').formSelect();			    	
+				});
+			</script>
 	    </section>
 	</body>
 </html>

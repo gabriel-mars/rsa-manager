@@ -16,6 +16,7 @@ import br.inatel.ssic.rsa.model.entity.Escala;
 import br.inatel.ssic.rsa.model.entity.EscalaColaborador;
 import br.inatel.ssic.rsa.model.entity.Falha;
 import br.inatel.ssic.rsa.model.entity.Ferias;
+import br.inatel.ssic.rsa.model.entity.InatelNRO;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
@@ -81,12 +82,14 @@ public class NavigationController {
 	public String getVincularForm(ModelMap model, HttpSession session) {
 		List<Pessoa> colaboradores = new ArrayList<Pessoa>(); 
 		Colaborador sessaoAtual = new Colaborador();
+		InatelNRO colab = new InatelNRO();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
 		colaboradores = service.findByOrganizacao(sessaoAtual.getOrganizacao());
 		
 		List<Item> nomesNro = service.findByAtividade(sessaoAtual.getOrganizacao().toUpperCase());
 		
+		model.addAttribute("colaborador", colab);
 		model.addAttribute("colaboradores", colaboradores);
 		model.addAttribute("nomesNro", nomesNro);
 		
