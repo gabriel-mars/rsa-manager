@@ -47,21 +47,81 @@ public class AtividadeService implements AtividadeInterface{
 		    	item.setOfensor(row.getCell(9).toString());
 		    	item.setCentroRsa(row.getCell(14).toString());
 		    	
-		    	if (inspetor.intern().equals(" ") || inspetor.intern().equals("")) {
-					inspetor = "JOSÉ";
+		    	if(inspetor.intern().equals("ALCIDES")) {
+		    		inspetor = "ALCIDES DOUGLAS";
 					item.setInspetor(inspetor);
-				} else if(inspetor.intern().equals("ANA")) {
-					inspetor = "ANA C.";
+		    	} else if(inspetor.intern().equals("ALEIXE")) {
+		    		inspetor = "ALEIXE ANDREOX TIBAES";
+					item.setInspetor(inspetor);
+		    	} else if(inspetor.intern().equals("ANA")) {
+					inspetor = "ANA CAROLINA DE MARTHA FURTADO PENA";
 					item.setInspetor(inspetor);
 				} else if(inspetor.intern().equals("Ana")) {
-					inspetor = "ANA L.";
+					inspetor = "Ana Jessica Marques Leite";
+					item.setInspetor(inspetor.toUpperCase());
+				} else if(inspetor.intern().equals("BENEDITO")) {
+					inspetor = "BENEDITO CAPUTO NETO";
 					item.setInspetor(inspetor);
-				} else if(inspetor.intern().equals("GABRIEL")) {
-					inspetor = "GABRIEL M.";
+				} else if(inspetor.intern().equals("DANILO")) {
+					inspetor = "DANILO BONITO FRANCA DA SILVA";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("Diego")) {
+					inspetor = "DIEGO CARVALHO DE FARIA";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("EDUARDO")) {
+					inspetor = "EDUARDO FERREIRA NUNES";
 					item.setInspetor(inspetor);
 				} else if(inspetor.intern().equals("Gabriel")) {
-					inspetor = "GABRIEL J.";
+					inspetor = "Gabriel José de Faria Rodrigues";
+					item.setInspetor(inspetor.toUpperCase());
+				} else if(inspetor.intern().equals("GABRIEL")) {
+					inspetor = "GABRIEL RODRIGO MARTINS DA SILVA";
 					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("HENNER")) {
+					inspetor = "HENNER RIBEIRO DE PAIVA";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("Igor")) {
+					inspetor = "Igor Caruso Miranda";
+					item.setInspetor(inspetor.toUpperCase());
+				} else if(inspetor.intern().equals("JOAO")) {
+					inspetor = "JOAO HENRIQUE DOS SANTOS";
+					item.setInspetor(inspetor);
+				} else if (inspetor.intern().equals(" ") || inspetor.intern().equals("")) {
+					inspetor = "JOSE AUGUSTO NOGUEIRA MIRANDA";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("JUSSARA")) {
+					inspetor = "JUSSARA DE FATIMA RAIMUNDO";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("Leon")) {
+					inspetor = "Leon Izidoro de Souza";
+					item.setInspetor(inspetor.toUpperCase());
+				} else if(inspetor.intern().equals("Leonardo")) {
+					inspetor = "Leonardo Liberato Jóia Ribeiro";
+					item.setInspetor(inspetor.toUpperCase());
+				} else if(inspetor.intern().equals("LUCAS")) {
+					inspetor = "LUCAS DE SOUZA RESENDE";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("MARCÍLIO")) {
+					inspetor = "MARCÍLIO ALBERTO BATISTA INOCÊNCIO";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("MARCOS")) {
+					inspetor = "MARCOS VINICIUS FERREIRA OLIVEIRA DE SOUZA";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("MATHEUS")) {
+					inspetor = "MATHEUS PIVOTO";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("Patrick")) {
+					inspetor = "Patrick Balestra de Paiva";
+					item.setInspetor(inspetor.toUpperCase());
+				} else if(inspetor.intern().equals("PEDRO")) {
+					inspetor = "PEDRO VILELA";
+					item.setInspetor(inspetor);
+				} else if(inspetor.intern().equals("Sabrina")) {
+					inspetor = "Sabrina de Lima Vilela";
+					item.setInspetor(inspetor.toUpperCase());
+				} else if(inspetor.intern().equals("Victória")) {
+					inspetor = "Victória de Cássia Garcia";
+					item.setInspetor(inspetor.toUpperCase());
 				} else {
 					item.setInspetor(row.getCell(15).toString().toUpperCase());
 				}
