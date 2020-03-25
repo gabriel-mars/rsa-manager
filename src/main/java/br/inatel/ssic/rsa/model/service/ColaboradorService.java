@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.inatel.ssic.rsa.model.base.ColaboradorInterface;
 import br.inatel.ssic.rsa.model.dao.ColaboradorDAO;
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.InatelNRO;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 
@@ -112,5 +113,22 @@ public class ColaboradorService implements ColaboradorInterface{
 	@Transactional(readOnly = true)
 	public List<Object[]> findByColaboradoresEscala(Long id) {
 		return dao.findByColaboradoresEscala(id);
+	}
+
+	@Override
+	public void linkNames(InatelNRO colaborador) {
+		dao.linkNames(colaborador);		
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Pessoa> findLinkOrganizacao(String org) {
+		return dao.findLinkOrganizacao(org);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Item> findLinkAtividade(String org) {
+		return dao.findLinkAtividade(org);
 	}
 }

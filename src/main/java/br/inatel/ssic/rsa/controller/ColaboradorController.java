@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.inatel.ssic.rsa.model.entity.Colaborador;
 import br.inatel.ssic.rsa.model.entity.Ferias;
+import br.inatel.ssic.rsa.model.entity.InatelNRO;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 import br.inatel.ssic.rsa.model.service.ColaboradorService;
@@ -260,5 +261,17 @@ public class ColaboradorController {
 			attr.addFlashAttribute("fail", "As senhas devem ser correspondentes.");
 			return "redirect:/colaborado/solicitar";
 		}
+	}
+	
+	@PostMapping("/colaborador/vincular/nomes")
+	public String vincularColaboradores(InatelNRO colaborador, RedirectAttributes attr) {
+		try {
+			service.linkNames(colaborador);
+			attr.addFlashAttribute("success", "Nomes vinculados.");
+		} catch (Exception e) {
+			attr.addFlashAttribute("fail", "Não foi possível vincular os nomes.");
+		}
+		
+		return "redirect:/colaborador/vincular";
 	}
 }

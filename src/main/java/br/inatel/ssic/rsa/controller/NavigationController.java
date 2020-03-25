@@ -85,9 +85,9 @@ public class NavigationController {
 		InatelNRO colab = new InatelNRO();
 		
 		sessaoAtual = (Colaborador) session.getAttribute("colaboradorLogado");
-		colaboradores = service.findByOrganizacao(sessaoAtual.getOrganizacao());
+		colaboradores = service.findLinkOrganizacao(sessaoAtual.getOrganizacao());
 		
-		List<Item> nomesNro = service.findByAtividade(sessaoAtual.getOrganizacao().toUpperCase());
+		List<Item> nomesNro = service.findLinkAtividade(sessaoAtual.getOrganizacao().toUpperCase());
 		
 		model.addAttribute("colaborador", colab);
 		model.addAttribute("colaboradores", colaboradores);

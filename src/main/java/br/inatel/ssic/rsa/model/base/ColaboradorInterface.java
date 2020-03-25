@@ -3,6 +3,7 @@ package br.inatel.ssic.rsa.model.base;
 import java.util.List;
 
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.InatelNRO;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 
@@ -24,4 +25,10 @@ public interface ColaboradorInterface {
     List<Object[]> findByColaboradoresSemEscala(String org);
     
     List<Object[]> findByColaboradoresEscala(Long id);
+    
+    void linkNames(InatelNRO colaborador);
+    
+    List<Pessoa> findLinkOrganizacao(String org);
+    
+    List<Item> findLinkAtividade(String org);
 }

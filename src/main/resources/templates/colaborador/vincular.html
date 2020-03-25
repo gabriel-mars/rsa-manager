@@ -6,7 +6,7 @@
 	    	<div class=" container row">
 	    		<div th:replace="fragments/alert"></div>
 		    		<h3 class="white-black">Vincular Colaboradores</h3>
-		    		<form class="col s12" th:object="${colaborador}" method="POST">
+		    		<form class="col s12" th:action="@{/colaborador/vincular/nomes}" th:object="${colaborador}" method="POST">
 			      	<div class="row">
 			        	<div class="input-field col s6">
 			          		<select id="inatel" required="true" th:field="*{colaborador_id}">

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import br.inatel.ssic.rsa.model.base.BaseDAO;
 import br.inatel.ssic.rsa.model.base.ColaboradorInterface;
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.InatelNRO;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.entity.Pessoa;
 
@@ -116,6 +117,37 @@ public class ColaboradorDAO extends BaseDAO<Colaborador, Long> implements Colabo
 				+ "INNER JOIN pessoa P ON P.id = C.pessoa_id "
 				+ "WHERE E.id = ?")
 				.setParameter(1, id);
+		return query.getResultList();
+	}
+
+	@Override
+	public void linkNames(InatelNRO colaborador) {
+		manager.persist(colaborador);
+		manager.flush();
+		manager.clear();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pessoa> findLinkOrganizacao(String org) {
+		Query query = manager.createNativeQuery("SELECT P.id as pessoa_id, P.nome, P.email "
+				+ "FROM pessoa P "
+				+ "INNER JOIN colaborador C ON C.pessoa_id = P.id "
+				+ "LEFT JOIN inatel_nro NR ON NR.colaborador_id = P.id "
+				+ "WHERE C.organizacao = ? AND NR.colaborador_id IS NULL")
+				.setParameter(1, org);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Item> findLinkAtividade(String org) {
+		Query query = manager.createNativeQuery("SELECT DISTINCT I.inspetor "
+				+ "FROM item I "
+				+ "LEFT JOIN inatel_nro NR ON NR.nome_nro = I.inspetor "
+				+ "WHERE I.centro_rsa = ? AND NR.nome_nro IS NULL "
+				+ "GROUP BY I.inspetor")
+				.setParameter(1, org);
 		return query.getResultList();
 	}
 }
