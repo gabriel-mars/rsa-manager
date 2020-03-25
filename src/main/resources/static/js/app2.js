@@ -768,4 +768,93 @@ function drawColumnSitesDiario(values){
 
 	var chart = new google.visualization.Table(document.getElementById("chartSiteDiario"));
 	chart.draw(data, {width: '100%', height: '100%'});
+	
+	getItensDiarioMenos();
+}
+
+function getItensDiarioMenos(){
+	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/diario/menos",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+			drawColumnDiarioMenos(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function drawColumnDiarioMenos(dataReturn){
+	var soma = 0;
+	var media = 0;
+	var mediaAux = 0;
+	var dp = 0;
+	var auxDp = [];
+	
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Topping');
+	data.addColumn('number', 'Itens Ap+Re*');
+	data.addColumn('number', 'Média');
+	data.addColumn('number', 'DP superior');
+	data.addColumn('number', 'DP inferior');
+	data.addColumn('number', 'Sites');
+	
+	for(var i = 0; i < dataReturn.length; i++){
+		var a = dataReturn[i];
+		
+		soma += parseInt(a[4]);
+	}
+  
+	media = soma / dataReturn.length;
+	
+	soma = 0;
+	
+	for(var i = 0; i < dataReturn.length; i++){
+		var a = dataReturn[i];
+		
+		soma = soma + Math.pow((a[4] - media), 2);
+	}
+	
+	mediaAux = soma / dataReturn.length;
+	dp = Math.sqrt(mediaAux);
+	
+	for(var i = 0; i < dataReturn.length; i++){
+		var a = dataReturn[i];
+		
+  	  	data.addRow([a[0], a[4], media, (media + dp), dp, a[6]]); 
+	}
+
+	var options = {
+		  title:'Itens avaliados no dia',
+		  hAxis: {
+	          title: 'Colaborador',
+	          viewWindow: {
+	            min: [7, 30, 0],
+	            max: [17, 30, 0]
+	          }
+	        },
+	        
+	        vAxes: [
+		    	  {title: "Itens"},
+		    	  {title: "Sites"}
+		      ],
+	        
+		      series: {
+		    	0: {type: 'bars', targetAxisIndex: 0},
+		    	1: {type: 'line', targetAxisIndex: 0},
+		    	2: {type: 'line', targetAxisIndex: 0},
+		    	3: {type: 'line', targetAxisIndex: 0},
+		    	4: {type: 'bars', targetAxisIndex: 1}}
+	 };
+
+	// Instantiate and draw our chart, passing in some options.
+	var chart = new google.visualization.ComboChart(document.getElementById('chartAtividadeDiarioMenos'));
+	chart.draw(data, options);
 }

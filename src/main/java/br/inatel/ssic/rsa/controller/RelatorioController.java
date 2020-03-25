@@ -1,5 +1,7 @@
 package br.inatel.ssic.rsa.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -262,6 +264,7 @@ public class RelatorioController {
 	@PostMapping("/relatorio/diario")
 	@ResponseBody
 	public String getRelatorioDiario(@RequestBody String ary) throws JSONException {
+		List<Item> dados = null;
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
 		String org, date = null;
@@ -270,7 +273,13 @@ public class RelatorioController {
 		org = obj.getString("Org");
 		date = obj.getString("Data");
 		
-		List<Item> dados = atvService.getAtividades(date, org);
+		if (!org.intern().equals("INATEL")) {
+			dados = atvService.getAtividades(date, org);
+		} else {
+			LocalDate lastMouth = LocalDate.now().minusMonths(6);
+			String formattedDate = lastMouth.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			dados = atvService.getAtividadesMoreMouths(date, org, formattedDate);
+		}
 		
 		String data = new Gson().toJson(dados);	
 		
@@ -436,6 +445,31 @@ public class RelatorioController {
 			List<Object[]> sitesColab = service.findItensSiteDiario(item);
 			
 			dados.put(colaborador, sitesColab);
+		}
+		
+		String data = new Gson().toJson(dados);	
+		
+		return data;
+	}
+	
+	@PostMapping("/relatorio/diario/menos")
+	@ResponseBody
+	public String getRelatorioDiarioMenos(@RequestBody String ary) throws JSONException {
+		List<Item> dados = null;
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String org, date = null;
+		
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		date = obj.getString("Data");
+		
+		if (!org.intern().equals("INATEL")) {
+			dados = atvService.getAtividades(date, org);
+		} else {
+			LocalDate lastMouth = LocalDate.now().minusMonths(6);
+			String formattedDate = lastMouth.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			dados = atvService.getAtividadesMinusMouths(date, org, formattedDate);
 		}
 		
 		String data = new Gson().toJson(dados);	

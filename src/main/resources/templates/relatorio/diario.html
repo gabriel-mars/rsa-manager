@@ -28,9 +28,17 @@
 	        </div>
 	        <div class="container row">
 	        	<div class="divider"></div>
-	        	<div id="chartAtividadeDiario" style="height: 400px; width: 100%;"></div>
+	        	<h5>Itens por colaborador com mais de 6 meses</h5>
+	        	<div id="chartAtividadeDiario" style="height: 450px; width: 100%;"></div>
+	        </div>
+	        
+	        <div class="container row">
 	        	<div class="divider"></div>
-	        	<div id="chartSiteDiario"></div>
+	        	<h5>Itens por colaborador com menos de 6 meses</h5>
+	        	<div id="chartAtividadeDiarioMenos" style="height: 450px; width: 100%;"></div>
+	        </div>
+	        
+	        <div class="container row">
 	        	<div class="divider"></div>
 	        	<table class="chartPieTimeDiario">
 			    	<tr>
@@ -41,6 +49,13 @@
 			    <blockquote>
 	        		<strong>*Ap+Re:</strong> somatória dos itens aprovados com os reprovados	    	
 			    </blockquote>
+	        </div>
+	        
+	        <div class="container row">
+	        	<div class="divider"></div>
+	        	<h5>Descrição de itens em cada site por colaborador</h5>
+	        	<br />
+	        	<div id="chartSiteDiario"></div>
 	        </div>
 	        <script>
 				$(document).ready(function(){

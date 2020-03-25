@@ -166,9 +166,22 @@ public class AtividadeService implements AtividadeInterface{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Item> getAtividadesMensal(String dataInicial, String dataFinal, String organizacao) {
 		List<Item> atividades = dao.getAtividadesMensal(dataInicial, dataFinal, organizacao);
 		
 		return atividades;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Item> getAtividadesMoreMouths(String data, String organizacao, String last) {
+		return dao.getAtividadesMoreMouths(data, organizacao, last);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Item> getAtividadesMinusMouths(String data, String organizacao, String last) {
+		return dao.getAtividadesMinusMouths(data, organizacao, last);
 	}
 }
