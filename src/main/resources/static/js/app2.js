@@ -577,6 +577,7 @@ function drawColumnDiario(dataReturn){
 	data.addColumn('number', 'DP superior');
 	data.addColumn('number', 'DP inferior');
 	data.addColumn('number', 'Sites');
+	data.addColumn('number', 'Meta');
 	
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
@@ -600,7 +601,7 @@ function drawColumnDiario(dataReturn){
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
 		
-  	  	data.addRow([a[0], a[4], media, (media + dp), dp, a[6]]); 
+  	  	data.addRow([a[0], a[4], media, (media + dp), dp, a[6], 180]); 
 	}
 
 	var options = {
@@ -805,6 +806,7 @@ function drawColumnDiarioMenos(dataReturn){
 	data.addColumn('number', 'DP superior');
 	data.addColumn('number', 'DP inferior');
 	data.addColumn('number', 'Sites');
+	data.addColumn('number', 'Meta');
 	
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
@@ -828,7 +830,7 @@ function drawColumnDiarioMenos(dataReturn){
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
 		
-  	  	data.addRow([a[0], a[4], media, (media + dp), dp, a[6]]); 
+  	  	data.addRow([a[0], a[4], media, (media + dp), dp, a[6], 120]); 
 	}
 
 	var options = {
