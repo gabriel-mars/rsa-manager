@@ -2,6 +2,7 @@ package br.inatel.ssic.rsa.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -465,7 +466,7 @@ public class RelatorioController {
 		date = obj.getString("Data");
 		
 		if (!org.intern().equals("INATEL")) {
-			dados = atvService.getAtividades(date, org);
+			dados = new ArrayList<Item>();
 		} else {
 			LocalDate lastMouth = LocalDate.now().minusMonths(6);
 			String formattedDate = lastMouth.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
