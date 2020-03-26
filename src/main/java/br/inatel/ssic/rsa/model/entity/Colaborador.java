@@ -29,6 +29,9 @@ public class Colaborador extends Pessoa{
 	@Transient
 	private Pessoa pessoa;
 
+	@Column(name = "estagiario")
+	private Boolean estagiario;
+
 	public String getIdEricsson() {
 		return idEricsson;
 	}
@@ -59,5 +62,13 @@ public class Colaborador extends Pessoa{
 
 	public void setOrganizacao(String organizacao) {
 		this.organizacao = organizacao;
+	}
+
+	public Boolean getEstagiario() {
+		return estagiario;
+	}
+
+	public void setEstagiario(Boolean estagiario) {
+		this.estagiario = estagiario;
 	}
 }

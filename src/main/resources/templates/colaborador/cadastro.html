@@ -20,17 +20,23 @@
 			        	</div>
 			      	</div>
 			      	<div class="row">
-			        	<div class="input-field col s4">
+			        	<div class="input-field col s3">
 			          		<input id="cpf" type="text" class="cpf validate" required="true" th:field="*{cpf}">
 			          		<label for="cpf">CPF</label>
 			        	</div>
-			        	<div class="input-field col s4">
+			        	<div class="input-field col s3">
 			          		<input id="phone" type="text" class="telefone validate" required="true" th:field="*{telefone}">
 			          		<label for="phone">Telefone</label>
 			        	</div>
-			        	<div class="input-field col s4">
+			        	<div class="input-field col s3">
 			          		<input id="id_ericsson" type="text" class="validate" required="true" th:field="*{idEricsson}" maxlength="7">
 			          		<label for="id_ericsson">ID Ericsson</label>
+			        	</div>
+			        	<div class="input-field col s3">
+			          		<label>
+						    	<input type="checkbox" th:field="*{estagiario}" class="filled-in"  />
+						      	<span>Estagiário</span>
+						    </label>
 			        	</div>
 			      	</div>
 			      	<div class="row">
