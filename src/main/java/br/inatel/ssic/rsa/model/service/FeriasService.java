@@ -1,5 +1,8 @@
 package br.inatel.ssic.rsa.model.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +57,20 @@ public class FeriasService implements FeriasInterface{
 	@Transactional(readOnly = true)
 	public List<Object[]> findFeriasBySemana(Ferias ferias) {
 		return dao.findFeriasBySemana(ferias);
+	}
+
+	@Override
+	public List<String> findFeriasByNRO(Ferias ferias) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(ferias.getInicioFerias(), format)
+	            .with(TemporalAdjusters.firstDayOfMonth());
+		
+		LocalDate dateFinish = LocalDate.parse(ferias.getInicioFerias(), format)
+	            .with(TemporalAdjusters.lastDayOfMonth());
+		
+		ferias.setInicioFerias(dateInit.format(format));
+		ferias.setFimFerias(dateFinish.format(format));
+		
+		return dao.findFeriasByNRO(ferias);
 	}
 }

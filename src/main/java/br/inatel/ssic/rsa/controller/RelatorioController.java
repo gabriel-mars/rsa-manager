@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import br.inatel.ssic.rsa.model.entity.Colaborador;
+import br.inatel.ssic.rsa.model.entity.Ferias;
 import br.inatel.ssic.rsa.model.entity.Item;
 import br.inatel.ssic.rsa.model.service.AtividadeService;
+import br.inatel.ssic.rsa.model.service.FeriasService;
 import br.inatel.ssic.rsa.model.service.RelatorioService;
 
 @Controller
@@ -35,6 +37,9 @@ public class RelatorioController {
 	
 	@Autowired
 	private AtividadeService atvService;
+	
+	@Autowired
+	private FeriasService feriasService;
 
 	@PostMapping("/relatorio/colaborador")
 	@ResponseBody
@@ -246,7 +251,9 @@ public class RelatorioController {
 	public String getItensMes(@RequestBody String ary, Item item, ModelMap model) throws JSONException {
 		JSONArray jsonArray = new JSONArray(ary);
 		JSONObject obj = null;
-		String org, date = null;
+		String org, date, colab = null;
+		Ferias ferias = new Ferias();
+		Object[] aux = null;
 		
 		obj = jsonArray.optJSONObject(0);
 		org = obj.getString("Org");
@@ -254,8 +261,23 @@ public class RelatorioController {
 		
 		item.setCentroRsa(org);
 		item.setDataAnalise(date);
+		ferias.setInicioFerias(date);
 		
+		List<String> colaboradores = feriasService.findFeriasByNRO(ferias);
 		List<Object[]> dados = service.findItensByMes(item);
+		
+		for (int i = 0; i < colaboradores.size(); i++) {
+			colab = colaboradores.get(i);
+			
+			for (int j = 0; j < dados.size(); j++) {
+				aux = dados.get(j);
+				
+				if (colab.intern().equals(aux[0])) {
+					aux[0] = "**" + aux[0];
+					dados.set(j, aux);
+				}
+			}
+		}
 		
 		String data = new Gson().toJson(dados);
 		

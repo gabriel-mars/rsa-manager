@@ -18,4 +18,6 @@ public interface FeriasInterface {
     List<Object[]> findFeriasByPeriodo(Ferias ferias);
     
     List<Object[]> findFeriasBySemana(Ferias ferias);
+    
+    List<String> findFeriasByNRO(Ferias ferias);
 }
