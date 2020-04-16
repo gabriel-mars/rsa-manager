@@ -4,6 +4,13 @@ var ary = [];
 // Dados para os gráficos
 var dados = [];
 
+// Dados para os cálculos das métricas diárias
+var somaDiaria = 0;
+var mediaDiaria = 0;
+var mediaDiariaAux = 0;
+var dpDiario = 0;
+var auxDpDiario = [];
+
 //Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['corechart', 'table'], 'language': 'pt'});
 
@@ -554,7 +561,44 @@ function getDadosDiario(){
 			$(".loader").show();
 		},
 		success: function(dataReturn){
-			google.charts.setOnLoadCallback(drawColumnDiario(dataReturn));
+			calcularMetricas(dataReturn);
+		},
+		complete: function(data){
+			$(".loader").hide();
+		}
+	});
+}
+
+function calcularMetricas(){
+    $.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		url: "/relatorio/diario/metricas",
+		data: JSON.stringify(ary),
+		beforeSend: function(){
+			$(".loader").show();
+		},
+		success: function(dataReturn){
+		    for(var i = 0; i < dataReturn.length; i++){
+                var a = dataReturn[i];
+
+                somaDiaria += parseInt(a[1]);
+            }
+            mediaDiaria = somaDiaria / dataReturn.length;
+            
+            somaDiaria = 0;
+
+            for(var i = 0; i < dataReturn.length; i++){
+                var a = dataReturn[i];
+
+                somaDiaria = somaDiaria + Math.pow((a[1] - mediaDiaria), 2);
+            }
+
+            mediaDiariaAux = somaDiaria / dataReturn.length;
+            dpDiario = Math.sqrt(mediaDiariaAux);
+
+            google.charts.setOnLoadCallback(drawColumnDiario(dataReturn));
 		},
 		complete: function(data){
 			$(".loader").hide();
@@ -564,12 +608,6 @@ function getDadosDiario(){
 
 // Gráficos de relatório diário
 function drawColumnDiario(dataReturn){
-	var soma = 0;
-	var media = 0;
-	var mediaAux = 0;
-	var dp = 0;
-	var auxDp = [];
-	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
 	data.addColumn('number', 'Itens Ap+Re*');
@@ -582,26 +620,7 @@ function drawColumnDiario(dataReturn){
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
 		
-		soma += parseInt(a[4]);
-	}
-  
-	media = soma / dataReturn.length;
-	
-	soma = 0;
-	
-	for(var i = 0; i < dataReturn.length; i++){
-		var a = dataReturn[i];
-		
-		soma = soma + Math.pow((a[4] - media), 2);
-	}
-	
-	mediaAux = soma / dataReturn.length;
-	dp = Math.sqrt(mediaAux);
-	
-	for(var i = 0; i < dataReturn.length; i++){
-		var a = dataReturn[i];
-		
-  	  	data.addRow([a[0], a[4], media, (media + dp), dp, a[6], 180]); 
+  	  	data.addRow([a[0], a[1], mediaDiaria, (mediaDiaria + dpDiario), dpDiario, a[3], 180]);
 	}
 
 	var options = {
@@ -793,11 +812,6 @@ function getItensDiarioMenos(){
 }
 
 function drawColumnDiarioMenos(dataReturn){
-	var soma = 0;
-	var media = 0;
-	var mediaAux = 0;
-	var dp = 0;
-	var auxDp = [];
 	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
@@ -811,26 +825,7 @@ function drawColumnDiarioMenos(dataReturn){
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
 		
-		soma += parseInt(a[4]);
-	}
-  
-	media = soma / dataReturn.length;
-	
-	soma = 0;
-	
-	for(var i = 0; i < dataReturn.length; i++){
-		var a = dataReturn[i];
-		
-		soma = soma + Math.pow((a[4] - media), 2);
-	}
-	
-	mediaAux = soma / dataReturn.length;
-	dp = Math.sqrt(mediaAux);
-	
-	for(var i = 0; i < dataReturn.length; i++){
-		var a = dataReturn[i];
-		
-  	  	data.addRow([a[0], a[4], media, (media + dp), dp, a[6], 120]); 
+  	  	data.addRow([a[0], a[4], mediaDiaria, (mediaDiaria + dpDiario), dpDiario, a[6], 120]);
 	}
 
 	var options = {

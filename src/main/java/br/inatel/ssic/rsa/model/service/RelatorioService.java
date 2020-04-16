@@ -289,4 +289,17 @@ public class RelatorioService implements RelatorioInterface{
 	public List<String> findColaboradoresDiario(Item item) {
 		return dao.findColaboradoresDiario(item);
 	}
+
+	@Transactional(readOnly = true)
+	public List<Object[]> findMetricasDiario(Item item) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dateInit = LocalDate.parse(item.getDataAnalise(), format);
+
+		LocalDate dateFinish = LocalDate.parse(item.getDataAnalise(), format);
+
+		item.setDataAnalise(dateInit.format(format));
+		item.setDataEnvio(dateFinish.format(format));
+
+		return dao.findItensByMes(item);
+	}
 }

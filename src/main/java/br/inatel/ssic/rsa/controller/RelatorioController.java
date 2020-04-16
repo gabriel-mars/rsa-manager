@@ -499,4 +499,26 @@ public class RelatorioController {
 		
 		return data;
 	}
+
+	@PostMapping("/relatorio/diario/metricas")
+	@ResponseBody
+	public String getMetricasDiario(@RequestBody String ary) throws JSONException{
+		Item item = new Item();
+		JSONArray jsonArray = new JSONArray(ary);
+		JSONObject obj = null;
+		String org, date = null;
+
+		obj = jsonArray.optJSONObject(0);
+		org = obj.getString("Org");
+		date = obj.getString("Data");
+
+		item.setCentroRsa(org);
+		item.setDataAnalise(date);
+
+		List<Object[]> dados = service.findMetricasDiario(item);
+
+		String data = new Gson().toJson(dados);
+
+		return data;
+	}
 }
