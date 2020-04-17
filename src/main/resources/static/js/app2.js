@@ -569,7 +569,7 @@ function getDadosDiario(){
 	});
 }
 
-function calcularMetricas(){
+function calcularMetricas(values){
     $.ajax({
 		type: "POST",
 		contentType : 'application/json; charset=utf-8',
@@ -598,7 +598,7 @@ function calcularMetricas(){
             mediaDiariaAux = somaDiaria / dataReturn.length;
             dpDiario = Math.sqrt(mediaDiariaAux);
 
-            google.charts.setOnLoadCallback(drawColumnDiario(dataReturn));
+            google.charts.setOnLoadCallback(drawColumnDiario(values));
 		},
 		complete: function(data){
 			$(".loader").hide();
@@ -620,7 +620,7 @@ function drawColumnDiario(dataReturn){
 	for(var i = 0; i < dataReturn.length; i++){
 		var a = dataReturn[i];
 		
-  	  	data.addRow([a[0], a[1], mediaDiaria, (mediaDiaria + dpDiario), dpDiario, a[3], 180]);
+  	  	data.addRow([a[0], a[4], mediaDiaria, (mediaDiaria + dpDiario), dpDiario, a[6], 180]);
 	}
 
 	var options = {
