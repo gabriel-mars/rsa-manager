@@ -770,10 +770,11 @@ function drawColumnSitesDiario(values){
         return [String(key), values[key]]; 
     });
 	
-	var data = new google.visualization.DataTable();
-	data.addColumn('string', 'Colaborador');
-    data.addColumn('string', 'Site');
-    data.addColumn('number', 'Itens');
+	var aux = $('#table_id').DataTable();
+	
+	aux.destroy();
+	
+	var table = $('#table_id').DataTable();
 	
 	for (var i = 0; i < result.length; i++){
 		var a = result[i];
@@ -782,13 +783,13 @@ function drawColumnSitesDiario(values){
 		for(var j = 0; j < b.length; j++){
 			var c = b[j];
 
-			data.addRow([a[0], c[0], c[1]]);
+			var rowNode = table
+				.row.add([a[0], c[0], c[1]])
+				.draw()
+				.node();
 		}
 	}
 
-	var chart = new google.visualization.Table(document.getElementById("chartSiteDiario"));
-	chart.draw(data, {width: '100%', height: '100%'});
-	
 	getItensDiarioMenos();
 }
 

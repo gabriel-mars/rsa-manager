@@ -55,7 +55,19 @@
 	        	<div class="divider"></div>
 	        	<h5>Descrição de itens em cada site por colaborador</h5>
 	        	<br />
-	        	<div id="chartSiteDiario"></div>
+
+	        	<table id="table_id" class="display">
+				    <thead>
+				        <tr>
+				            <th>Colaborador</th>
+				            <th>Site</th>
+				            <th>Itens</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+
+				    </tbody>
+				</table>
 	        </div>
 	        <script>
 				$(document).ready(function(){
@@ -63,6 +75,7 @@
 			    	$('.datepicker').datepicker({
 			    		format: 'dd/mm/yyyy'
 			    	});
+
 				});
 			</script>
 	    </section>
