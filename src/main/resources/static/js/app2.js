@@ -21,6 +21,12 @@ function getDadosTime(){
 	let strOrg = selectOrg.options[selectOrg.selectedIndex].value;
 	
 	ary = [];
+	dados = [];
+	somaDiaria = 0;
+	mediaDiaria = 0;
+	mediaDiariaAux = 0;
+	dpDiario = 0;
+	auxDpDiario = [];
 	
 	ary.push({ Org: strOrg, Data: date });
 	
@@ -548,6 +554,12 @@ function getDadosDiario(){
 	let strOrg = selectOrg.options[selectOrg.selectedIndex].value;
 	
 	ary = [];
+	dados = [];
+	somaDiaria = 0;
+	mediaDiaria = 0;
+	mediaDiariaAux = 0;
+	dpDiario = 0;
+	auxDpDiario = [];
 	
 	ary.push({ Org: strOrg, Data: date });
 	
@@ -770,11 +782,9 @@ function drawColumnSitesDiario(values){
         return [String(key), values[key]]; 
     });
 	
-	var aux = $('#table_id').DataTable();
-	
-	aux.destroy();
-	
 	var table = $('#table_id').DataTable();
+	
+	table.clear().draw();
 	
 	for (var i = 0; i < result.length; i++){
 		var a = result[i];

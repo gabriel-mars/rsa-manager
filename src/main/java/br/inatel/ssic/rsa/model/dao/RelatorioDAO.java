@@ -200,7 +200,7 @@ public class RelatorioDAO implements RelatorioInterface{
 	public List<Object[]> findItensSiteDiario(Item item) {
 		Query query = manager.createNativeQuery("SELECT DISTINCT I.site, "
 				+ "COUNT (I.status) FILTER (WHERE I.status = 'Rejeitado' OR I.status = 'Aprovado') AS sum_itens_ap_re "
-				+ "FROM item I WHERE I.inspetor = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) "
+				+ "FROM item I WHERE I.inspetor = ? AND DATE(I.data_analise) = DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "GROUP BY I.site")
 				.setParameter(1, item.getInspetor())
 				.setParameter(2, item.getDataAnalise());
@@ -213,7 +213,7 @@ public class RelatorioDAO implements RelatorioInterface{
 	public List<String> findColaboradoresDiario(Item item) {
 		Query query = manager.createNativeQuery("SELECT DISTINCT I.inspetor "
 				+ "FROM item I "
-				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) >= DATE(TO_DATE(?, 'DD/MM/YYY')) "
+				+ "WHERE I.centro_rsa = ? AND DATE(I.data_analise) = DATE(TO_DATE(?, 'DD/MM/YYY')) "
 				+ "GROUP BY I.inspetor")
 				.setParameter(1, item.getCentroRsa())
 				.setParameter(2, item.getDataAnalise());
