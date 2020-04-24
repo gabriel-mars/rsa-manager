@@ -156,7 +156,7 @@ function drawColumn(){
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Topping');
 	data.addColumn('number', 'Itens avalidados');
-	data.addColumn('number', 'Porcentagem');
+	data.addColumn('number', 'Média do dia');
   
 	for(var i = 0; i < result.length; i++){
 		var a = result[i];
